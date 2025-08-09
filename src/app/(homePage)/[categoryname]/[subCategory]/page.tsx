@@ -4,6 +4,7 @@ import {
 } from "@/lib/api/article.api";
 import { getSubCategoryById } from "@/lib/api/sub-category.api";
 import MainPage from "./_components/main-page";
+export const dynamic = "force-dynamic";
 
 export default async function Page({
   params,
