@@ -10,12 +10,12 @@ export default async function Page({
   params,
   searchParams,
 }: {
-  params: Promise<{ subCategory: string }>;
+  params: { subCategory: string };
 
-  searchParams: Promise<{ subSubCategory?: string; page?: string }>;
+  searchParams: { subSubCategory?: string; page?: string };
 }) {
-  const { subCategory } = await params;
-  const { subSubCategory: selectedSubSubCategory, page } = await searchParams;
+  const { subCategory } = params;
+  const { subSubCategory: selectedSubSubCategory, page } = searchParams;
   const currentPage = parseInt(page || "1", 10);
 
   const sub = await getSubCategoryById(subCategory);
