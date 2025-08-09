@@ -5,6 +5,7 @@ import { getBookmarkedArticles, removeBookmark } from "@/lib/utils/articles";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import ArticleCard from "../[categoryname]/[subCategory]/_components/article-card";
+export const dynamic = "force-dynamic";
 
 export default function Archive() {
   const [articles, setArticles] = useState<Article[]>([]);
