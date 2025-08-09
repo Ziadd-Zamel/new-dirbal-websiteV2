@@ -3,6 +3,8 @@ import {
   getArticlesBySubCategory,
 } from "@/lib/api/article.api";
 import ArticlePage from "./_components/article-page";
+export const dynamic = "force-dynamic";
+
 export default async function Page({
   params,
 }: {
