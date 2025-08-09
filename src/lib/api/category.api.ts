@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 interface getCategoryResponse {
   data: Category;
 }
@@ -7,7 +5,7 @@ interface getCategoryResponse {
 // Categories API
 export const getAllCategories = async () => {
   const baseUrl =
-    typeof window === 'undefined'
+    typeof window === "undefined"
       ? process.env.API
       : process.env.NEXT_PUBLIC_API;
 
@@ -15,7 +13,7 @@ export const getAllCategories = async () => {
 
   try {
     const response = await fetch(url, {
-      cache: 'no-store',
+      cache: "no-store",
     });
 
     if (!response.ok) {
@@ -24,13 +22,13 @@ export const getAllCategories = async () => {
 
     const payload: APIResponse<Category[]> = await response.json();
 
-    if (!('data' in payload)) {
-      throw new Error(payload.message || 'Unknown error occurred');
+    if (!("data" in payload)) {
+      throw new Error(payload.message || "Unknown error occurred");
     }
 
     return payload;
   } catch (error) {
-    console.error('Error fetching categories:', error);
+    console.error("Error fetching categories:", error);
     throw error;
   }
 };
@@ -40,7 +38,7 @@ export const getCategoryById = async (categoryUuid: string) => {
 
   try {
     const response = await fetch(url, {
-      cache: 'no-store',
+      cache: "no-store",
     });
 
     if (!response.ok) {
@@ -49,13 +47,13 @@ export const getCategoryById = async (categoryUuid: string) => {
 
     const payload: APIResponse<getCategoryResponse> = await response.json();
 
-    if (!('data' in payload)) {
-      throw new Error(payload.message || 'Unknown error occurred');
+    if (!("data" in payload)) {
+      throw new Error(payload.message || "Unknown error occurred");
     }
 
     return payload;
   } catch (error) {
-    console.error('Error fetching category:', error);
+    console.error("Error fetching category:", error);
     throw error;
   }
 };

@@ -4,18 +4,17 @@ import {
 } from "@/lib/api/article.api";
 import { getSubCategoryById } from "@/lib/api/sub-category.api";
 import MainPage from "./_components/main-page";
-export const dynamic = "force-dynamic";
 
 export default async function Page({
   params,
   searchParams,
 }: {
-  params: { subCategory: string };
+  params: Promise<{ subCategory: string }>;
 
-  searchParams: { subSubCategory?: string; page?: string };
+  searchParams: Promise<{ subSubCategory?: string; page?: string }>;
 }) {
-  const { subCategory } = params;
-  const { subSubCategory: selectedSubSubCategory, page } = searchParams;
+  const { subCategory } = await params;
+  const { subSubCategory: selectedSubSubCategory, page } = await searchParams;
   const currentPage = parseInt(page || "1", 10);
 
   const sub = await getSubCategoryById(subCategory);
