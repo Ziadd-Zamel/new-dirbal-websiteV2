@@ -74,10 +74,10 @@ export default function SubCategorySection({ SubCategory, categoryId }: Props) {
                   href={`/${categoryId}/${sub.uuid}`}
                   className="mr-3 text-right transition-transform duration-300 hover:scale-105"
                 >
-                  <h3 className="font-tajawal text-xl font-[800] text-[#B5975C]">
+                  <h3 className="font-tajawal text-xl font-[800] text-gray-300">
                     {sub.name}
                   </h3>
-                  <p className="text-gray-300">
+                  <p className="text-[#B5975C] ">
                     {sub.sub_title || "هذا نص تعريفي"}
                   </p>
                 </Link>

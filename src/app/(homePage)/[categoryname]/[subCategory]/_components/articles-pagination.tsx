@@ -82,7 +82,7 @@ export default function ArticlePagintation({
         <div className="flex items-center gap-1">
           {/* First page button */}
           <button
-            className={`flex h-9 w-9 items-center justify-center rounded-lg transition-all duration-200 ${
+            className={`flex h-9 w-9 items-center justify-center  transition-all duration-200 ${
               currentPage > 1
                 ? "border border-gray-300 bg-white text-gray-700 hover:border-[#B5975C] hover:bg-gray-50"
                 : "cursor-not-allowed border border-gray-200 bg-gray-100 text-gray-400"
@@ -97,7 +97,7 @@ export default function ArticlePagintation({
 
           {/* Previous page button */}
           <button
-            className={`flex h-9 w-9 items-center justify-center rounded-lg transition-all duration-200 ${
+            className={`flex h-9 w-9 items-center justify-center  transition-all duration-200 ${
               currentPage > 1
                 ? "border border-gray-300 bg-white text-gray-700 hover:border-[#B5975C] hover:bg-gray-50"
                 : "cursor-not-allowed border border-gray-200 bg-gray-100 text-gray-400"
@@ -128,7 +128,7 @@ export default function ArticlePagintation({
               <button
                 key={page}
                 style={{ direction: "rtl" }}
-                className={`flex h-9 w-9 items-center justify-center rounded-lg font-medium transition-all duration-200 ${
+                className={`flex h-9 w-9 items-center justify-center font-medium transition-all duration-200 ${
                   currentPage === page
                     ? "scale-105 bg-[#B5975C] text-white shadow-lg"
                     : "border border-gray-300 bg-white text-gray-700 hover:border-[#B5975C] hover:bg-gray-50"
@@ -145,7 +145,7 @@ export default function ArticlePagintation({
 
           {/* Next page button */}
           <button
-            className={`flex h-9 w-9 items-center justify-center rounded-lg transition-all duration-200 ${
+            className={`flex h-9 w-9 items-center justify-center transition-all duration-200 ${
               currentPage < pagination.last_page
                 ? "border border-gray-300 bg-white text-gray-700 hover:border-[#B5975C] hover:bg-gray-50"
                 : "cursor-not-allowed border border-gray-200 bg-gray-100 text-gray-400"
@@ -160,7 +160,7 @@ export default function ArticlePagintation({
 
           {/* Last page button */}
           <button
-            className={`flex h-9 w-9 items-center justify-center rounded-lg transition-all duration-200 ${
+            className={`flex h-9 w-9 items-center justify-center transition-all duration-200 ${
               currentPage < pagination.last_page
                 ? "border border-gray-300 bg-white text-gray-700 hover:border-[#B5975C] hover:bg-gray-50"
                 : "cursor-not-allowed border border-gray-200 bg-gray-100 text-gray-400"

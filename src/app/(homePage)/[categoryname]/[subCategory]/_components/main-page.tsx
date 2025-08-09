@@ -142,7 +142,7 @@ const MainPage = ({
     <div className="relative">
       {/* Heading section */}
       <HeadingSection
-        bgImageSrc="/assets/Soteyat.png"
+        bgImageSrc={subCategory.image_url || "/assets/Soteyat.png"}
         text={
           subCategory.description
             ? subCategory.description.replace(/<[^>]*>/g, "")
@@ -171,7 +171,7 @@ const MainPage = ({
         )}
       </div>
 
-      <section className="relative z-50 min-h-[100vh] items-start gap-10 justify-start pb-24 md:flex main-padding 2xl:-mr-10">
+      <section className="relative z-50 min-h-[100vh] items-start gap-10 justify-start pb-24 md:flex main-padding 2xl:box-container ">
         {/* Background image */}
         <div className="absolute inset-0 mt-0 h-full w-full">
           <Image

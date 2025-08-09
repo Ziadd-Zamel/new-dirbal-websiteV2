@@ -51,9 +51,9 @@ const MawdooaHeading: React.FC<MawdooaHeadingProps> = ({
           dir="rtl"
         >
           <div dir="rtl" className="mt-5 text-right">
-            <div className="mt-10 sm:mt-20 lg:mt-24">
+            <div className="mt-10 sm:mt-20 lg:mt-40">
               <div className="flex items-center gap-5 lg:w-[70%]">
-                <div className="relative mt-[16px] flex h-24 w-28 flex-col items-center justify-center">
+                <div className="relative  flex h-24 w-28 flex-col items-center justify-center">
                   <Image
                     className="absolute z-0"
                     src={"/assets/bgbooks.jpg"}
@@ -71,7 +71,7 @@ const MawdooaHeading: React.FC<MawdooaHeadingProps> = ({
                   </div>
                 </div>
                 <motion.h2
-                  className="text-justify font-tajawal text-xl font-semibold text-[#B5975C] sm:text-3xl"
+                  className="text-right font-tajawal text-xl font-semibold text-[#B5975C] sm:text-3xl"
                   initial={{ opacity: 0, y: 50 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8 }}

@@ -43,7 +43,7 @@ const ArticlePage = ({
           />
         </div>
 
-        <div className="relative z-50 flex min-h-screen w-full justify-between main-padding">
+        <div className="relative z-50 flex min-h-screen w-full justify-between main-padding gap-2">
           {/* Sidebar Container */}
           <div className="hidden w-fit md:block">
             <div className="sticky top-0">
@@ -52,7 +52,7 @@ const ArticlePage = ({
           </div>
 
           {/* Main Content */}
-          <div className="w-full md:w-[60%]">
+          <div className="w-full md:w-[59%]">
             <Mawdooa articleById={articleById} searchTerm={searchTerm} />
             {/* Add id or data attribute for comments section */}
             <div id="comments-section">

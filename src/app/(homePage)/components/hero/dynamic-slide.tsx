@@ -42,7 +42,7 @@ export default function DynamicSlide({ category }: { category: Category }) {
 
       <div
         style={{ direction: "rtl" }}
-        className="relative flex h-full flex-col justify-between pb-5 text-right"
+        className="relative flex h-full flex-col justify-between pb-5 text-right "
       >
         <div className="text-justify">
           <div className="px-10 pt-5 lg:px-20 xl:px-[71px]">

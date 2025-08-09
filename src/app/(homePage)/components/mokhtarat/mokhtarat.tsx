@@ -7,7 +7,7 @@ export default async function Mokhtarat() {
   const bestArticles = await getBestArticles();
   return (
     <section id="Mokhtarat" className="relative z-50 min-h-[100vh] bg-white">
-      <div className="relative z-50 pt-16">
+      <div className="relative z-50 pt-16 ">
         <div className="flex-row-center">
           <SectionLogo LogoUrl={`/assets/sectionLogo-1.png`} />
         </div>

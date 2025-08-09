@@ -1,6 +1,7 @@
 "use client";
 
 import SearchIcon from "@/components/Icons/SearchIcon";
+import { Search } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -79,7 +80,7 @@ const ArticleSearch = ({
             value={searchQuery}
             onChange={handleInputChange}
             placeholder={placeholder}
-            className="ml-3 w-[170px] border-b border-white bg-transparent pb-1 pt-2 text-right font-tajawal text-gray-600 outline-none placeholder:text-xs focus:border-[#B5975C] xl:w-[260px] xl:placeholder:text-base"
+            className="ml-3 w-[170px] border-b border-white bg-transparent pb-1 pt-2 text-right font-tajawal text-gray-200 outline-none placeholder:text-xs focus:border-[#B5975C] xl:w-[280px] xl:placeholder:text-base"
             dir="rtl"
           />
 
@@ -113,7 +114,7 @@ const ArticleSearch = ({
           className="flex size-[30px] items-center justify-center rounded-[50px] border border-gray-400 bg-transparent transition-colors hover:border-[#B5975C] xl:h-[45px] xl:w-[50px]"
           aria-label="بحث"
         >
-          <SearchIcon dark={false} height={20} />
+          <Search className="text-white" strokeWidth={1} />
         </button>
       </form>
     </div>

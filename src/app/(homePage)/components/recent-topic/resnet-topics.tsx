@@ -40,7 +40,7 @@ const RecentTopics = ({
       id="RecentTopics"
       className="relative z-50 min-h-[100vh] pb-10 pt-16"
     >
-      <div className="main-padding relative z-50">
+      <div className="main-padding relative z-50 2xl:box-container">
         <div className="flex-row-center">
           <SectionLogo LogoUrl={LogoUrl} />
         </div>

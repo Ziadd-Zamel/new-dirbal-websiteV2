@@ -63,7 +63,7 @@ export default function Sidebar() {
                   <div className="flex w-full items-center justify-end gap-2 rounded-sm">
                     <FiMinus className="text-xl text-white" />
                     <span className="text-right font-tajawal text-lg font-medium">
-                      الرئيسية
+                      الرئيسة
                     </span>
                   </div>
                 </Link>

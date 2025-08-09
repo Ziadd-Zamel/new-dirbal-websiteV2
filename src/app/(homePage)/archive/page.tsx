@@ -60,11 +60,11 @@ export default function Archive() {
           </div>
         ) : articles.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-16 text-center">
-            <h3 className="mb-2 text-xl text-white">
-              لا توجد مقالات في المفضلة
+            <h3 className="mb-2 text-xl text-white font-tajawal">
+              المفضلة خالية{" "}
             </h3>
-            <p className="text-sm text-[#FAE1C6]">
-              لم تقم بإضافة أي مقالات إلى المفضلة بعد
+            <p className="text-sm text-[#FAE1C6] font-tajawal">
+              لم تضف من عندك أي موضوع بعد{" "}
             </p>
           </div>
         ) : (

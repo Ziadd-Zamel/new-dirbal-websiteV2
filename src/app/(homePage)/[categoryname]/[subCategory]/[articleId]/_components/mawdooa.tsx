@@ -157,7 +157,7 @@ const Mawdooa = ({ articleById, searchTerm }: MawdooaProps) => {
     }
   }, [searchTerm]);
   return (
-    <div className="w-full" ref={contentRef}>
+    <div className="w-full border-b pb-20 border-[#B5975C]" ref={contentRef}>
       <div
         style={{ direction: "rtl" }}
         className="flex w-full items-center gap-5"

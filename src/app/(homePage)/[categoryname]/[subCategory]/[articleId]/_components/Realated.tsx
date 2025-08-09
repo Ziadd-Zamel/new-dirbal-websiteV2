@@ -129,7 +129,7 @@ const RelatedTopics = ({
       {/* Related Topics Section */}
       <div className="mb-6 mt-32">
         <h2 className="mb-2 font-tajawal text-lg">موضوعات ذات صلة:</h2>
-        <div className="overflow-hidden rounded-md bg-white text-black">
+        <div className="overflow-hidden bg-white text-black">
           {relatedTopics.map((article) => (
             <p
               key={article.id}
@@ -145,7 +145,7 @@ const RelatedTopics = ({
       {/* Latest Branch Topics Section */}
       <div className="mt-20">
         <h2 className="mb-2 font-tajawal text-lg">آخر موضوعات الفرع:</h2>
-        <div className="overflow-hidden rounded-md bg-white text-black">
+        <div className="overflow-hidden  bg-white text-black">
           {latestTopics.map((article) => {
             const { day, month } = formatDateForDisplay(article.published_at);
             return (
@@ -167,7 +167,7 @@ const RelatedTopics = ({
                 >
                   {article.title_number} {article.title_short}: {article.title}
                 </p>
-                <div className="relative flex h-16 w-20 flex-shrink-0 flex-col items-center justify-center rounded-md text-xs text-white">
+                <div className="relative flex h-16 w-20 flex-shrink-0 flex-col items-center justify-center  text-xs text-white">
                   <span className="relative z-50 text-sm font-bold">{day}</span>
                   <span className="relative z-50">{month}</span>
                   <Image

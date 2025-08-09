@@ -40,7 +40,7 @@ export default function QabasatBox({ Qabasat }: { Qabasat: Qabasat[] }) {
   const hasImage = currentQuote.image;
 
   return (
-    <div className="relative  flex h-full items-center px-10 lg:px-20 xl:px-[70px]">
+    <div className="relative  flex h-full items-center px-10 lg:px-20 xl:px-[70px] 2xl:box-container">
       <div className="flex w-full flex-col items-center gap-5 lg:flex-row-reverse lg:justify-between">
         <Image
           alt="Aya"

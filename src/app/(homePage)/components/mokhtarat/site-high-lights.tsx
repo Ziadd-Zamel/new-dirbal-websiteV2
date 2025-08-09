@@ -31,9 +31,9 @@ export default function SiteHighLights({
         return (
           <div
             key={index}
-            className={`main-padding m-auto ${section.backgroundColor} py-8`}
+            className={`main-padding 2xl:px-0  m-auto ${section.backgroundColor} py-8`}
           >
-            <div className="flex flex-col items-center justify-between gap-16 md:flex-row md:items-start">
+            <div className="flex flex-col items-center justify-between gap-16 md:flex-row md:items-start 2xl:box-container">
               {section.articles.map((article) => (
                 <HighLightCard
                   key={article.uuid}

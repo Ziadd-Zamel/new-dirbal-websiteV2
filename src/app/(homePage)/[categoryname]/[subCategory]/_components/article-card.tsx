@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface ArticleCardProps {
   article: Article;
@@ -26,6 +26,9 @@ function getYouTubeVideoId(url: string): string | null {
   return match && match[2].length === 11 ? match[2] : null;
 }
 
+// Global state to track which article is currently expanded
+let currentlyExpandedArticle: string | null = null;
+
 const ArticleCard = ({
   article,
   className = "",
@@ -44,21 +47,55 @@ const ArticleCard = ({
   };
 
   const hasVideo = article.video_url;
+  console.log(article);
+  useEffect(() => {
+    const handleCloseOthers = (event: CustomEvent) => {
+      if (event.detail.exceptId !== article.uuid && isExpanded) {
+        setIsCollapsing(true);
+        setIsExpanded(false);
+        setTimeout(() => {
+          setIsCollapsing(false);
+        }, 1600);
+      }
+    };
+
+    window.addEventListener(
+      "closeOtherArticles",
+      handleCloseOthers as EventListener
+    );
+
+    return () => {
+      window.removeEventListener(
+        "closeOtherArticles",
+        handleCloseOthers as EventListener
+      );
+    };
+  }, [article.uuid, isExpanded]);
 
   const toggleExpand = () => {
+    if (currentlyExpandedArticle && currentlyExpandedArticle !== article.uuid) {
+      window.dispatchEvent(
+        new CustomEvent("closeOtherArticles", {
+          detail: { exceptId: article.uuid },
+        })
+      );
+    }
+
     if (isExpanded) {
       setIsCollapsing(true);
       setIsExpanded(false);
+      currentlyExpandedArticle = null;
 
       setTimeout(() => {
         setIsCollapsing(false);
-      }, 800);
+      }, 400);
     } else {
       setIsAnimating(true);
+      currentlyExpandedArticle = article.uuid;
 
       setTimeout(() => {
         setIsExpanded(true);
-      }, 500);
+      }, 250);
     }
   };
 
@@ -86,7 +123,7 @@ const ArticleCard = ({
       opacity: 0,
       height: 0,
       transition: {
-        duration: 0.8,
+        duration: 0.5,
         ease: "easeInOut",
       },
     },
@@ -94,7 +131,7 @@ const ArticleCard = ({
       opacity: 1,
       height: "auto",
       transition: {
-        duration: 0.8,
+        duration: 0.5,
         ease: "easeInOut",
       },
     },
@@ -141,7 +178,7 @@ const ArticleCard = ({
       >
         <div>
           <span className="font-tajawal text-[12px] text-[#FAE1C6] sm:text-[16px] md:text-[16px] xl:text-[22px]">
-            {article.title_number} م د:{" "}
+            {article.title_number} {article.title_short}:
           </span>
           <span className="font-tajawal text-[12px] text-white sm:text-[16px] md:text-[16px] xl:text-[22px]">
             {article.title}
@@ -246,7 +283,7 @@ const ArticleCard = ({
             }}
           >
             <h6 className="mt-8 font-tajawal text-xl text-[#B5975C]">
-              {"القاعدة"}
+              {article.title_description || "القاعدة"}
             </h6>
 
             {renderVideoOrText()}
