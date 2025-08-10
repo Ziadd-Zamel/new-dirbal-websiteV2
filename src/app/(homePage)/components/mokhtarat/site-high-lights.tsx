@@ -21,6 +21,11 @@ export default function SiteHighLights({
       backgroundColor: "bg-[#FFFFFF55]",
       gradientColor: "from-gray-500",
     },
+    {
+      articles: bestArticles.slice(6, 8),
+      backgroundColor: "bg-[#B5975C]/10",
+      gradientColor: "from-gray-500",
+    },
   ];
 
   return (

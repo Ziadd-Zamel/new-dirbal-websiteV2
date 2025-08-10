@@ -188,9 +188,8 @@ const ArticleCard = ({
           <Image
             src={article.image_url!}
             alt="article image"
-            width={80}
-            height={200}
-            className="h-[130px]"
+            width={85} // 17 * 5
+            height={120} // 24 * 5
           />
         )}
         {onDelete && (
@@ -219,51 +218,49 @@ const ArticleCard = ({
         )}
       </div>
 
-      {!hasImage && (
-        <AnimatePresence>
-          <motion.div
-            // @ts-ignore
-            initial={
-              isCollapsing
-                ? metadataVariants.hidden
-                : { opacity: 1, height: "auto" }
-            }
-            // @ts-ignore
-            animate={metadataVariants.visible}
-            // @ts-ignore
-            exit={metadataVariants.hidden}
-            style={{ direction: "rtl" }}
-            className="flex items-center gap-10 text-white"
-          >
-            <div className="mt-1 flex items-center">
-              <Image
-                src={"/assets/date.png"}
-                alt="Home Icon"
-                width={35}
-                height={0}
-              />{" "}
-              <span className="font-tajawal text-[12px] text-[#B5975C] sm:text-[14px] xl:text-[16px]">
-                {new Date(article.created_at)
-                  .toLocaleDateString()
-                  .split("/")
-                  .reverse()
-                  .join("-")}
-              </span>
-            </div>
-            <div className="ml-6 mt-1 flex items-center">
-              <Image
-                src={"/assets/Author.svg"}
-                alt="Home Icon"
-                width={30}
-                height={0}
-              />{" "}
-              <span className="font-tajawal text-[12px] text-[#B5975C] sm:text-[14px] xl:text-[16px]">
-                {article.written_by}
-              </span>
-            </div>
-          </motion.div>
-        </AnimatePresence>
-      )}
+      <AnimatePresence>
+        <motion.div
+          // @ts-ignore
+          initial={
+            isCollapsing
+              ? metadataVariants.hidden
+              : { opacity: 1, height: "auto" }
+          }
+          // @ts-ignore
+          animate={metadataVariants.visible}
+          // @ts-ignore
+          exit={metadataVariants.hidden}
+          style={{ direction: "rtl" }}
+          className="flex items-center gap-10 text-white"
+        >
+          <div className="mt-1 flex items-center">
+            <Image
+              src={"/assets/date.png"}
+              alt="Home Icon"
+              width={35}
+              height={0}
+            />{" "}
+            <span className="font-tajawal text-[12px] text-[#B5975C] sm:text-[14px] xl:text-[16px]">
+              {new Date(article.created_at)
+                .toLocaleDateString("en-GB")
+                .split("/")
+                .reverse()
+                .join("-")}
+            </span>
+          </div>
+          <div className="ml-6 mt-1 flex items-center">
+            <Image
+              src={"/assets/Author.svg"}
+              alt="Home Icon"
+              width={30}
+              height={0}
+            />{" "}
+            <span className="font-tajawal text-[12px] text-[#B5975C] sm:text-[14px] xl:text-[16px]">
+              {article.written_by}
+            </span>
+          </div>
+        </motion.div>
+      </AnimatePresence>
 
       {/* Expanded Content */}
       <AnimatePresence>
@@ -283,7 +280,7 @@ const ArticleCard = ({
             }}
           >
             <h6 className="mt-8 font-tajawal text-xl text-[#B5975C]">
-              {article.title_description || "القاعدة"}
+              {article.title_description}
             </h6>
 
             {renderVideoOrText()}

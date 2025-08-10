@@ -1,3 +1,4 @@
+"use client";
 import LeftArrowIcon from "@/components/Icons/LeftArrowIcon";
 import Link from "next/link";
 import RecentIcons from "./recent-icons";
@@ -11,6 +12,30 @@ export default function RecentLeftSection({
 }) {
   const stripHtmlTags = (html: string): string => {
     return html.replace(/<[^>]*>/g, "");
+  };
+
+  // Function to render description with fade effect
+  const renderDescriptionWithFade = (description: string) => {
+    const cleanDescription = stripHtmlTags(description);
+    const words = cleanDescription.split(" ");
+
+    if (words.length <= 120) {
+      return cleanDescription;
+    }
+
+    const beforeFade = words.slice(0, 120).join(" ");
+    const fadeWords = words.slice(120, 130);
+    const hasMoreWords = words.length > 130;
+
+    return (
+      <>
+        {beforeFade}
+        {fadeWords.length > 0 && (
+          <span className="fade-text">{" " + fadeWords.join(" ")}</span>
+        )}
+        {hasMoreWords}
+      </>
+    );
   };
 
   return (
@@ -38,24 +63,7 @@ export default function RecentLeftSection({
         thickness="h-[2px]"
       />
       <p className="pl-2 pt-6 text-justify font-tajawal text-[16px] font-medium leading-[25px] text-gray-300 sm:text-[16px] md:text-[20px] lg:text-[13px] xl:text-[15.5px]">
-        {(() => {
-          const cleanText = stripHtmlTags(selectedArticle.description);
-          if (cleanText.length <= 400) {
-            return cleanText;
-          }
-
-          const truncatedText = cleanText.substring(0, 400);
-          const lastWords = cleanText.substring(400, 500);
-
-          return (
-            <>
-              {truncatedText}
-              <span className="bg-gradient-to-l from-gray-200 to-transparent bg-clip-text text-transparent">
-                {lastWords}
-              </span>
-            </>
-          );
-        })()}
+        {renderDescriptionWithFade(selectedArticle.description)}
       </p>
       <div className="mt-5 flex flex-col-reverse justify-between gap-5 sm:flex-row sm:items-center">
         <Link
@@ -69,6 +77,15 @@ export default function RecentLeftSection({
         </Link>
         <RecentIcons article={selectedArticle} />
       </div>
+
+      <style jsx>{`
+        .fade-text {
+          background: linear-gradient(to right, rgb(209 213 219), transparent);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+      `}</style>
     </div>
   );
 }

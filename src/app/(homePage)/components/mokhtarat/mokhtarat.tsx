@@ -14,9 +14,9 @@ export default async function Mokhtarat() {
 
         <div className="mb-10 mt-5">
           <HeadingText
-            title="   من فروع الموقع  "
-            goldenText="  مدوّنات منتقاة  "
-            text="يقترحها مدير الموقع لما تنطوي عليه من مسائل مهمة أو موضوعات جدلية أو جديدة"
+            title="من مختلف الفروع"
+            goldenText="مدونات منتقاة"
+            text="تقترحها إدارة الموقع بالنظر إلى أهمية مسائلها أو جدة موضوعاتها"
             className="text-black"
             black={true}
           />

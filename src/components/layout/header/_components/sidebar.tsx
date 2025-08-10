@@ -30,9 +30,23 @@ export default function Sidebar() {
     setExpandedId(expandedId === id ? null : id);
   };
 
+  // Function to handle link clicks - close sidebar
+  const handleLinkClick = () => {
+    setOpen(false);
+  };
+
+  // Reset expanded state when sidebar opens/closes
+  const handleOpenChange = (isOpen: boolean) => {
+    setOpen(isOpen);
+    if (!isOpen) {
+      // Reset expanded state when closing
+      setExpandedId(null);
+    }
+  };
+
   return (
     <div className="relative" style={{ direction: "rtl" }}>
-      <Sheet open={open} onOpenChange={setOpen}>
+      <Sheet open={open} onOpenChange={handleOpenChange}>
         <SheetTrigger asChild>
           <button className="mt-5 cursor-pointer block border-solid md:mt-0 md:pl-[16px] ">
             <HamburgerIcon dark={false} />
@@ -60,7 +74,10 @@ export default function Sidebar() {
             <div>
               <div className="mr-1 flex cursor-pointer items-center justify-start gap-2 rounded-sm px-1 py-2 text-white transition-colors hover:bg-white/10">
                 <Link href="/" passHref>
-                  <div className="flex w-full items-center justify-end gap-2 rounded-sm">
+                  <div
+                    className="flex w-full items-center justify-end gap-2 rounded-sm"
+                    onClick={handleLinkClick}
+                  >
                     <FiMinus className="text-xl text-white" />
                     <span className="text-right font-tajawal text-lg font-medium">
                       الرئيسة
@@ -139,6 +156,7 @@ export default function Sidebar() {
                                     borderRadius: "4px",
                                     color: "rgb(209, 213, 219)",
                                   }}
+                                  onClick={handleLinkClick}
                                 >
                                   <IoIosArrowBack className="text-sm text-white" />
                                   <span className="text-right font-tajawal text-base font-normal">

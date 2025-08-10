@@ -47,13 +47,13 @@ const MawdooaHeading: React.FC<MawdooaHeadingProps> = ({
           <div className="absolute inset-0 bg-[rgba(37,37,37,0.9)]"></div>
         )}
         <div
-          className="relative flex h-full flex-col justify-between px-10 pb-16 text-right lg:px-20 xl:px-20"
+          className="relative flex h-full flex-col justify-between px-10 pb-20 text-right lg:px-20 xl:px-20"
           dir="rtl"
         >
-          <div dir="rtl" className="mt-5 text-right">
-            <div className="mt-10 sm:mt-20 lg:mt-40">
+          <div dir="rtl" className="text-right">
+            <div className="mt-10 sm:mt-20 lg:mt-36">
               <div className="flex items-center gap-5 lg:w-[70%]">
-                <div className="relative  flex h-24 w-28 flex-col items-center justify-center">
+                <div className="relative  flex h-24 w-42  flex-col items-center justify-center">
                   <Image
                     className="absolute z-0"
                     src={"/assets/bgbooks.jpg"}
@@ -66,7 +66,7 @@ const MawdooaHeading: React.FC<MawdooaHeadingProps> = ({
                       {articleById?.title_number}
                     </p>
                     <p className="mt-1 font-tajawal text-3xl font-semibold text-white">
-                      {articleById?.title_short}{" "}
+                      {articleById?.title_short}
                     </p>
                   </div>
                 </div>

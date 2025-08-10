@@ -11,19 +11,6 @@ interface MawdooaProps {
 const Mawdooa = ({ articleById, searchTerm }: MawdooaProps) => {
   const contentRef = useRef<HTMLDivElement>(null);
 
-  // Function to strip HTML tags - server-safe version
-  const stripHtml = (html: string) => {
-    return html
-      .replace(/<[^>]*>/g, "")
-      .replace(/&nbsp;/g, " ")
-      .replace(/&amp;/g, "&")
-      .replace(/&lt;/g, "<")
-      .replace(/&gt;/g, ">")
-      .replace(/&quot;/g, '"')
-      .replace(/&#39;/g, "'")
-      .trim();
-  };
-
   // Function to highlight search terms
   const highlightText = (text: string, searchTerm: string) => {
     if (!searchTerm || !text) return text;
@@ -157,7 +144,7 @@ const Mawdooa = ({ articleById, searchTerm }: MawdooaProps) => {
     }
   }, [searchTerm]);
   return (
-    <div className="w-full border-b pb-20 border-[#B5975C]" ref={contentRef}>
+    <div className="w-full border-b pb-5 border-[#B5975C]" ref={contentRef}>
       <div
         style={{ direction: "rtl" }}
         className="flex w-full items-center gap-5"
@@ -231,9 +218,7 @@ const Mawdooa = ({ articleById, searchTerm }: MawdooaProps) => {
         {sortedSubjects.length > 0 && (
           <>
             <hr className="my-6 w-full border-t border-[#B5975C] opacity-70" />
-            <h6 className="mt-5 text-center font-tajawal text-xl font-bold text-[#B5975C]">
-              المواضيع
-            </h6>
+
             {sortedSubjects.map((subject: Subject) => (
               <div key={subject.id} className="mt-5">
                 <h6 className="mb-3 text-center font-tajawal text-lg font-bold text-[#B5975C]">
@@ -245,10 +230,10 @@ const Mawdooa = ({ articleById, searchTerm }: MawdooaProps) => {
                   dangerouslySetInnerHTML={{
                     __html: searchTerm
                       ? highlightText(
-                          stripHtml(subject.description),
+                          removeParagraphStylesOnly(subject.description),
                           searchTerm
                         )
-                      : stripHtml(subject.description),
+                      : removeParagraphStylesOnly(subject.description),
                   }}
                 />
               </div>
