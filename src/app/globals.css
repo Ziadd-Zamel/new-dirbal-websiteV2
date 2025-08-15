@@ -167,3 +167,29 @@
 button {
   cursor: pointer;
 }
+.box {
+  width: 260px;
+  height: 42px;
+  line-height: 50px;
+  background: rgb(40,40,40);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  overflow: hidden;
+  position: relative;
+}
+.box p {
+  margin: 0;
+  display: inline-block;
+  line-height: 14px;
+  vertical-align: middle;
+}
+.box p:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0px;
+  width: 150px;
+  height: 14px;
+  background: linear-gradient(to right, rgba(40, 40, 40, 0), rgba(40, 40, 40, 1) 50%);;
+}

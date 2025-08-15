@@ -46,7 +46,7 @@ declare type Qabasat = {
   qabasat_category_uuid: null | string;
   category: {
     name: string;
-    uuid: srting;
+    uuid: string;
   };
 };
 declare type QabasatResponse = {
