@@ -35,10 +35,10 @@ export default function SubCategorySection({ SubCategory, categoryId }: Props) {
                   className="flex w-full items-center justify-end rounded-lg bg-black/20 p-4 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:bg-black/30"
                 >
                   <div className="mr-3 flex flex-col text-right">
-                    <h3 className="font-zain text-base font-[700] text-[#B5975C] sm:text-lg">
+                    <h3 className="font-tajawal text-base font-[700] text-[#B5975C] sm:text-lg">
                       {sub.name}
                     </h3>
-                    <p className="text-xl text-white">نص تعريفي</p>
+                    <p className="text-xl text-white font-tajawal">نص تعريفي</p>
                   </div>
                   <div className="flex-shrink-0">
                     <Image

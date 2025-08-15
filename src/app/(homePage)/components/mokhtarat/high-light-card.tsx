@@ -48,7 +48,7 @@ export default function HighLightCard({
       <h4 className="my-7 min-h-[80px] text-right font-tajawal text-xl font-[500] text-black">
         <span className="font-[600] text-[#B5975C]">
           {article.title_number}
-          {article.title_short} :
+          {article.title_short}:
         </span>{" "}
         {article.sub_title}
       </h4>

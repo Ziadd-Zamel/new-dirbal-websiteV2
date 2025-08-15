@@ -13,7 +13,7 @@ interface SearchModalProps {
 export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="h-[500px] max-w-4xl border-0 bg-[#161D27] p-0">
+      <DialogContent className="h-[500px] !max-w-4xl border-0 bg-[#161D27] p-0">
         <div className="relative h-[500px] w-full bg-[#161D27] bg-opacity-95">
           <div className="absolute inset-0 mt-0 h-full">
             <Image
@@ -33,13 +33,13 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
           </DialogClose>
 
           <div className="relative flex h-[500px] items-center justify-center px-6">
-            <div className="relative flex w-full max-w-2xl items-center">
+            <div className="relative flex w-full !max-w-4xl items-center">
               <div className="relative w-full">
                 <div className="absolute left-0 top-1/2 -translate-y-1/2 text-white">
                   <SearchIcon dark={false} width={30} height={30} />
                 </div>
                 <Input
-                  className="border-0 bg-transparent pb-5 pl-10 text-right !text-[50px] text-white placeholder:text-[50px] placeholder:text-[#FFFFFF4D] focus-visible:ring-0"
+                  className="border-0 bg-transparent  text-right !text-[30px] text-white placeholder:text-[30px] placeholder:font-tajawal placeholder:text-[#FFFFFF4D] focus-visible:ring-0"
                   dir="rtl"
                   placeholder="كلمة/كلمات البحث..."
                   autoFocus

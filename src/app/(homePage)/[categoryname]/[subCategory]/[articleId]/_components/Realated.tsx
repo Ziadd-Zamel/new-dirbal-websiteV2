@@ -113,7 +113,7 @@ const RelatedTopics = ({
         </div>
         <button
           onClick={handleSearch}
-          className="mr-1 h-[42px] bg-[#B5975C] px-4 text-white transition-colors hover:bg-[#9d7f45]"
+          className="mr-1 h-[42px] bg-[#B5975C] px-4 text-white font-tajawal transition-colors hover:bg-[#9d7f45]"
         >
           بحث
         </button>
@@ -168,11 +168,13 @@ const RelatedTopics = ({
                   {article.title_number} {article.title_short}: {article.title}
                 </p>
                 <div className="relative flex h-16 w-20 flex-shrink-0 flex-col items-center justify-center  text-xs text-white">
-                  <span className="relative z-50 text-sm font-bold">{day}</span>
-                  <span className="relative z-50">{month}</span>
+                  <span className="relative z-50 text-sm font-bold font-tajawal">
+                    {day}
+                  </span>
+                  <span className="relative z-50 font-tajawal">{month}</span>
                   <Image
                     className="absolute z-0"
-                    src={"/assets/test.png"}
+                    src={article.image_url || "/assets/test.png"}
                     alt="icon"
                     fill
                   />

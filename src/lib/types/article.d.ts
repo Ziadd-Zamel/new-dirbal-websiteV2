@@ -20,6 +20,7 @@ declare type Article = {
   image: string;
   image_url: string;
   video_url: string | null;
+  voice_url: string | null;
   written_by: string;
   sub_category_id: number;
   best: boolean;

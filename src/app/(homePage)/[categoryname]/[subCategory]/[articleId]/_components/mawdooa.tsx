@@ -1,7 +1,150 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
+import { Pause, Play } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+
+interface CustomAudioPlayerProps {
+  audioUrl: string;
+}
+
+const CustomAudioPlayer = ({ audioUrl }: CustomAudioPlayerProps) => {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    const updateTime = () => setCurrentTime(audio.currentTime);
+    const updateDuration = () => setDuration(audio.duration);
+    const handlePlay = () => setIsPlaying(true);
+    const handlePause = () => setIsPlaying(false);
+
+    audio.addEventListener("timeupdate", updateTime);
+    audio.addEventListener("loadedmetadata", updateDuration);
+    audio.addEventListener("play", handlePlay);
+    audio.addEventListener("pause", handlePause);
+
+    return () => {
+      audio.removeEventListener("timeupdate", updateTime);
+      audio.removeEventListener("loadedmetadata", updateDuration);
+      audio.removeEventListener("play", handlePlay);
+      audio.removeEventListener("pause", handlePause);
+    };
+  }, []);
+
+  const togglePlay = () => {
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play();
+      }
+    }
+  };
+
+  const handleProgressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const time = parseFloat(e.target.value);
+    if (audioRef.current) {
+      audioRef.current.currentTime = time;
+      setCurrentTime(time);
+    }
+  };
+
+  const formatTime = (time: number) => {
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+  };
+
+  const handleDownload = () => {
+    const link = document.createElement("a");
+    link.href = audioUrl;
+    link.download = "audio.mp3";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  return (
+    <div
+      className="w-full  flex items-center gap-3 bg-[#E9E9E9] h-12 pr-3"
+      style={{ direction: "rtl" }}
+    >
+      {/* Download Button */}
+      <button
+        onClick={handleDownload}
+        className="size-8 text-[#B5975C] hover:text-white transition-colors"
+        title="تحميل"
+      >
+        <svg className="w-full h-full" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+        </svg>
+      </button>
+
+      {/* Time Display - Total Duration */}
+      <span className="text-[#828282] text-sm font-tajawal min-w-[40px] mt-0.5 text-center">
+        {formatTime(duration)}
+      </span>
+
+      {/* Progress Bar */}
+      <div className="flex-1  -mt-1.5" style={{ direction: "ltr" }}>
+        <input
+          type="range"
+          min="0"
+          max={duration || 0}
+          value={currentTime}
+          onChange={handleProgressChange}
+          className="w-full h-1 bg-gray-600 rounded-lg appearance-none cursor-pointer slider"
+          style={{
+            background: `linear-gradient(to right, #B5975C 0%, #B5975C ${
+              (currentTime / (duration || 1)) * 100
+            }%, #828282 ${
+              (currentTime / (duration || 1)) * 100
+            }%, #828282 100%)`,
+            WebkitAppearance: "none",
+            appearance: "none",
+          }}
+        />
+        <style jsx>{`
+          input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 0;
+            height: 0;
+            background: transparent;
+            cursor: pointer;
+          }
+          input[type="range"]::-moz-range-thumb {
+            width: 0;
+            height: 0;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+          }
+        `}</style>
+      </div>
+
+      {/* Play Button */}
+      <button
+        onClick={togglePlay}
+        className="w-12 h-full bg-[#B5975C] flex items-center justify-center hover:bg-[#9d7f45] transition-colors"
+      >
+        {isPlaying ? (
+          <Pause strokeWidth={1} fill="white" className="text-white" />
+        ) : (
+          <Play fill="white" className="text-white" />
+        )}
+      </button>
+
+      {/* Hidden Audio Element */}
+      <audio ref={audioRef} src={audioUrl} />
+    </div>
+  );
+};
 
 interface MawdooaProps {
   articleById: Article;
@@ -144,7 +287,10 @@ const Mawdooa = ({ articleById, searchTerm }: MawdooaProps) => {
     }
   }, [searchTerm]);
   return (
-    <div className="w-full border-b pb-5 border-[#B5975C]" ref={contentRef}>
+    <div
+      className="w-full border-b pb-5 pl-2 border-[#B5975C]"
+      ref={contentRef}
+    >
       <div
         style={{ direction: "rtl" }}
         className="flex w-full items-center gap-5"
@@ -203,6 +349,12 @@ const Mawdooa = ({ articleById, searchTerm }: MawdooaProps) => {
         <h6 className="mt-5 text-center font-tajawal text-xl font-bold text-[#B5975C]">
           {articleById.title_description}
         </h6>
+        {articleById.voice_url && (
+          <div className="my-5 flex justify-center">
+            <CustomAudioPlayer audioUrl={articleById.voice_url} />
+          </div>
+        )}
+        <hr className="w-full border-t border-[#B5975C] opacity-70" />
 
         <div
           className="mt-5 text-justify font-tajawal text-sm text-gray-300"
@@ -215,6 +367,7 @@ const Mawdooa = ({ articleById, searchTerm }: MawdooaProps) => {
               : removeParagraphStylesOnly(articleById.description),
           }}
         />
+
         {sortedSubjects.length > 0 && (
           <>
             <hr className="my-6 w-full border-t border-[#B5975C] opacity-70" />

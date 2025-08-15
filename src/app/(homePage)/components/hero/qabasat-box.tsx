@@ -18,6 +18,7 @@ const stripHtml = (html: string) => {
 export default function QabasatBox({ Qabasat }: { Qabasat: Qabasat[] }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [fade, setFade] = useState(true);
+  const [isPaused, setIsPaused] = useState(false);
 
   // Group Qabasat by category
   const groupedQabasat = useMemo(() => {
@@ -66,7 +67,7 @@ export default function QabasatBox({ Qabasat }: { Qabasat: Qabasat[] }) {
   const currentQuote = flattenedQabasat[currentIndex];
 
   useEffect(() => {
-    if (!currentQuote) return;
+    if (!currentQuote || isPaused) return;
 
     const duration = (currentQuote.time || 5) * 1000;
 
@@ -80,7 +81,7 @@ export default function QabasatBox({ Qabasat }: { Qabasat: Qabasat[] }) {
       clearTimeout(fadeOut);
       clearTimeout(switchQuote);
     };
-  }, [currentIndex, currentQuote?.time, flattenedQabasat.length]);
+  }, [currentIndex, currentQuote?.time, flattenedQabasat.length, isPaused]);
 
   const hasImage = currentQuote?.image;
   const currentCategoryIndex = getCurrentCategoryIndex();
@@ -99,7 +100,11 @@ export default function QabasatBox({ Qabasat }: { Qabasat: Qabasat[] }) {
         />
 
         {/* Main content box with smooth height transitions */}
-        <div className="h-fit min-h-[200px] w-full rounded-[12px] border border-[#2E394780] bg-[#FFFFFF26] px-[10px] pb-[16px] pt-10 transition-all duration-1000 ease-in-out sm:px-[20px] md:w-[80%] lg:mt-16 lg:w-[51%] lg:px-[15px] xl:mt-28 xl:px-[45px] xl:py-[15px]">
+        <div
+          className="h-fit min-h-[200px] w-full rounded-[12px] border border-[#2E394780] bg-[#FFFFFF26] px-[10px] pb-[16px] pt-10 transition-all duration-1000 ease-in-out sm:px-[20px] md:w-[80%] lg:mt-16 lg:w-[51%] lg:px-[15px] xl:mt-28 xl:px-[45px] xl:py-[15px] cursor-pointer"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
           <div
             key={currentQuote.uuid}
             className={`transition-all duration-500 ease-in-out ${

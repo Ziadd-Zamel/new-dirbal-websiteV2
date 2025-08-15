@@ -86,7 +86,7 @@ export default function Third() {
           <button
             type="submit"
             disabled={isLoading}
-            className="mt-7 font-tajawal flex w-fit items-center gap-5 justify-self-end rounded-[2px] bg-[#B5975C] px-2 pb-1 text-lg text-white disabled:opacity-50 hover:bg-[#A08650] transition-colors"
+            className="mt-[34px] font-tajawal flex w-fit items-center gap-5 justify-self-end rounded-[2px] bg-[#B5975C] px-2 pb-1 text-lg text-white disabled:opacity-50 hover:bg-[#A08650] transition-colors"
           >
             {isLoading ? "جاري الإرسال..." : "إرسال"}
             <span className="mt-1">

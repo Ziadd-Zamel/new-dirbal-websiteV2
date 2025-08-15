@@ -15,21 +15,21 @@ export default function Footer() {
       </div>
 
       <div
-        className="mt-8 bg-[#070D17] pb-6 pt-16 text-center text-[18px] text-white xl:-mr-24"
+        className="mt-20 bg-[#070D17] pb-6 pt-16 text-center text-[18px] text-white"
         dir="rtl"
       >
-        <p className="font-tajawal text-sm">
+        <p className="font-tajawal text-xs">
           {" "}
           © دربال، جميع الحقوق محفوظة ضد الاستعمال التجاري، 2025
         </p>{" "}
       </div>
-      <div className="absolute bottom-[12%] left-[0%] xl:bottom-[200px] xl:left-10">
+      <div className="absolute bottom-[12%] left-[0%] xl:bottom-[140px] xl:left-7">
         <Image
           src="/assets/none.png"
           alt="logo"
           width={370}
           height={300}
-          className="w-[70%] lg:h-[200px] lg:w-[200px] xl:h-[300px] xl:w-[370px] lg:block hidden"
+          className="w-[70%] lg:h-[200px] lg:w-[200px] xl:h-[400px] xl:w-[340px] lg:block hidden"
         />{" "}
       </div>
     </footer>

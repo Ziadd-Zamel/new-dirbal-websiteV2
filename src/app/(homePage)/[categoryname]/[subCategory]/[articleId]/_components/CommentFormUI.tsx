@@ -9,7 +9,7 @@ const CommentForm = () => {
   return (
     <div
       style={{ direction: "rtl" }}
-      className="mb-10 mt-12 w-full rounded-lg text-right text-white"
+      className="mb-10 mt-24 w-full rounded-lg text-right text-white"
     >
       <h2 className="flex items-center gap-2 text-md font-semibold font-tajawal">
         <FaRegComment className="text-[#D9A760]" /> أضف تعليقاً

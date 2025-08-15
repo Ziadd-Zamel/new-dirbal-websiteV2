@@ -102,7 +102,7 @@ export default function Seconde() {
             </button>
           </div>
         </form>
-        <div className="flex w-full justify-start mt-[30px]">
+        <div className="flex w-full justify-start mt-[35px]">
           <Image
             src="/assets/QRCode.png"
             alt="logo"
