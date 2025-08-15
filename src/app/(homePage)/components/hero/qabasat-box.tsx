@@ -186,13 +186,16 @@ export default function QabasatBox({ Qabasat }: { Qabasat: Qabasat[] }) {
               }`}
             >
               {/* DESCRIPTION */}
-              <p className="text-justify font-tajawal text-[18px] font-[400] leading-8 text-gray-200 sm:text-[18px] sm:leading-[25px] lg:text-[16px] xl:text-[18px] transition-all duration-1000 ease-in-out">
+              <p
+                style={{ direction: "rtl" }}
+                className="text-justify font-tajawal text-[18px] font-[400] leading-8 text-gray-200 sm:text-[18px] sm:leading-[25px] lg:text-[16px] xl:text-[18px] transition-all duration-1000 ease-in-out"
+              >
                 {stripHtml(currentQuote.description)}
               </p>
 
               {/* SOURCE */}
             </div>
-            <p className="text-left font-tajawal self-end justify-self-end text-base text-white lg:mt-[6px] xl:mt-4 transition-all duration-500">
+            <p className="text-left font-tajawal self-end justify-self-start text-base text-white lg:mt-[6px] xl:mt-4 transition-all duration-500">
               {currentQuote.source}
             </p>
           </div>
