@@ -419,6 +419,20 @@ const Mawdooa = ({ articleById, searchTerm }: MawdooaProps) => {
           </div>
         </div>
       )}
+      {articleById.tags && (
+        <div className="flex justify-start items-center gap-3 border-[#B5975C] border-t pt-5">
+          {articleById.tags.map((tag, index) => {
+            return (
+              <p
+                key={index}
+                className="bg-white text-black font-tajawal py-.5 px-4 text-lg border border-gray-300 hover:bg-[#B5975C] hover:border-[#B5975C] hover:text-white transition-all duration-300"
+              >
+                {tag}
+              </p>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 };
