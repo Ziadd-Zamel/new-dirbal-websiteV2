@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -134,13 +135,14 @@ const RelatedTopics = ({
         <div className="overflow-hidden bg-white text-black">
           {relatedTopics && relatedTopics.length > 0 ? (
             relatedTopics.map((article) => (
-              <p
+              <Link
+                href={`/${article.sub_category.category.uuid}/${article.sub_category.uuid}/${article.id}`}
                 key={article.id}
                 onClick={() => handleArticleClick(article.uuid)}
                 className="cursor-pointer border-b border-gray-200 px-4 py-3.5 font-tajawal text-sm transition-colors last:border-none hover:bg-gray-50"
               >
                 {article.title_number} {article.title_short}: {article.title}
-              </p>
+              </Link>
             ))
           ) : (
             <div className="px-4 py-8 text-center">
@@ -177,7 +179,8 @@ const RelatedTopics = ({
           {latestTopics.map((article) => {
             const { day, month } = formatDateForDisplay(article.published_at);
             return (
-              <div
+              <Link
+                href={`/${article.sub_category.category.name}/${article.sub_category.uuid}/${article.uuid}`}
                 key={article.id}
                 onClick={() => handleArticleClick(article.uuid)}
                 className="flex cursor-pointer flex-row-reverse items-center justify-between gap-2 border-b border-gray-200 py-2 pl-4 pr-1 transition-colors duration-200 last:border-none hover:bg-gray-50"
@@ -208,7 +211,7 @@ const RelatedTopics = ({
                   />
                   <div className="absolute inset-0 bg-black/20"></div>
                 </div>
-              </div>
+              </Link>
             );
           })}
         </div>

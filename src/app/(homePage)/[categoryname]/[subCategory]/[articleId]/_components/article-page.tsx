@@ -95,7 +95,7 @@ const ArticlePage = ({
         articleById.description?.replace(/<[^>]*>/g, "").split(" ").length || 0,
     };
   };
-
+  console.log(articleById);
   return (
     <>
       {/* Dynamic Meta Tags */}
