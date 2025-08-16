@@ -54,3 +54,8 @@ declare type QabasatResponse = {
   message: string;
   data: Qabasat[];
 };
+
+declare type Message = {
+  email: string;
+  message: string;
+};

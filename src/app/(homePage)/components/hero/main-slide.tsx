@@ -1,6 +1,12 @@
 import QabasatBox from "./qabasat-box";
 
-export default function MainSlide({ Qabasat }: { Qabasat: Qabasat[] }) {
+export default function MainSlide({
+  Qabasat,
+  backgroundHomeImage,
+}: {
+  Qabasat: Qabasat[];
+  backgroundHomeImage: string;
+}) {
   return (
     <div
       className={`absolute inset-0 z-10 h-full flex-[0_0_100%] opacity-100 transition-opacity duration-1000 ease-in-out`}
@@ -8,7 +14,7 @@ export default function MainSlide({ Qabasat }: { Qabasat: Qabasat[] }) {
       <div
         className={`absolute inset-0 h-full w-full animate-zoom`}
         style={{
-          backgroundImage: `url('/assets/bg-1.jpg')`,
+          backgroundImage: `url(${backgroundHomeImage})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}

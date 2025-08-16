@@ -122,3 +122,27 @@ export const getArticlesBySubSubCategory = async (
     throw error;
   }
 };
+
+export const getArticlesByTag = async (tag: string) => {
+  const url = `${process.env.API}/articles/by-tag/${tag}`;
+
+  try {
+    const response = await fetch(url, {
+      cache: "no-store",
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const payload: ArticlesResponse = await response.json();
+
+    if (!("data" in payload)) {
+      throw new Error(payload || "Unknown error occurred");
+    }
+
+    return payload;
+  } catch (error) {
+    console.error("Error fetching articles by tag:", error);
+    throw error;
+  }
+};

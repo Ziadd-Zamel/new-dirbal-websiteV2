@@ -3,6 +3,7 @@
 import LeftArrowIcon from "@/components/Icons/LeftArrowIcon";
 import { MdEmail } from "react-icons/md";
 import { useState } from "react";
+import { sendContact } from "@/lib/actions/sendContact";
 import {
   Dialog,
   DialogContent,
@@ -29,23 +30,19 @@ export default function Third() {
     setIsLoading(true);
 
     try {
-      // Fake endpoint - replace with your actual endpoint
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, message }),
-      });
+      // Use the contact server action
+      const result = await sendContact(email, message);
 
-      setShowSuccessDialog(true);
-      if (response.ok) {
+      if (result.success) {
         setShowSuccessDialog(true);
         setEmail("");
         setMessage("");
+      } else {
+        setShowErrorDialog(true);
       }
     } catch (error) {
       console.error("Message send failed:", error);
+      setShowErrorDialog(true);
     } finally {
       setIsLoading(false);
     }

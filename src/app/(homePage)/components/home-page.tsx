@@ -4,6 +4,10 @@ import { getAllQabasat } from "@/lib/api/qabasat.api";
 import HeroSection from "./hero/hero-section";
 import Mokhtarat from "./mokhtarat/mokhtarat";
 import RecentTopics from "./recent-topic/resnet-topics";
+import {
+  getBackgroundHomeImage,
+  getFavouriteArticleImage,
+} from "@/lib/api/settings.api";
 
 export default async function HoomPage() {
   const bgUrl = `/assets/mainbg-1.png`;
@@ -11,16 +15,23 @@ export default async function HoomPage() {
   const Categories = await getAllCategories();
   const Articles = await getAllArticles();
   const Qabasat = await getAllQabasat();
+  const backgroundHomeImage = await getBackgroundHomeImage();
+  const favouriteArticleImage = await getFavouriteArticleImage();
+
   return (
     <div className="relative flex min-h-screen flex-col overflow-hidden">
       <div className="relative z-50 flex-grow">
-        <HeroSection Qabasat={Qabasat.data} categories={Categories.data} />
+        <HeroSection
+          backgroundHomeImage={backgroundHomeImage}
+          Qabasat={Qabasat.data}
+          categories={Categories.data}
+        />
         <Mokhtarat />
         <div className="relative">
           <div
             className={`absolute inset-0 h-full w-full`}
             style={{
-              backgroundImage: `url('/assets/bg-1.jpg')`,
+              backgroundImage: `url(${favouriteArticleImage})`,
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}

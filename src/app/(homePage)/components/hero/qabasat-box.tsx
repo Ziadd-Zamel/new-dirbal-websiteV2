@@ -101,7 +101,7 @@ export default function QabasatBox({ Qabasat }: { Qabasat: Qabasat[] }) {
 
         {/* Main content box with smooth height transitions */}
         <div
-          className="h-fit min-h-[200px] w-full rounded-[12px] border border-[#2E394780] bg-[#FFFFFF26] px-[10px] pb-[16px] pt-10 transition-all duration-1000 ease-in-out sm:px-[20px] md:w-[80%] lg:mt-16 lg:w-[51%] lg:px-[15px] xl:mt-28 xl:px-[45px] xl:py-[15px] cursor-pointer"
+          className="h-fit min-h-[200px] hover:border-1 hover:border-[#B5975C] w-full rounded-[12px] border border-[#2E394780] bg-[#FFFFFF26] px-[10px] pb-[16px] pt-10 transition-all duration-1000 ease-in-out sm:px-[20px] md:w-[80%] lg:mt-16 lg:w-[51%] lg:px-[15px] xl:mt-28 xl:px-[45px] xl:py-[15px] cursor-pointer"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >

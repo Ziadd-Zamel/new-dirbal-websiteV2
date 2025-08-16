@@ -6,20 +6,22 @@ import { useState } from "react";
 interface RelatedTopicsProps {
   articlesByCategory: Article[];
   onSearch?: (searchTerm: string) => void;
+  articlesByTag: Article[];
 }
 
 const RelatedTopics = ({
   articlesByCategory,
   onSearch,
+  articlesByTag,
 }: RelatedTopicsProps) => {
   const router = useRouter();
   const pathname = usePathname();
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Get related topics (excluding current article if needed)
-  const relatedTopics = articlesByCategory.slice(0, 5);
+  // Get related topics from tag-based articles only
+  const relatedTopics = articlesByTag || [];
 
-  // Get latest topics with dates
+  // Get latest topics with dates from category-based articles
   const latestTopics = articlesByCategory
     .sort(
       (a, b) =>
@@ -130,15 +132,41 @@ const RelatedTopics = ({
       <div className="mb-6 mt-32">
         <h2 className="mb-2 font-tajawal text-lg">موضوعات ذات صلة:</h2>
         <div className="overflow-hidden bg-white text-black">
-          {relatedTopics.map((article) => (
-            <p
-              key={article.id}
-              onClick={() => handleArticleClick(article.uuid)}
-              className="cursor-pointer border-b border-gray-200 px-4 py-3.5 font-tajawal text-sm transition-colors last:border-none hover:bg-gray-50"
-            >
-              {article.title_number} {article.title_short}: {article.title}
-            </p>
-          ))}
+          {relatedTopics && relatedTopics.length > 0 ? (
+            relatedTopics.map((article) => (
+              <p
+                key={article.id}
+                onClick={() => handleArticleClick(article.uuid)}
+                className="cursor-pointer border-b border-gray-200 px-4 py-3.5 font-tajawal text-sm transition-colors last:border-none hover:bg-gray-50"
+              >
+                {article.title_number} {article.title_short}: {article.title}
+              </p>
+            ))
+          ) : (
+            <div className="px-4 py-8 text-center">
+              <div className="text-gray-400 mb-2">
+                <svg
+                  className="mx-auto h-12 w-12"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                  />
+                </svg>
+              </div>
+              <p className="text-gray-500 font-tajawal text-sm">
+                لا توجد موضوعات ذات صلة متاحة حالياً
+              </p>
+              <p className="text-gray-400 font-tajawal text-xs mt-1">
+                سيتم إضافة المزيد من الموضوعات قريباً
+              </p>
+            </div>
+          )}
         </div>
       </div>
 
@@ -174,11 +202,11 @@ const RelatedTopics = ({
                   <span className="relative z-50 font-tajawal">{month}</span>
                   <Image
                     className="absolute z-0"
-                    src={article.image_url || "/assets/test.png"}
+                    src={"/assets/test.jpg"}
                     alt="icon"
                     fill
                   />
-                  <div className="absolute inset-0 bg-[rgba(37,37,37,0.8)]"></div>
+                  <div className="absolute inset-0 bg-black/20"></div>
                 </div>
               </div>
             );

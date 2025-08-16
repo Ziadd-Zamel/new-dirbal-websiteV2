@@ -29,7 +29,7 @@ export default function Seconde() {
 
     try {
       // Fake endpoint - replace with your actual endpoint
-      const response = await fetch("/api/newsletter/subscribe", {
+      const response = await fetch("/api//subscribe", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

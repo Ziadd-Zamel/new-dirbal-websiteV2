@@ -4,14 +4,9 @@ import CommnetIcon from "@/components/Icons/CommnetIcon";
 import ShareIcon from "@/components/Icons/ShareIcon";
 import Image from "next/image";
 import { useState } from "react";
-import {
-  FaFacebook,
-  FaFacebookMessenger,
-  FaWhatsapp,
-  FaTwitter,
-  FaCopy,
-  FaTelegram,
-} from "react-icons/fa";
+import { FaFacebookF, FaWhatsapp } from "react-icons/fa";
+import { SiMessenger } from "react-icons/si";
+import { BsTwitterX } from "react-icons/bs";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface SidebarProps {
@@ -192,19 +187,21 @@ const Sidebar = ({ articleById }: SidebarProps) => {
 
   // Download PDF functionality
   const handleDownloadPDF = () => {
-    // This would typically generate a PDF of the article
-    // For now, we'll simulate the download process
-    const link = document.createElement("a");
-    link.href = "#"; // In a real app, this would be the PDF generation endpoint
-    link.download = `${articleById?.title || "article"}.pdf`;
+    if (articleById?.document_url) {
+      // Download the document from the URL
+      const link = document.createElement("a");
+      link.href = articleById.document_url;
+      link.download = `${articleById?.title || "document"}.pdf`;
+      link.target = "_blank";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
 
-    // Show loading state or generate PDF here
-    showNotification("سيتم تحضير ملف PDF وتحميله قريباً...");
-
-    // In a real implementation, you might:
-    // 1. Call an API to generate PDF
-    // 2. Use a library like jsPDF or Puppeteer
-    // 3. Download from a pre-generated PDF URL
+      showNotification("جاري تحميل المستند...");
+    } else {
+      // Fallback for when no document URL is available
+      showNotification("لا يوجد مستند متاح للتحميل");
+    }
   };
 
   // Scroll to comments section
@@ -230,10 +227,10 @@ const Sidebar = ({ articleById }: SidebarProps) => {
 
   return (
     <div className="w-full mt-2">
-      <div className="flex w-16 flex-col items-center justify-center border border-gray-500 text-white bg-gray-900">
+      <div className="flex w-[78px] flex-col items-center justify-center border border-gray-500 text-white bg-gray-900">
         {/* Add to Favorites */}
         <div
-          className="flex h-16 w-full cursor-pointer items-center justify-center border-b border-gray-500 text-center text-sm transition-colors hover:bg-gray-800"
+          className="flex h-[78px] w-full cursor-pointer items-center justify-center border-b border-gray-500 text-center text-sm transition-colors hover:bg-gray-800"
           title="إضافة إلى المفضلة"
         >
           {articleById && <BookmarkButton article={articleById} />}
@@ -241,7 +238,7 @@ const Sidebar = ({ articleById }: SidebarProps) => {
 
         {/* Share Icon with Dropdown */}
         <div
-          className="relative flex h-16 w-full cursor-pointer items-center justify-center border-b border-gray-500 transition-colors hover:bg-gray-800"
+          className="relative flex h-[78px]  w-full cursor-pointer items-center justify-center border-b border-gray-500 transition-colors hover:bg-gray-800"
           onMouseEnter={() => setShowShareDropdown(true)}
           onMouseLeave={() => setShowShareDropdown(false)}
           title="مشاركة المقال"
@@ -252,85 +249,58 @@ const Sidebar = ({ articleById }: SidebarProps) => {
           <AnimatePresence>
             {showShareDropdown && (
               <motion.div
-                className="absolute right-full top-0 mr-2 flex flex-col bg-gray-800 shadow-2xl rounded-lg overflow-hidden border border-gray-600 min-w-48"
-                initial={{ opacity: 0, scale: 0.8, x: 20 }}
-                animate={{ opacity: 1, scale: 1, x: 0 }}
-                exit={{ opacity: 0, scale: 0.8, x: 20 }}
-                transition={{ duration: 0.2, ease: "easeOut" }}
+                className="absolute right-full h-[80px] -top-[2px] flex flex-row bg-gray-800 shadow-2xl overflow-hidden border border-gray-600 z-[-1]"
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 50 }}
+                transition={{ duration: 0.1, ease: "easeOut" }}
               >
                 {/* Facebook */}
                 <div
-                  className="flex h-12 cursor-pointer items-center justify-start px-4 border-b border-gray-600 transition-colors hover:bg-gray-700 group"
+                  className="flex w-[78px] cursor-pointer items-center justify-center border border-gray-500 transition-colors hover:bg-gray-700 group"
                   onClick={() => handleShare("facebook")}
                   title="مشاركة على فيسبوك"
                 >
-                  <FaFacebook size={18} className="text-blue-500 ml-3" />
-                  <span className="text-white text-sm group-hover:text-blue-400">
-                    فيسبوك
-                  </span>
+                  <FaFacebookF
+                    size={20}
+                    className="text-white group-hover:text-[#B5975C] transition-colors"
+                  />
                 </div>
 
                 {/* Messenger */}
                 <div
-                  className="flex h-12 cursor-pointer items-center justify-start px-4 border-b border-gray-600 transition-colors hover:bg-gray-700 group"
+                  className="flex w-[78px] cursor-pointer items-center justify-center border border-gray-500 transition-colors hover:bg-gray-700 group"
                   onClick={() => handleShare("messenger")}
                   title="مشاركة على ماسنجر"
                 >
-                  <FaFacebookMessenger
-                    size={18}
-                    className="text-blue-400 ml-3"
+                  <SiMessenger
+                    size={20}
+                    className="text-white group-hover:text-[#B5975C] transition-colors"
                   />
-                  <span className="text-white text-sm group-hover:text-blue-400">
-                    ماسنجر
-                  </span>
-                </div>
-
-                {/* WhatsApp */}
-                <div
-                  className="flex h-12 cursor-pointer items-center justify-start px-4 border-b border-gray-600 transition-colors hover:bg-gray-700 group"
-                  onClick={() => handleShare("whatsapp")}
-                  title="مشاركة على واتساب"
-                >
-                  <FaWhatsapp size={18} className="text-green-500 ml-3" />
-                  <span className="text-white text-sm group-hover:text-green-400">
-                    واتساب
-                  </span>
                 </div>
 
                 {/* Twitter */}
                 <div
-                  className="flex h-12 cursor-pointer items-center justify-start px-4 border-b border-gray-600 transition-colors hover:bg-gray-700 group"
+                  className="flex w-[78px] cursor-pointer items-center justify-center border border-gray-500 transition-colors hover:bg-gray-700 group"
                   onClick={() => handleShare("twitter")}
                   title="مشاركة على تويتر"
                 >
-                  <FaTwitter size={18} className="text-blue-400 ml-3" />
-                  <span className="text-white text-sm group-hover:text-blue-400">
-                    تويتر
-                  </span>
+                  <BsTwitterX
+                    size={20}
+                    className="text-white group-hover:text-[#B5975C] transition-colors"
+                  />
                 </div>
 
-                {/* Telegram */}
+                {/* WhatsApp */}
                 <div
-                  className="flex h-12 cursor-pointer items-center justify-start px-4 border-b border-gray-600 transition-colors hover:bg-gray-700 group"
-                  onClick={() => handleShare("telegram")}
-                  title="مشاركة على تيليجرام"
+                  className="flex w-[78px] cursor-pointer items-center justify-center border border-gray-500 transition-colors hover:bg-gray-700 group"
+                  onClick={() => handleShare("whatsapp")}
+                  title="مشاركة على واتساب"
                 >
-                  <FaTelegram size={18} className="text-blue-500 ml-3" />
-                  <span className="text-white text-sm group-hover:text-blue-400">
-                    تيليجرام
-                  </span>
-                </div>
-
-                {/* Copy Link */}
-                <div
-                  className="flex h-12 cursor-pointer items-center justify-start px-4 transition-colors hover:bg-gray-700 group"
-                  onClick={() => handleShare("copy")}
-                  title="نسخ الرابط"
-                >
-                  <FaCopy size={18} className="text-yellow-400 ml-3" />
-                  <span className="text-white text-sm group-hover:text-yellow-400">
-                    نسخ الرابط
-                  </span>
+                  <FaWhatsapp
+                    size={20}
+                    className="text-white group-hover:text-[#B5975C] transition-colors"
+                  />
                 </div>
               </motion.div>
             )}
@@ -339,7 +309,7 @@ const Sidebar = ({ articleById }: SidebarProps) => {
 
         {/* PDF Download */}
         <div
-          className="flex h-16 w-full cursor-pointer items-center justify-center border-b border-gray-500 transition-colors hover:bg-gray-800"
+          className="flex h-[78px] w-full cursor-pointer items-center justify-center border-b border-gray-500 transition-colors hover:bg-gray-800"
           onClick={handleDownloadPDF}
           title="تحميل PDF"
         >
@@ -354,7 +324,7 @@ const Sidebar = ({ articleById }: SidebarProps) => {
 
         {/* Comment Icon - Scroll to Comments */}
         <div
-          className="flex h-16 w-full cursor-pointer items-center justify-center transition-colors hover:bg-gray-800"
+          className="flex h-[78px] w-full cursor-pointer items-center justify-center transition-colors hover:bg-gray-800"
           onClick={handleScrollToComments}
           title="الانتقال إلى التعليقات"
         >

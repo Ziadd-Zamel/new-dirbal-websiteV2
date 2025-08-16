@@ -38,7 +38,7 @@ export default function First() {
         </span>
       </p>
       <Link
-        href={"#"}
+        href={"/resume"}
         style={{ direction: "rtl" }}
         className="flex w-fit items-center  gap-2 self-end justify-self-end rounded-[2px] bg-[#B5975C] px-2 pb-1 font-tajawal text-lg text-white hover:bg-[#C18F59]"
       >

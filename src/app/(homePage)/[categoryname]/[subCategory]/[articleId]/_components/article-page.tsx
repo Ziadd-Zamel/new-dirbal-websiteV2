@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Head from "next/head";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import RelatedTopics from "./Realated";
 import Mawdooa from "./mawdooa";
 import CommentForm from "./CommentFormUI";
@@ -12,9 +12,11 @@ import MawdooaHeading from "./mawdooa-heading";
 const ArticlePage = ({
   articlesByCategory,
   articleById,
+  articlesByTag,
 }: {
   articleById: Article;
   articlesByCategory: Article[];
+  articlesByTag: Article[];
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -93,8 +95,6 @@ const ArticlePage = ({
         articleById.description?.replace(/<[^>]*>/g, "").split(" ").length || 0,
     };
   };
-
-  console.log(articleById);
 
   return (
     <>
@@ -190,7 +190,9 @@ const ArticlePage = ({
       <div className="relative min-h-screen">
         {/* Page Heading with Background */}
         <MawdooaHeading
-          bgImageSrc="/assets/mawdoo3at.png"
+          bgImageSrc={
+            articleById.sub_category.image_url || "/assets/mawdoo3at.png"
+          }
           title={articleById.title}
           articleById={articleById}
         />
@@ -229,6 +231,7 @@ const ArticlePage = ({
             <div className="hidden w-[30%] md:block">
               <RelatedTopics
                 articlesByCategory={articlesByCategory}
+                articlesByTag={articlesByTag}
                 onSearch={handleSearch}
               />
             </div>

@@ -32,8 +32,8 @@ export default function ArchiveButton() {
     >
       <TabIcon dark={false} />
       {bookmarkCount > 0 && (
-        <span className="absolute -top-1 left-1 rounded-full bg-red-600 px-1.5 py-0.5 text-[10px] font-bold text-white leading-none">
-          {bookmarkCount}
+        <span className="absolute -top-1 left-2 rounded-full bg-red-600 w-3 h-3 flex items-center justify-center text-[8px] font-bold text-white leading-none">
+          <p className="mt-[-1px]"> {bookmarkCount}</p>
         </span>
       )}
     </button>

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Tajawal } from "next/font/google";
 import "./globals.css";
 import Providers from "@/components/providers";
+import Script from "next/script";
 
 const tajawal = Tajawal({
   subsets: ["arabic", "latin"],
@@ -21,6 +22,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ar" dir="rtl">
+      <head>
+        <Script
+          src={`https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
+          strategy="afterInteractive"
+        />
+      </head>
       <body className={`${tajawal.variable} font-sans antialiased`}>
         <Providers>{children}</Providers>
       </body>

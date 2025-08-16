@@ -29,6 +29,7 @@ declare type Article = {
     id: number;
     name: string;
     uuid: string;
+    image_url: string;
     category: Category;
     icon_url: string;
   };
@@ -36,5 +37,7 @@ declare type Article = {
   status: boolean;
   created_at: string;
   updated_at: string;
+  tags: string[];
+  document_url: string;
   video_url: string | null;
 };

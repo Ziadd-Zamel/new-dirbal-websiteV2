@@ -10,8 +10,13 @@ import DynamicSlide from "./dynamic-slide";
 interface Props {
   categories: Category[];
   Qabasat: Qabasat[];
+  backgroundHomeImage: string;
 }
-export default function HeroSection({ Qabasat, categories }: Props) {
+export default function HeroSection({
+  Qabasat,
+  categories,
+  backgroundHomeImage,
+}: Props) {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const totalSlides = 1 + (categories?.length || 0);
   const [emblaRef, emblaApi] = useEmblaCarousel({
@@ -59,7 +64,10 @@ export default function HeroSection({ Qabasat, categories }: Props) {
           {/* First slide - always present */}
           <div className="relative min-w-full flex-none overflow-hidden">
             <div className="h-full w-full">
-              <MainSlide Qabasat={Qabasat} />
+              <MainSlide
+                backgroundHomeImage={backgroundHomeImage}
+                Qabasat={Qabasat}
+              />
             </div>
           </div>
 
