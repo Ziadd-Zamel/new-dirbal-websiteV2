@@ -89,18 +89,6 @@ export default function SearchResults({
             searchResults.data.articles &&
             searchResults.data.articles.length > 0 ? (
             <>
-              {/* Results Count */}
-              <div className="mb-6 text-center text-white font-tajawal text-sm">
-                تم العثور على {searchResults.data.articles.length} نتيجة
-                {searchResults.data.pagination &&
-                  searchResults.data.pagination.total > 15 && (
-                    <span>
-                      {" "}
-                      من أصل {searchResults.data.pagination.total} نتيجة
-                    </span>
-                  )}
-              </div>
-
               {/* Articles List */}
               <div className="space-y-0">
                 {searchResults.data.articles.map((article) => (
