@@ -1,9 +1,12 @@
+"use client";
 import SearchIcon from "@/components/Icons/SearchIcon";
 import { Dialog, DialogClose, DialogContent } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { motion } from "framer-motion";
 import { X } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 interface SearchModalProps {
   isOpen: boolean;
@@ -11,6 +14,17 @@ interface SearchModalProps {
 }
 
 export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
+  const router = useRouter();
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+      onClose();
+    }
+  };
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="h-[500px] !max-w-4xl border-0 bg-[#161D27] p-0">
@@ -33,7 +47,10 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
           </DialogClose>
 
           <div className="relative flex h-[500px] items-center justify-center px-6">
-            <div className="relative flex w-full !max-w-4xl items-center">
+            <form
+              onSubmit={handleSearch}
+              className="relative flex w-full !max-w-4xl items-center"
+            >
               <div className="relative w-full">
                 <div className="absolute left-0 top-1/2 -translate-y-1/2 text-white">
                   <SearchIcon dark={false} width={30} height={30} />
@@ -43,6 +60,8 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                   dir="rtl"
                   placeholder="كلمة/كلمات البحث..."
                   autoFocus
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
                   style={{ direction: "rtl" }}
                 />
                 <motion.div
@@ -56,7 +75,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                   layoutId="searchUnderline"
                 />
               </div>
-            </div>
+            </form>
           </div>
         </div>
       </DialogContent>

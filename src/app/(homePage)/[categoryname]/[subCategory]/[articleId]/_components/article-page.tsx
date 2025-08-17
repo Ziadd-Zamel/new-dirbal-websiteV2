@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import Head from "next/head";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import RelatedTopics from "./Realated";
 import Mawdooa from "./mawdooa";
 import CommentForm from "./CommentFormUI";
@@ -19,6 +20,15 @@ const ArticlePage = ({
   articlesByTag: Article[];
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
+  const searchParams = useSearchParams();
+
+  // Read search parameter from URL when component mounts
+  useEffect(() => {
+    const searchQuery = searchParams.get("search");
+    if (searchQuery) {
+      setSearchTerm(searchQuery);
+    }
+  }, [searchParams]);
 
   const handleSearch = (term: string) => {
     setSearchTerm(term);

@@ -11,6 +11,7 @@ interface ArticleCardProps {
   article: Article;
   className?: string;
   onDelete?: (articleUuid: string) => void;
+  searchTerm?: string;
 }
 
 function stripHtmlTags(html: string): string {
@@ -18,6 +19,20 @@ function stripHtmlTags(html: string): string {
   const div = document.createElement("div");
   div.innerHTML = html;
   return div.textContent || div.innerText || "";
+}
+
+// Function to highlight search terms
+function highlightText(text: string, searchTerm: string) {
+  if (!searchTerm || !text) return text;
+
+  const regex = new RegExp(
+    `(${searchTerm.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`,
+    "gi"
+  );
+  return text.replace(
+    regex,
+    '<mark class="search-highlight bg-yellow-300 text-black px-1 rounded">$1</mark>'
+  );
 }
 
 function getYouTubeVideoId(url: string): string | null {
@@ -33,6 +48,7 @@ const ArticleCard = ({
   article,
   className = "",
   onDelete,
+  searchTerm,
 }: ArticleCardProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -162,9 +178,10 @@ const ArticleCard = ({
       <div
         style={{ direction: "rtl" }}
         className="mt-5 text-justify font-tajawal text-gray-300 lg:text-base"
-      >
-        {plainText}
-      </div>
+        dangerouslySetInnerHTML={{
+          __html: searchTerm ? highlightText(plainText, searchTerm) : plainText,
+        }}
+      />
     );
   };
 
@@ -180,9 +197,14 @@ const ArticleCard = ({
           <span className="font-tajawal text-[12px] text-[#FAE1C6] sm:text-[16px] md:text-[16px] xl:text-[22px]">
             {article.title_number} {article.title_short}:
           </span>
-          <span className="font-tajawal text-[12px] text-white sm:text-[16px] md:text-[16px] xl:text-[22px]">
-            {article.title}
-          </span>
+          <span
+            className="font-tajawal text-[12px] text-white sm:text-[16px] md:text-[16px] xl:text-[22px]"
+            dangerouslySetInnerHTML={{
+              __html: searchTerm
+                ? highlightText(article.title, searchTerm)
+                : article.title,
+            }}
+          />
         </div>
         {hasImage && !onDelete && (
           <Image
@@ -287,7 +309,11 @@ const ArticleCard = ({
 
             <div className="mt-5 flex w-full items-end justify-start">
               <Link
-                href={`${pathname}/${article.uuid}`}
+                href={`${article.sub_category.category.uuid}/${
+                  article.sub_category.uuid
+                }/${article.uuid}${
+                  searchTerm ? `?search=${encodeURIComponent(searchTerm)}` : ""
+                }`}
                 className="flex w-fit items-center gap-2 self-end rounded-[2px] bg-[#B5975C] px-2 pb-1 font-tajawal text-lg text-white hover:bg-[#C18F59]"
               >
                 المزيد
@@ -304,6 +330,32 @@ const ArticleCard = ({
       <div className="mb-3 mt-3">
         <hr className="w-full border-t border-[#B5975C] opacity-70" />
       </div>
+
+      {/* Global styles for search highlighting with animation */}
+      <style>{`
+        .search-highlight {
+          background-color: #fef08a !important;
+          color: #000 !important;
+          font-weight: bold !important;
+          padding: 2px !important;
+          border-radius: 2px !important;
+          box-shadow: 0 0 0 1px #eab308;
+        }
+
+        .search-highlight:first-of-type {
+          animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+          0%,
+          100% {
+            opacity: 1;
+          }
+          50% {
+            opacity: 0.7;
+          }
+        }
+      `}</style>
     </div>
   );
 };

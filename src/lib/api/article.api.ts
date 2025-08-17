@@ -146,3 +146,33 @@ export const getArticlesByTag = async (tag: string) => {
     throw error;
   }
 };
+
+export const searchArticles = async (
+  query: string,
+  page: number = 1,
+  perPage: number = 15
+) => {
+  const url = `${process.env.API}/articles/search?q=${encodeURIComponent(
+    query
+  )}&page=${page}&per_page=${perPage}`;
+
+  try {
+    const response = await fetch(url, {
+      cache: "no-store",
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const payload = await response.json();
+
+    if (!("data" in payload)) {
+      throw new Error(payload.message || "Unknown error occurred");
+    }
+
+    return payload;
+  } catch (error) {
+    console.error("Error searching articles:", error);
+    throw error;
+  }
+};
