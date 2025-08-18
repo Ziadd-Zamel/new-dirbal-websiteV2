@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Tajawal } from "next/font/google";
 import "./globals.css";
 import Providers from "@/components/providers";
+import AccessibilityWrapper from "@/components/accessibility-wrapper";
+import ScrollToTopButton from "@/components/scroll-to-top-button";
 import Script from "next/script";
 
 const tajawal = Tajawal({
@@ -29,7 +31,13 @@ export default function RootLayout({
         />
       </head>
       <body className={`${tajawal.variable} font-sans antialiased`}>
-        <Providers>{children}</Providers>
+        <Providers>
+          {children}
+          {/* Accessibility Button - Left side, resets on every page navigation */}
+          <AccessibilityWrapper />
+          {/* Scroll to Top Button - Right side */}
+          <ScrollToTopButton />
+        </Providers>
       </body>
     </html>
   );

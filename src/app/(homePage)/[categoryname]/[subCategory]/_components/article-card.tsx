@@ -309,7 +309,7 @@ const ArticleCard = ({
 
             <div className="mt-5 flex w-full items-end justify-start">
               <Link
-                href={`${article.sub_category.category.uuid}/${
+                href={`/${article.sub_category.category.uuid}/${
                   article.sub_category.uuid
                 }/${article.uuid}${
                   searchTerm ? `?search=${encodeURIComponent(searchTerm)}` : ""

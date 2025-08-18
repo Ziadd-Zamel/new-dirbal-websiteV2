@@ -77,6 +77,11 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+  /* Accessibility variables */
+  --accessibility-font-scale: 1;
+  --accessibility-focus-outline: 3px solid #007acc;
+  --accessibility-focus-offset: 2px;
 }
 
 .dark {
@@ -171,7 +176,7 @@ button {
   width: 260px;
   height: 42px;
   line-height: 50px;
-  background: rgb(40,40,40);
+  background: rgb(40, 40, 40);
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -191,5 +196,50 @@ button {
   right: 0px;
   width: 150px;
   height: 14px;
-  background: linear-gradient(to right, rgba(40, 40, 40, 0), rgba(40, 40, 40, 1) 50%);;
+  background: linear-gradient(
+    to right,
+    rgba(40, 40, 40, 0),
+    rgba(40, 40, 40, 1) 50%
+  );
+}
+
+/* Accessibility Styles */
+@layer utilities {
+  .sr-only {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+  }
+
+  .accessibility-focus:focus {
+    outline: var(--accessibility-focus-outline) !important;
+    outline-offset: var(--accessibility-focus-offset) !important;
+  }
+
+  .accessibility-text {
+    font-size: calc(1em * var(--accessibility-font-scale)) !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --accessibility-focus-outline: 4px solid #000000;
+    --accessibility-focus-offset: 3px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
