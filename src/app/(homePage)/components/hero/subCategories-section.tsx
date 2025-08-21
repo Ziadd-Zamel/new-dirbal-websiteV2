@@ -77,7 +77,7 @@ export default function SubCategorySection({ SubCategory, categoryId }: Props) {
                   <h3 className="font-tajawal text-xl font-[800] text-gray-300">
                     {sub.name}
                   </h3>
-                  <p className="text-[#B5975C] ">
+                  <p className="text-[#B5975C] font-tajawal ">
                     {sub.sub_title || "هذا نص تعريفي"}
                   </p>
                 </Link>

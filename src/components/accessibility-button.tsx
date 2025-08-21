@@ -8,8 +8,10 @@ import {
   EyeIcon,
   TextIcon,
   Settings,
+  BookOpen,
 } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
+import { IoAccessibilitySharp } from "react-icons/io5";
 
 interface AccessibilityButtonProps {
   className?: string;
@@ -20,7 +22,8 @@ export default function AccessibilityButton({
 }: AccessibilityButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [fontScale, setFontScale] = useState(1);
-  const [isScreenReaderActive, setIsScreenReaderActive] = useState(false);
+  const [isReadingMaskActive, setIsReadingMaskActive] = useState(false);
+  const readingMaskHeight = 80; // Fixed height in px
   const [baseFontSizes, setBaseFontSizes] = useState<Map<Element, number>>(
     new Map()
   );
@@ -33,8 +36,9 @@ export default function AccessibilityButton({
   // Reset internal state when page changes
   useEffect(() => {
     setFontScale(1);
-    setIsScreenReaderActive(false);
+    setIsReadingMaskActive(false);
     setBaseFontSizes(new Map());
+    removeReadingMask();
   }, [pathname]);
 
   const storeBaseFontSizes = () => {
@@ -219,85 +223,172 @@ export default function AccessibilityButton({
     applyFontScale(newScale);
   };
 
-  const toggleScreenReader = () => {
-    setIsScreenReaderActive(!isScreenReaderActive);
+  const createReadingMask = () => {
+    // Remove existing mask if any
+    removeReadingMask();
 
-    if (!isScreenReaderActive) {
-      document.body.setAttribute("aria-live", "polite");
-      document.body.setAttribute("role", "main");
+    // Create the reading mask element
+    const mask = document.createElement("div");
+    mask.id = "reading-mask";
+    mask.style.cssText = `
+       position: fixed;
+       top: 0;
+       left: 0;
+       width: 100%;
+       height: ${readingMaskHeight}px;
+       background: rgba(0, 0, 0, 0);
+       border-top: 4px solid #D4AF37;
+       border-bottom: 4px solid #D4AF37;
+       pointer-events: none;
+       z-index: 9998;
+       transition: top 0.1s ease;
+       box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+     `;
 
-      const style = document.createElement("style");
-      style.id = "screen-reader-styles";
-      style.textContent = `
-        *:focus {
-          outline: 3px solid #007acc !important;
-          outline-offset: 2px !important;
-        }
-        [role="button"], [role="link"], [role="menuitem"] {
-          cursor: pointer;
-        }
-        .sr-only {
-          position: absolute !important;
-          width: 1px !important;
-          height: 1px !important;
-          padding: 0 !important;
-          margin: -1px !important;
-          overflow: hidden !important;
-          clip: rect(0, 0, 0, 0) !important;
-          white-space: nowrap !important;
-          border: 0 !important;
-        }
-        [aria-hidden="true"] {
-          display: none !important;
-        }
-      `;
-      document.head.appendChild(style);
+    // Create the dimming overlay with a hole for the reading mask
+    const overlay = document.createElement("div");
+    overlay.id = "reading-mask-overlay";
+    overlay.style.cssText = `
+       position: fixed;
+       top: 0;
+       left: 0;
+       width: 100%;
+       height: 100%;
+       background: rgba(0, 0, 0, 0.3);
+       pointer-events: none;
+       z-index: 9997;
+       clip-path: polygon(
+         0 0,
+         100% 0,
+         100% 100%,
+         0 100%,
+         0 0,
+         0 calc(var(--mask-top, 0px) + 80px),
+         100% calc(var(--mask-top, 0px) + 80px),
+         100% var(--mask-top, 0px),
+         0 var(--mask-top, 0px)
+       );
+     `;
 
-      const announcement = document.createElement("div");
-      announcement.setAttribute("aria-live", "polite");
-      announcement.setAttribute("aria-atomic", "true");
-      announcement.className = "sr-only";
-      announcement.textContent = "تم تفعيل وضع قارئ الشاشة";
-      document.body.appendChild(announcement);
+    // Add elements to DOM
+    document.body.appendChild(overlay);
+    document.body.appendChild(mask);
 
-      setTimeout(() => {
-        if (announcement.parentNode) {
-          announcement.parentNode.removeChild(announcement);
-        }
-      }, 3000);
-    } else {
-      document.body.removeAttribute("aria-live");
-      document.body.removeAttribute("role");
+    // Add scroll event listener to move mask with scroll
+    const handleScroll = () => {
+      const scrollTop =
+        window.pageYOffset || document.documentElement.scrollTop;
+      const maskTop =
+        scrollTop + window.innerHeight / 2 - readingMaskHeight / 2;
+      const finalTop = Math.max(0, maskTop);
+      mask.style.top = `${finalTop}px`;
 
-      const style = document.getElementById("screen-reader-styles");
-      if (style) {
-        style.remove();
+      // Update overlay clip-path to create hole for reading mask
+      const overlay = document.getElementById("reading-mask-overlay");
+      if (overlay) {
+        overlay.style.setProperty("--mask-top", `${finalTop}px`);
+      }
+    };
+
+    // Add mouse move event listener for manual control
+    const handleMouseMove = (e: MouseEvent) => {
+      const maskTop = e.clientY - readingMaskHeight / 2;
+      const finalTop = Math.max(0, maskTop);
+      mask.style.top = `${finalTop}px`;
+
+      // Update overlay clip-path to create hole for reading mask
+      const overlay = document.getElementById("reading-mask-overlay");
+      if (overlay) {
+        overlay.style.setProperty("--mask-top", `${finalTop}px`);
+      }
+    };
+
+    // Add keyboard navigation
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const currentTop = parseInt(mask.style.top) || 0;
+      let newTop = currentTop;
+
+      switch (e.key) {
+        case "ArrowUp":
+          e.preventDefault();
+          newTop = Math.max(0, currentTop - readingMaskHeight);
+          break;
+        case "ArrowDown":
+          e.preventDefault();
+          newTop = currentTop + readingMaskHeight;
+          break;
+        case "Home":
+          e.preventDefault();
+          newTop = 0;
+          break;
+        case "End":
+          e.preventDefault();
+          const maxTop =
+            document.documentElement.scrollHeight - readingMaskHeight;
+          newTop = Math.max(0, maxTop);
+          break;
       }
 
-      const announcement = document.createElement("div");
-      announcement.setAttribute("aria-live", "polite");
-      announcement.setAttribute("aria-atomic", "true");
-      announcement.className = "sr-only";
-      announcement.textContent = "تم إيقاف وضع قارئ الشاشة";
-      document.body.appendChild(announcement);
+      mask.style.top = `${newTop}px`;
 
-      setTimeout(() => {
-        if (announcement.parentNode) {
-          announcement.parentNode.removeChild(announcement);
-        }
-      }, 3000);
+      // Update overlay clip-path to create hole for reading mask
+      const overlay = document.getElementById("reading-mask-overlay");
+      if (overlay) {
+        overlay.style.setProperty("--mask-top", `${newTop}px`);
+      }
+    };
+
+    // Store event listeners for cleanup
+    mask.dataset.scrollHandler = handleScroll.toString();
+    mask.dataset.mouseHandler = handleMouseMove.toString();
+    mask.dataset.keyHandler = handleKeyDown.toString();
+
+    window.addEventListener("scroll", handleScroll);
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("keydown", handleKeyDown);
+
+    // Initial position
+    handleScroll();
+  };
+
+  const removeReadingMask = () => {
+    const mask = document.getElementById("reading-mask");
+    const overlay = document.getElementById("reading-mask-overlay");
+
+    if (mask) {
+      // Remove event listeners
+      const scrollHandler = mask.dataset.scrollHandler;
+      const mouseHandler = mask.dataset.mouseHandler;
+      const keyHandler = mask.dataset.keyHandler;
+
+      if (scrollHandler)
+        window.removeEventListener("scroll", eval(scrollHandler));
+      if (mouseHandler)
+        document.removeEventListener("mousemove", eval(mouseHandler));
+      if (keyHandler) document.removeEventListener("keydown", eval(keyHandler));
+
+      mask.remove();
+    }
+
+    if (overlay) {
+      overlay.remove();
+    }
+  };
+
+  const toggleReadingMask = () => {
+    if (!isReadingMaskActive) {
+      setIsReadingMaskActive(true);
+      createReadingMask();
+    } else {
+      setIsReadingMaskActive(false);
+      removeReadingMask();
     }
   };
 
   const resetAccessibility = () => {
     setFontScale(1);
-    setIsScreenReaderActive(false);
-
-    document.body.removeAttribute("aria-live");
-    document.body.removeAttribute("role");
-
-    const style = document.getElementById("screen-reader-styles");
-    if (style) style.remove();
+    setIsReadingMaskActive(false);
+    removeReadingMask();
 
     const root = document.documentElement;
     root.style.removeProperty("--accessibility-font-scale");
@@ -317,13 +408,13 @@ export default function AccessibilityButton({
 
   return (
     <div
-      className={cn("fixed bottom-6 left-6 z-50", className)}
+      className={cn("fixed bottom-3 left-3 z-50", className)}
       data-accessibility-button
     >
       {/* Main accessibility button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="group relative flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-blue-700 text-white shadow-2xl transition-all duration-300 hover:from-blue-500 hover:to-blue-600 hover:scale-105 hover:shadow-blue-600/50 focus:outline-none focus:ring-4 focus:ring-blue-400/30"
+        className="group relative flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-blue-700 text-white shadow-2xl transition-all duration-300 hover:from-blue-500 hover:to-blue-600 hover:scale-105 hover:shadow-blue-600/50 focus:outline-none focus:ring-4 focus:ring-blue-400/30"
         aria-label="إعدادات إمكانية الوصول"
         aria-expanded={isOpen}
         data-accessibility-button
@@ -333,7 +424,7 @@ export default function AccessibilityButton({
 
         {/* Icon */}
         <div className="relative z-10">
-          <Settings className="h-6 w-6 transition-transform duration-200 group-hover:rotate-90" />
+          <IoAccessibilitySharp className="h-6 w-6 transition-transform duration-200 group-hover:rotate-90" />
         </div>
 
         {/* Status dot */}
@@ -403,40 +494,42 @@ export default function AccessibilityButton({
               </div>
             </div>
 
-            {/* Screen reader toggle */}
+            {/* Reading mask toggle */}
             <div className="space-y-3">
               <label className="flex items-center gap-2 text-sm font-semibold text-slate-700">
                 <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-green-50 mr-3">
-                  <EyeIcon className="h-4 w-4 text-green-600" />
+                  <BookOpen className="h-4 w-4 text-green-600" />
                 </div>
-                وضع قارئ الشاشة
+                قناع القراءة
               </label>
 
-              <button
-                onClick={toggleScreenReader}
-                className={cn(
-                  "w-full py-3 px-4 rounded-xl text-sm font-semibold transition-all duration-200 border-2 shadow-sm",
-                  isScreenReaderActive
-                    ? "bg-green-100 text-green-800 border-green-300 hover:bg-green-200 hover:border-green-400"
-                    : "bg-slate-100 text-slate-700 border-slate-300 hover:bg-slate-200 hover:border-slate-400"
-                )}
-              >
-                <div className="flex items-center justify-center space-x-2 space-x-reverse">
-                  <div
-                    className={cn(
-                      "h-2.5 w-2.5 rounded-full transition-all duration-200",
-                      isScreenReaderActive
-                        ? "bg-green-500 animate-pulse"
-                        : "bg-slate-400"
-                    )}
-                  >
-                    {isScreenReaderActive && (
-                      <div className="absolute inset-0 rounded-full bg-green-300/50 animate-ping"></div>
-                    )}
+              <div className="space-y-3">
+                <button
+                  onClick={toggleReadingMask}
+                  className={cn(
+                    "w-full py-3 px-4 rounded-xl text-sm font-semibold transition-all duration-200 border-2 shadow-sm",
+                    isReadingMaskActive
+                      ? "bg-green-100 text-green-800 border-green-300 hover:bg-green-200 hover:border-green-400"
+                      : "bg-slate-100 text-slate-700 border-slate-300 hover:bg-slate-200 hover:border-slate-400"
+                  )}
+                >
+                  <div className="flex items-center justify-center space-x-2 space-x-reverse">
+                    <div
+                      className={cn(
+                        "h-2.5 w-2.5 rounded-full transition-all duration-200",
+                        isReadingMaskActive
+                          ? "bg-green-500 animate-pulse"
+                          : "bg-slate-400"
+                      )}
+                    >
+                      {isReadingMaskActive && (
+                        <div className="absolute inset-0 rounded-full bg-green-300/50 animate-ping"></div>
+                      )}
+                    </div>
+                    <span>{isReadingMaskActive ? "مفعل" : "غير مفعل"}</span>
                   </div>
-                  <span>{isScreenReaderActive ? "مفعل" : "غير مفعل"}</span>
-                </div>
-              </button>
+                </button>
+              </div>
             </div>
 
             {/* Reset button */}

@@ -201,7 +201,7 @@ const MainPage = ({
         {/* Main items */}
         <div
           className={`mt-10 w-full md:mt-0 ${
-            hasTabs ? "md:w-[70%]" : "md:w-full max-w-[80%]"
+            hasTabs ? "md:w-[70%]" : "md:w-full max-w-[80%] lg:mr-24"
           }`}
         >
           <ArticleSectoin

@@ -56,7 +56,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                   <SearchIcon dark={false} width={30} height={30} />
                 </div>
                 <Input
-                  className="border-0 bg-transparent  text-right !text-[30px] text-white placeholder:text-[30px] placeholder:font-tajawal placeholder:text-[#FFFFFF4D] focus-visible:ring-0"
+                  className="border-0 bg-transparent font-tajawal text-right !text-[30px] text-white placeholder:text-[30px] placeholder:font-tajawal placeholder:text-[#FFFFFF4D] focus-visible:ring-0"
                   dir="rtl"
                   placeholder="كلمة/كلمات البحث..."
                   autoFocus

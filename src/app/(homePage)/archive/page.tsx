@@ -68,7 +68,7 @@ export default function Archive() {
             </p>
           </div>
         ) : (
-          <div className="mt-6 max-w-[80%] h-full">
+          <div className="mt-6 max-w-[80%] h-full lg:mr-24">
             {articles.map((article) => (
               <ArticleCard
                 key={article.uuid}

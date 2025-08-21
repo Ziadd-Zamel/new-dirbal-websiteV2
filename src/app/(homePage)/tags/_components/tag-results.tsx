@@ -6,29 +6,27 @@ import SectionLogo from "@/components/common/section-logo";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 
-interface SearchResultsProps {
-  query: string;
-  searchResults: {
+interface TagResultsProps {
+  tag: string;
+  tagResults: {
     data: {
       articles: Article[];
       pagination: PaginationMeta;
     };
     message: string;
-    search_query: string;
-    search_results_count: number;
     success: boolean;
   } | null;
   currentPage: number;
 }
 
-export default function SearchResults({
-  query,
-  searchResults,
+export default function TagResults({
+  tag,
+  tagResults,
   currentPage,
-}: SearchResultsProps) {
+}: TagResultsProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  console.log(searchResults);
+
   const handlePageChange = (page: number) => {
     const params = new URLSearchParams(searchParams.toString());
     if (page === 1) {
@@ -40,7 +38,7 @@ export default function SearchResults({
   };
 
   return (
-    <section id="SearchResults" className="relative min-h-[100vh] pb-24">
+    <section id="TagResults" className="relative min-h-[100vh] pb-24">
       {/* Background image */}
       <div className="absolute inset-0 mt-0 h-full">
         <Image
@@ -60,62 +58,61 @@ export default function SearchResults({
           <HeadingText
             align="left"
             title=""
-            text="نتائج البحث"
+            text="المقالات حسب المفتاحيات"
             containerClassName="-mr-4"
             className="text-3xl"
           />
         </div>
 
-        {/* Search Query Display */}
-        {query && (
+        {/* Tag Display */}
+        {tag && (
           <div className="mt-6 text-center">
             <p className="text-white font-tajawal text-lg">
-              البحث عن:{" "}
+              المفتاح:{" "}
               <span className="text-[#B5975C] font-bold">
-                &ldquo;{query}&rdquo;
+                &ldquo;{tag}&rdquo;
               </span>
             </p>
           </div>
         )}
 
-        {/* Search Results */}
+        {/* Tag Results */}
         <div className="mt-8">
-          {!query ? (
+          {!tag ? (
             <div className="text-center text-gray-300 font-tajawal text-lg">
-              أدخل كلمة البحث للبدء
+              اختر وسماً لعرض المقالات
             </div>
-          ) : searchResults &&
-            searchResults.data &&
-            searchResults.data.articles &&
-            searchResults.data.articles.length > 0 ? (
+          ) : tagResults &&
+            tagResults.data &&
+            tagResults.data.articles &&
+            tagResults.data.articles.length > 0 ? (
             <>
               {/* Articles List */}
               <div className="space-y-0 lg:mr-24 max-w-[80%]">
-                {searchResults.data.articles.map((article) => (
+                {tagResults.data.articles.map((article) => (
                   <ArticleCard
                     key={article.id}
                     article={article}
                     className="mb-0"
-                    searchTerm={query}
                   />
                 ))}
               </div>
 
               {/* Pagination */}
-              {searchResults.data.pagination &&
-                searchResults.data.pagination.last_page > 1 && (
+              {tagResults.data.pagination &&
+                tagResults.data.pagination.last_page > 1 && (
                   <div className="mt-8">
                     <ArticlePagintation
                       currentPage={currentPage}
                       onPageChange={handlePageChange}
-                      pagination={searchResults.data.pagination}
+                      pagination={tagResults.data.pagination}
                     />
                   </div>
                 )}
             </>
           ) : (
             <div className="text-center text-gray-300 font-tajawal text-lg">
-              لم يتم العثور على نتائج لـ &ldquo;{query}&rdquo;
+              لم يتم العثور على مقالات للوسم &ldquo;{tag}&rdquo;
             </div>
           )}
         </div>

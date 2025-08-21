@@ -44,12 +44,12 @@ export default function ScrollToTopButton({
         <button
           onClick={scrollToTop}
           className={cn(
-            "fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#B5975C] text-white shadow-lg transition-all duration-300 hover:bg-[#C4A66A] hover:scale-110 focus:outline-none focus:ring-4 focus:ring-[#B5975C] focus:ring-opacity-50",
+            "fixed bottom-3 right-3 z-50 flex h-10 w-10 items-center justify-center rounded-full bg-[#B5975C] text-white shadow-lg transition-all duration-300 hover:bg-[#C4A66A] hover:scale-110 focus:outline-none focus:ring-4 focus:ring-[#B5975C] focus:ring-opacity-50",
             className
           )}
           aria-label="العودة إلى أعلى الصفحة"
         >
-          <ChevronUpIcon className="h-6 w-6" />
+          <ChevronUpIcon className="h-4 w-4" />
         </button>
       )}
     </>

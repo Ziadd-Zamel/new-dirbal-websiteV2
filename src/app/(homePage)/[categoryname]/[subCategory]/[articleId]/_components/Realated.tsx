@@ -129,49 +129,6 @@ const RelatedTopics = ({
         </div>
       )}
 
-      {/* Related Topics Section */}
-      <div className="mb-6 mt-32">
-        <h2 className="mb-2 font-tajawal text-lg">موضوعات ذات صلة:</h2>
-        <div className="overflow-hidden bg-white text-black">
-          {relatedTopics && relatedTopics.length > 0 ? (
-            relatedTopics.map((article) => (
-              <Link
-                href={`/${article.sub_category.category.uuid}/${article.sub_category.uuid}/${article.id}`}
-                key={article.id}
-                onClick={() => handleArticleClick(article.uuid)}
-                className="cursor-pointer border-b border-gray-200 px-4 py-3.5 font-tajawal text-sm transition-colors last:border-none hover:bg-gray-50"
-              >
-                {article.title_number} {article.title_short}: {article.title}
-              </Link>
-            ))
-          ) : (
-            <div className="px-4 py-8 text-center">
-              <div className="text-gray-400 mb-2">
-                <svg
-                  className="mx-auto h-12 w-12"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                  />
-                </svg>
-              </div>
-              <p className="text-gray-500 font-tajawal text-sm">
-                لا توجد موضوعات ذات صلة متاحة حالياً
-              </p>
-              <p className="text-gray-400 font-tajawal text-xs mt-1">
-                سيتم إضافة المزيد من الموضوعات قريباً
-              </p>
-            </div>
-          )}
-        </div>
-      </div>
-
       {/* Latest Branch Topics Section */}
       <div className="mt-20">
         <h2 className="mb-2 font-tajawal text-lg">آخر موضوعات الفرع:</h2>

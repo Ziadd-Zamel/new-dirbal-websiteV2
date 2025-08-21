@@ -2,9 +2,9 @@ import {
   addBookmark,
   isBookmarked,
   removeBookmark,
-} from '@/lib/utils/articles';
-import { Bookmark } from 'lucide-react';
-import { useEffect, useState } from 'react';
+} from "@/lib/utils/articles";
+import Image from "next/image";
+import { useEffect, useState } from "react";
 
 interface BookmarkButtonProps {
   article: Article;
@@ -14,8 +14,8 @@ interface BookmarkButtonProps {
 
 export default function BookmarkButton({
   article,
-  width = 24,
-  height = 24,
+  width = 80,
+  height = 80,
 }: BookmarkButtonProps) {
   const [bookmarked, setBookmarked] = useState(false);
 
@@ -34,14 +34,26 @@ export default function BookmarkButton({
   };
 
   return (
-    <button onClick={handleClick} className="mt-0.5">
-      <Bookmark
-        width={width}
-        height={height}
-        fill={bookmarked ? 'currentColor' : 'none'}
-        className={bookmarked ? 'text-yellow-500' : 'text-white'}
-        strokeWidth={1}
-      />
-    </button>
+    <div className="size-10 flex items-center justify-center -ml-3">
+      <button onClick={handleClick} className="mt-0.5">
+        {bookmarked ? (
+          <Image
+            src="/assets/bookmark-filled.svg"
+            alt="Remove from favorites"
+            width={30}
+            height={30}
+            className="text-yellow-500 w-[]"
+          />
+        ) : (
+          <Image
+            src="/assets/bookmark-w.svg"
+            alt="Add to favorites"
+            width={30}
+            height={30}
+            className="text-white"
+          />
+        )}
+      </button>
+    </div>
   );
 }

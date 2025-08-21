@@ -123,21 +123,29 @@ export const getArticlesBySubSubCategory = async (
   }
 };
 
-export const getArticlesByTag = async (tag: string) => {
-  const url = `${process.env.API}/articles/by-tag/${tag}`;
+export const getArticlesByTag = async (
+  tag: string,
+  page: number = 1,
+  perPage: number = 15
+) => {
+  // Try using the search API with the tag as the search query
+  const url = `${process.env.API}/articles/search?q=${encodeURIComponent(
+    tag
+  )}&page=${page}&per_page=${perPage}`;
 
   try {
     const response = await fetch(url, {
       cache: "no-store",
     });
+    console.log(response);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    const payload: ArticlesResponse = await response.json();
+    const payload = await response.json();
 
     if (!("data" in payload)) {
-      throw new Error(payload || "Unknown error occurred");
+      throw new Error(payload.message || "Unknown error occurred");
     }
 
     return payload;

@@ -20,6 +20,7 @@ const ArticlePage = ({
   articlesByTag: Article[];
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [sidebarOffset, setSidebarOffset] = useState(0);
   const searchParams = useSearchParams();
 
   // Read search parameter from URL when component mounts
@@ -29,6 +30,45 @@ const ArticlePage = ({
       setSearchTerm(searchQuery);
     }
   }, [searchParams]);
+
+  // Dynamic scroll-based sidebar animation
+  useEffect(() => {
+    let scrollTimeout: NodeJS.Timeout;
+
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+
+      // Clear previous timeout
+      clearTimeout(scrollTimeout);
+
+      // Wait for user to stop scrolling (300ms delay)
+      scrollTimeout = setTimeout(() => {
+        // Ignore first 600px of scroll, then move sidebar 1:1 with remaining scroll
+        if (scrollY <= 500) {
+          setSidebarOffset(0);
+          return;
+        }
+
+        // Calculate offset after ignoring first 400px
+        const dynamicOffset = scrollY - 400;
+
+        // Limit to 80% of the main content div height
+        const mainContent = document.querySelector(".main-content");
+        const maxOffset = mainContent
+          ? mainContent.scrollHeight * 0.8
+          : window.innerHeight * 0.8;
+        const clampedOffset = Math.min(dynamicOffset, maxOffset);
+
+        setSidebarOffset(clampedOffset);
+      }, 300);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      clearTimeout(scrollTimeout);
+    };
+  }, []);
 
   const handleSearch = (term: string) => {
     setSearchTerm(term);
@@ -105,7 +145,6 @@ const ArticlePage = ({
         articleById.description?.replace(/<[^>]*>/g, "").split(" ").length || 0,
     };
   };
-  console.log(articleById);
   return (
     <>
       {/* Dynamic Meta Tags */}
@@ -222,12 +261,15 @@ const ArticlePage = ({
 
           <div className="relative z-50 flex min-h-screen w-full justify-between main-padding gap-2">
             {/* Sidebar Container */}
-            <div className="hidden w-fit md:block">
-              <div className="sticky top-0">
-                <Sidebar articleById={articleById} />
-              </div>
+            <div
+              className="hidden w-fit md:block absolute top-0 transition-transform duration-300 ease-out"
+              style={{
+                transform: `translateY(${sidebarOffset}px)`,
+              }}
+            >
+              <Sidebar articleById={articleById} />
             </div>
-
+            <div className="w-[87px]" />
             {/* Main Content */}
             <div className="w-full md:w-[59%]">
               <Mawdooa articleById={articleById} searchTerm={searchTerm} />

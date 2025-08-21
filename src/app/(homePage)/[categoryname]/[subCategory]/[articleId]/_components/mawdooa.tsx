@@ -3,6 +3,8 @@
 import { Pause, Play } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface CustomAudioPlayerProps {
   audioUrl: string;
@@ -153,6 +155,7 @@ interface MawdooaProps {
 
 const Mawdooa = ({ articleById, searchTerm }: MawdooaProps) => {
   const contentRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
 
   // Function to highlight search terms
   const highlightText = (text: string, searchTerm: string) => {
@@ -288,7 +291,7 @@ const Mawdooa = ({ articleById, searchTerm }: MawdooaProps) => {
   }, [searchTerm]);
   return (
     <div
-      className="w-full border-b pb-5 pl-2 border-[#B5975C]"
+      className="w-full pb-5 pl-2 border-[#B5975C]  main-content"
       ref={contentRef}
     >
       <div
@@ -350,11 +353,13 @@ const Mawdooa = ({ articleById, searchTerm }: MawdooaProps) => {
           {articleById.title_description}
         </h6>
         {articleById.voice_url && (
-          <div className="my-5 flex justify-center">
-            <CustomAudioPlayer audioUrl={articleById.voice_url} />
-          </div>
+          <>
+            <div className="my-5 flex justify-center">
+              <CustomAudioPlayer audioUrl={articleById.voice_url} />
+            </div>
+            <hr className="w-full border-t border-[#B5975C] opacity-70" />
+          </>
         )}
-        <hr className="w-full border-t border-[#B5975C] opacity-70" />
 
         <div
           className="mt-5 text-justify font-tajawal text-sm text-gray-300"
@@ -420,17 +425,23 @@ const Mawdooa = ({ articleById, searchTerm }: MawdooaProps) => {
         </div>
       )}
       {articleById.tags && (
-        <div className="flex justify-start items-center gap-3 border-[#B5975C] border-t pt-5">
-          {articleById.tags.map((tag, index) => {
-            return (
-              <p
-                key={index}
-                className="bg-white text-black font-tajawal py-.5 px-4 text-lg border border-gray-300 hover:bg-[#B5975C] hover:border-[#B5975C] hover:text-white transition-all duration-300"
-              >
-                {tag}
-              </p>
-            );
-          })}
+        <div className="mt-12">
+          <div className="flex justify-start items-center gap-3 border-[#B5975C] border-t py-5">
+            {articleById.tags.map((tag, index) => {
+              return (
+                <Link
+                  key={index}
+                  href={`/tags?tag=${encodeURIComponent(tag)}`}
+                  className="bg-white text-black font-tajawal py-1 px-2 text-sm border border-gray-300 hover:bg-[#B5975C] hover:border-[#B5975C] hover:text-white transition-all duration-300 cursor-pointer"
+                >
+                  {tag}
+                </Link>
+              );
+            })}
+          </div>
+          {articleById.tags.length !== 0 && (
+            <hr className="w-full border-t border-[#B5975C]" />
+          )}
         </div>
       )}
     </div>

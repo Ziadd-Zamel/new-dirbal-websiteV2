@@ -230,10 +230,12 @@ const Sidebar = ({ articleById }: SidebarProps) => {
       <div className="flex w-[78px] flex-col items-center justify-center border border-gray-500 text-white bg-gray-900">
         {/* Add to Favorites */}
         <div
-          className="flex h-[78px] w-full cursor-pointer items-center justify-center border-b border-gray-500 text-center text-sm transition-colors hover:bg-gray-800"
+          className="flex h-[78px] w-full  cursor-pointer items-center justify-center border-b border-gray-500 text-center text-sm transition-colors hover:bg-gray-800"
           title="إضافة إلى المفضلة"
         >
-          {articleById && <BookmarkButton article={articleById} />}
+          <div className="-mr-3">
+            {articleById && <BookmarkButton article={articleById} />}
+          </div>
         </div>
 
         {/* Share Icon with Dropdown */}
@@ -314,7 +316,7 @@ const Sidebar = ({ articleById }: SidebarProps) => {
           title="تحميل PDF"
         >
           <Image
-            src={"/assets/Download.svg"}
+            src={"/assets/Download3_WHT.svg"}
             alt="تحميل PDF"
             width={35}
             height={35}
