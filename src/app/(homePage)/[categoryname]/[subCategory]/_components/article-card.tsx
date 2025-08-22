@@ -195,7 +195,7 @@ const ArticleCard = ({
       >
         <div>
           <span className="font-tajawal text-[12px] text-[#FAE1C6] sm:text-[16px] md:text-[16px] xl:text-[22px]">
-            {article.title_number} {article.title_short}:
+            {article.title_number} {article.title_short}:{" "}
           </span>
           <span
             className="font-tajawal text-[12px] text-white sm:text-[16px] md:text-[16px] xl:text-[22px]"

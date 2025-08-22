@@ -271,7 +271,7 @@ const ArticlePage = ({
             </div>
             <div className="w-[87px]" />
             {/* Main Content */}
-            <div className="w-full md:w-[59%]">
+            <div className="w-full md:w-[65%]">
               <Mawdooa articleById={articleById} searchTerm={searchTerm} />
               {/* Add id or data attribute for comments section */}
               <div id="comments-section" data-comments>
@@ -280,7 +280,7 @@ const ArticlePage = ({
             </div>
             {/* Related Topics - Hidden on Mobile */}
 
-            <div className="hidden w-[30%] md:block">
+            <div className="hidden w-[25%] md:block">
               <RelatedTopics
                 articlesByCategory={articlesByCategory}
                 articlesByTag={articlesByTag}

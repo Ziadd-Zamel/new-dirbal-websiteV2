@@ -76,7 +76,7 @@ export default function Third() {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             disabled={isLoading}
-            className="w-full mt-[18px] resize-none rounded-[2px] border border-gray-700 bg-[#474747] px-2 placeholder:font-tajawal placeholder:text-sm placeholder:text-gray-500 disabled:opacity-50"
+            className="w-full mt-[18px] resize-none rounded-[2px] border border-gray-700 bg-[#474747]/70 px-2 placeholder:font-tajawal placeholder:text-sm placeholder:text-gray-500 disabled:opacity-50"
             placeholder="اكتب رسالتك إلى إدارة الموقع"
             rows={12}
           />

@@ -13,14 +13,12 @@ interface RelatedTopicsProps {
 const RelatedTopics = ({
   articlesByCategory,
   onSearch,
-  articlesByTag,
 }: RelatedTopicsProps) => {
   const router = useRouter();
   const pathname = usePathname();
   const [searchTerm, setSearchTerm] = useState("");
 
   // Get related topics from tag-based articles only
-  const relatedTopics = articlesByTag || [];
 
   // Get latest topics with dates from category-based articles
   const latestTopics = articlesByCategory
@@ -102,7 +100,7 @@ const RelatedTopics = ({
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             onKeyPress={handleKeyPress}
-            className="flex h-[42px] w-full items-center border border-gray-300 bg-white px-4 pr-4 text-black outline-none placeholder:font-tajawal focus:border-[#B5975C] focus:ring-1 focus:ring-[#B5975C]"
+            className="flex h-[42px] w-full items-center placeholder:text-sm text-sm border border-gray-300 bg-white px-4 pr-4 text-black outline-none placeholder:font-tajawal focus:border-[#B5975C] focus:ring-1 focus:ring-[#B5975C]"
           />
           {searchTerm && (
             <button
@@ -143,7 +141,7 @@ const RelatedTopics = ({
                 className="flex cursor-pointer flex-row-reverse items-center justify-between gap-2 border-b border-gray-200 py-2 pl-4 pr-1 transition-colors duration-200 last:border-none hover:bg-gray-50"
               >
                 <p
-                  className="min-w-0 flex-1 pr-2 font-tajawal text-sm"
+                  className="min-w-0 flex-1 pr-2 font-tajawal text-xs"
                   style={{
                     display: "-webkit-box",
                     WebkitLineClamp: 2,
@@ -155,11 +153,13 @@ const RelatedTopics = ({
                 >
                   {article.title_number} {article.title_short}: {article.title}
                 </p>
-                <div className="relative flex h-16 w-20 flex-shrink-0 flex-col items-center justify-center  text-xs text-white">
-                  <span className="relative z-50 text-sm font-bold font-tajawal">
+                <div className="relative flex h-12 w-14 flex-shrink-0 flex-col items-center justify-center  text-xs text-white">
+                  <span className="relative z-50 text-xs font-bold font-tajawal">
                     {day}
                   </span>
-                  <span className="relative z-50 font-tajawal">{month}</span>
+                  <span className="relative z-50 font-tajawal text-xs">
+                    {month}
+                  </span>
                   <Image
                     className="absolute z-0"
                     src={"/assets/test.jpg"}

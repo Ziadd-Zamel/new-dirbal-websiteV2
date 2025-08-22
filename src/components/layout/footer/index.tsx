@@ -23,15 +23,13 @@ export default async function Footer() {
 
         {/* Content with relative positioning to appear above overlay */}
         <div className="relative z-10">
-          <div className="flex flex-col items-end lg:flex-row lg:items-start 2xl:box-container ">
+          <div className="flex flex-col items-end lg:flex-row lg:items-start 2xl:box-container relative z-30 ">
             <First />
-            <div className="h-[3px] w-full bg-[#21262C] lg:h-[450px] lg:w-[3px]" />
             <Seconde />
-            <div className="h-[3px] w-full bg-[#21262C] lg:h-[450px] lg:w-[3px]" />
             <Third />
           </div>
 
-          <div className="absolute bottom-[12%] left-[0%] xl:bottom-[140px] xl:left-7">
+          <div className="absolute bottom-[12%] -left-[0%] xl:-bottom-[30px] xl:left-0 z-0">
             <Image
               src={footerSettings.footerImage}
               alt="logo"

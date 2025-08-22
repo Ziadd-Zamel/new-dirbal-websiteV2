@@ -2,10 +2,10 @@
 "use client";
 import Image from "next/image";
 import { FaFacebookF, FaWhatsapp } from "react-icons/fa";
-import { SiMessenger } from "react-icons/si";
-import { SiViber } from "react-icons/si";
+import { SiMessenger, SiViber } from "react-icons/si";
 import { BsTwitterX } from "react-icons/bs";
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Dialog,
   DialogContent,
@@ -17,6 +17,7 @@ export default function Seconde() {
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
+  const [showShareDropdown, setShowShareDropdown] = useState(false);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -49,24 +50,110 @@ export default function Seconde() {
     }
   };
 
+  // Share website functionality
+  const handleShareWebsite = (
+    platform: "facebook" | "messenger" | "twitter" | "whatsapp" | "viber"
+  ) => {
+    const websiteUrl = window.location.origin;
+    const websiteName = "موقع ديربال";
+    const websiteDescription =
+      "موقع ديربال - مصدر موثوق للمعلومات الإسلامية والقانونية";
+
+    try {
+      switch (platform) {
+        case "facebook":
+          const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+            websiteUrl
+          )}&quote=${encodeURIComponent(websiteDescription)}`;
+          window.open(facebookShareUrl, "_blank", "width=626,height=436");
+          break;
+
+        case "messenger":
+          const messengerUrl = `https://www.facebook.com/dialog/send?link=${encodeURIComponent(
+            websiteUrl
+          )}&redirect_uri=${encodeURIComponent(websiteUrl)}`;
+          window.open(messengerUrl, "_blank", "width=626,height=436");
+          break;
+
+        case "twitter":
+          const twitterText = `${websiteName} - ${websiteDescription}`;
+          const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+            twitterText
+          )}&url=${encodeURIComponent(websiteUrl)}`;
+          window.open(twitterUrl, "_blank", "width=550,height=420");
+          break;
+
+        case "whatsapp":
+          const whatsappText = `*${websiteName}*\n\n${websiteDescription}\n\n${websiteUrl}`;
+          const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(
+            whatsappText
+          )}`;
+          window.open(whatsappUrl, "_blank");
+          break;
+
+        case "viber":
+          const viberText = `${websiteName} - ${websiteDescription} ${websiteUrl}`;
+          const viberUrl = `viber://forward?text=${encodeURIComponent(
+            viberText
+          )}`;
+          window.open(viberUrl, "_blank");
+          break;
+      }
+    } catch (error) {
+      console.error("Share error:", error);
+    }
+
+    setShowShareDropdown(false);
+  };
+
   return (
     <>
-      <div className="flex w-full flex-col space-y-4 py-10 text-right lg:w-[30%] lg:pb-0 lg:pl-5 lg:pr-5 lg:pt-4">
+      <div className="flex w-full border-x-3 border-[#21262C] flex-col space-y-4 py-10 text-right lg:w-[30%] lg:pb-0 lg:pl-5 lg:pr-5 lg:pt-4">
         <div className="items-cente mb-2 flex justify-start">
           <h3 className="font-tajawal text-lg font-[500] uppercase">
             شارك الصفحة بواسطة :
           </h3>
         </div>
         <div className="flex w-full items-center justify-start gap-1 space-x-3">
-          <FaFacebookF size={"25px"} />
+          <div
+            className="cursor-pointer transition-colors hover:text-[#B5975C]"
+            onClick={() => handleShareWebsite("facebook")}
+            title="مشاركة الموقع على فيسبوك"
+          >
+            <FaFacebookF size={"25px"} />
+          </div>
           <div className="h-[35px] w-[1px] bg-[#FFFFFF1A]" />
-          <SiMessenger size={"25px"} />
+          <div
+            className="cursor-pointer transition-colors hover:text-[#B5975C]"
+            onClick={() => handleShareWebsite("messenger")}
+            title="مشاركة الموقع على ماسنجر"
+          >
+            <SiMessenger size={"25px"} />
+          </div>
           <div className="h-[35px] w-[1px] bg-[#FFFFFF1A]" />
-          <BsTwitterX size={"25px"} />
+          <div
+            className="cursor-pointer transition-colors hover:text-[#B5975C]"
+            onClick={() => handleShareWebsite("twitter")}
+            title="مشاركة الموقع على تويتر"
+          >
+            <BsTwitterX size={"25px"} />
+          </div>
           <div className="h-[35px] w-[1px] bg-[#FFFFFF1A]" />
-          <SiViber size={"25px"} />
+          <div
+            className="cursor-pointer transition-colors hover:text-[#B5975C]"
+            onClick={() => handleShareWebsite("viber")}
+            title="مشاركة الموقع على فايبر"
+          >
+            <SiViber size={"25px"} />
+          </div>
           <div className="h-[35px] w-[1px] bg-[#FFFFFF1A]" />
-          <FaWhatsapp size={"30px"} />
+          <div
+            className="cursor-pointer transition-colors hover:text-[#B5975C]"
+            onClick={() => handleShareWebsite("whatsapp")}
+            title="مشاركة الموقع على واتساب"
+          >
+            <FaWhatsapp size={"30px"} />
+          </div>
         </div>
         <div className="flex w-full justify-start">
           <div className="mb-1 mt-3 flex h-[2px] w-[80%] items-start justify-start bg-[#21262C] md:w-[40%] lg:w-full" />

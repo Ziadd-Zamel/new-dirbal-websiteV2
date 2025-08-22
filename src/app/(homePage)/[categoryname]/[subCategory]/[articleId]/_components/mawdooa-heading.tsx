@@ -97,7 +97,7 @@ const MawdooaHeading: React.FC<MawdooaHeadingProps> = ({
                 {/* Breadcrumbs */}
                 {breadcrumbs.length > 0 && (
                   <motion.div
-                    className="absolute top-28 -left-[22px] flex items-center font-tajawal text-[#B4935C]"
+                    className="absolute top-28 -left-[22px] flex items-center font-tajawal text-[#B5975C]"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.2 }}
@@ -106,7 +106,7 @@ const MawdooaHeading: React.FC<MawdooaHeadingProps> = ({
                       <li>
                         <Link
                           href="/"
-                          className="text-[#B4935C] hover:text-[#d1b283]"
+                          className="text-[#B5975C] hover:text-[#d1b283]"
                         >
                           <Image
                             src={"/assets/HomePage.svg"}
@@ -119,14 +119,14 @@ const MawdooaHeading: React.FC<MawdooaHeadingProps> = ({
                       {breadcrumbs.map((item, index) => (
                         <React.Fragment key={index}>
                           <li className="mx-1 text-[18px]">
-                            <span className="text-[18px] text-[#B4935C]">
+                            <span className="text-[18px] text-[#B5975C]">
                               <ChevronLeft size={20} />
                             </span>
                           </li>
                           <li>
                             <Link
                               href={item.href}
-                              className="text-[#B4935C] hover:text-[#d1b283]"
+                              className="text-[#B5975C] hover:text-[#d1b283]"
                             >
                               {item.name}
                             </Link>

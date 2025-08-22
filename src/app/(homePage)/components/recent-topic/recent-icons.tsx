@@ -1,12 +1,10 @@
 import BookmarkButton from "@/components/common/add-to-fav";
-import ShareIcon from "@/components/Icons/ShareIcon";
-import { Copy } from "lucide-react";
+import { Files, Share2 } from "lucide-react";
 import { useState } from "react";
 import { FaFacebookF, FaWhatsapp } from "react-icons/fa";
 import { SiMessenger } from "react-icons/si";
 import { BsTwitterX } from "react-icons/bs";
 import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
 
 export default function RecentIcons({ article }: { article: Article }) {
   const [copiedDesc, setCopiedDesc] = useState(false);
@@ -164,14 +162,14 @@ export default function RecentIcons({ article }: { article: Article }) {
 
   return (
     <div className="relative flex w-fit items-center gap-3 -mb-1">
-      <div className="px-1.5 py-1.5">
+      <div className="px-2 py-1.5">
         <BookmarkButton article={article} width={25} height={25} />
       </div>
       <div
         className="cursor-pointer border-x-[1px] border-solid border-gray-400 px-5 py-1.5"
         onClick={handleCopyDescription}
       >
-        <Image src="assets/copy_Wht.svg" alt="copy" width={25} height={25} />
+        <Files strokeWidth={1} size={35} color="white" />
       </div>
 
       {/* Share Button with Dropdown */}
@@ -187,7 +185,7 @@ export default function RecentIcons({ article }: { article: Article }) {
         }}
         title="مشاركة المقال"
       >
-        <ShareIcon width={25} height={25} />
+        <Share2 color="white" strokeWidth={1} size={35} />
 
         {/* Share Dropdown - Vertical Column Layout */}
         <AnimatePresence>

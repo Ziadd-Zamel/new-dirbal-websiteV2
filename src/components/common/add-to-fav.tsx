@@ -3,7 +3,8 @@ import {
   isBookmarked,
   removeBookmark,
 } from "@/lib/utils/articles";
-import Image from "next/image";
+import { TfiBookmark } from "react-icons/tfi";
+import { IoIosBookmark } from "react-icons/io";
 import { useEffect, useState } from "react";
 
 interface BookmarkButtonProps {
@@ -37,20 +38,16 @@ export default function BookmarkButton({
     <div className="size-10 flex items-center justify-center -ml-3">
       <button onClick={handleClick} className="mt-0.5">
         {bookmarked ? (
-          <Image
-            src="/assets/bookmark-filled.svg"
-            alt="Remove from favorites"
-            width={30}
-            height={30}
-            className="text-yellow-500 w-[]"
+          <IoIosBookmark
+            strokeWidth={0.01}
+            size={35}
+            className="transition-colors duration-300 text-[#B5975C]"
           />
         ) : (
-          <Image
-            src="/assets/bookmark-w.svg"
-            alt="Add to favorites"
-            width={30}
-            height={30}
-            className="text-white"
+          <TfiBookmark
+            strokeWidth={0.01}
+            size={30}
+            className="transition-colors text-white duration-300"
           />
         )}
       </button>

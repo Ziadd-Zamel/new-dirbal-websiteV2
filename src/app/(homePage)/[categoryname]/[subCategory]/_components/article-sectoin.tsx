@@ -9,7 +9,7 @@ interface MainItemsProps {
   pagination: PaginationMeta;
   currentPage: number;
   onPageChange: (page: number) => void;
-  searchQuery?: string; // Add search query prop
+  searchQuery?: string;
 }
 
 const ArticleSectoin = ({

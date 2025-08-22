@@ -3,7 +3,6 @@
 import { Pause, Play } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 interface CustomAudioPlayerProps {
@@ -155,7 +154,6 @@ interface MawdooaProps {
 
 const Mawdooa = ({ articleById, searchTerm }: MawdooaProps) => {
   const contentRef = useRef<HTMLDivElement>(null);
-  const router = useRouter();
 
   // Function to highlight search terms
   const highlightText = (text: string, searchTerm: string) => {
@@ -223,6 +221,20 @@ const Mawdooa = ({ articleById, searchTerm }: MawdooaProps) => {
   const sortedSubjects =
     articleById.subjects?.sort((a: Subject, b: Subject) => a.order - b.order) ||
     [];
+
+  // Function to detect if subject content is primarily English (ONLY for subjects)
+  const isSubjectEnglish = (text: string): boolean => {
+    if (!text) return false;
+    const englishChars = (text.match(/[a-zA-Z]/g) || []).length;
+    const arabicChars = (
+      text.match(
+        /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]/g
+      ) || []
+    ).length;
+    const totalLetters = englishChars + arabicChars;
+    if (totalLetters === 0) return false;
+    return englishChars / totalLetters > 0.6;
+  };
 
   // Clear previous highlights and add new ones when search term changes
   useEffect(() => {
@@ -362,7 +374,16 @@ const Mawdooa = ({ articleById, searchTerm }: MawdooaProps) => {
         )}
 
         <div
-          className="mt-5 text-justify font-tajawal text-sm text-gray-300"
+          style={{
+            direction: isSubjectEnglish(articleById.description)
+              ? "ltr"
+              : "rtl",
+          }}
+          className={`mt-5 font-tajawal text-sm text-gray-300 ${
+            isSubjectEnglish(articleById.description)
+              ? "text-left"
+              : "text-justify"
+          }`}
           dangerouslySetInnerHTML={{
             __html: searchTerm
               ? highlightHtmlContent(
@@ -377,25 +398,33 @@ const Mawdooa = ({ articleById, searchTerm }: MawdooaProps) => {
           <>
             <hr className="my-6 w-full border-t border-[#B5975C] opacity-70" />
 
-            {sortedSubjects.map((subject: Subject) => (
-              <div key={subject.id} className="mt-5">
-                <h6 className="mb-3 text-center font-tajawal text-lg font-bold text-[#B5975C]">
-                  {subject.title}
-                </h6>
-                <p
-                  style={{ direction: "rtl" }}
-                  className="text-justify font-tajawal text-sm text-gray-300"
-                  dangerouslySetInnerHTML={{
-                    __html: searchTerm
-                      ? highlightText(
-                          removeParagraphStylesOnly(subject.description),
-                          searchTerm
-                        )
-                      : removeParagraphStylesOnly(subject.description),
-                  }}
-                />
-              </div>
-            ))}
+            {sortedSubjects.map((subject: Subject) => {
+              const isEnglish = isSubjectEnglish(subject.description);
+              return (
+                <div key={subject.id} className="mt-5">
+                  <h6
+                    style={{ direction: isEnglish ? "ltr" : "rtl" }}
+                    className="mb-3 text-center font-tajawal text-lg font-bold text-[#B5975C]"
+                  >
+                    {subject.title}
+                  </h6>
+                  <p
+                    style={{ direction: isEnglish ? "ltr" : "rtl" }}
+                    className={`font-tajawal text-sm text-gray-300 ${
+                      isEnglish ? "text-left" : "text-justify"
+                    }`}
+                    dangerouslySetInnerHTML={{
+                      __html: searchTerm
+                        ? highlightText(
+                            removeParagraphStylesOnly(subject.description),
+                            searchTerm
+                          )
+                        : removeParagraphStylesOnly(subject.description),
+                    }}
+                  />
+                </div>
+              );
+            })}
           </>
         )}
       </div>
@@ -426,7 +455,7 @@ const Mawdooa = ({ articleById, searchTerm }: MawdooaProps) => {
       )}
       {articleById.tags && (
         <div className="mt-12">
-          <div className="flex justify-start items-center gap-3 border-[#B5975C] border-t py-5">
+          <div className="flex justify-start flex-wrap items-center gap-3 border-[#B5975C] border-t py-5">
             {articleById.tags.map((tag, index) => {
               return (
                 <Link

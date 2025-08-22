@@ -20,7 +20,6 @@ export default function QabasatBox({ Qabasat }: { Qabasat: Qabasat[] }) {
   const [isPaused, setIsPaused] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [nextIndex, setNextIndex] = useState(0);
-  const [contentHeight, setContentHeight] = useState(0);
   const contentRef = useRef<HTMLDivElement>(null);
 
   // Group Qabasat by category
@@ -92,21 +91,19 @@ export default function QabasatBox({ Qabasat }: { Qabasat: Qabasat[] }) {
     };
   }, [currentIndex, isPaused, nextIndex]); // Removed currentQuote?.time from dependencies
 
-  // Measure content height when content changes
-  useEffect(() => {
-    if (contentRef.current) {
-      // Use a small delay to ensure DOM is updated
-      setTimeout(() => {
-        if (contentRef.current) {
-          const height = contentRef.current.scrollHeight;
-          setContentHeight(height);
-        }
-      }, 100);
-    }
-  }, [currentQuote.description, nextQuote?.description, isTransitioning]);
-
   const hasImage = currentQuote?.image;
   const currentCategoryIndex = getCurrentCategoryIndex();
+
+  // Simple height calculation to prevent content overflow
+  const minBoxHeight = useMemo(() => {
+    if (!currentQuote) return 200;
+
+    const text = stripHtml(currentQuote.description);
+    const wordCount = text.split(" ").length;
+
+    // Base height + height for content (roughly 6px per word)
+    return Math.min(300 + wordCount * 6, 320); // Cap at 500px max
+  }, [currentQuote]);
 
   if (!currentQuote) return null;
 
@@ -122,9 +119,12 @@ export default function QabasatBox({ Qabasat }: { Qabasat: Qabasat[] }) {
         />
 
         <div
-          className="h-fit min-h-[200px] hover:border-1 hover:border-[#B5975C] w-full rounded-[12px] border border-[#2E394780] bg-[#FFFFFF26] px-[10px] pb-[16px] pt-10 transition-all duration-[2000ms] ease-in-out sm:px-[20px] md:w-[80%] lg:mt-16 lg:w-[51%] lg:px-[15px] xl:mt-28 xl:px-[45px] xl:py-[15px] cursor-pointer"
+          className="hover:border-1 hover:border-[#B5975C] w-full rounded-[12px] border border-[#2E394780] bg-[#FFFFFF26] px-[10px] pb-[16px] pt-10 transition-all duration-[2000ms] ease-in-out sm:px-[20px] md:w-[80%] lg:mt-16 lg:w-[51%] lg:px-[15px] xl:mt-28 xl:px-[45px] xl:py-[15px] cursor-pointer flex flex-col"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
+          style={{
+            minHeight: minBoxHeight,
+          }}
         >
           {/* HEADER AND IMAGE CONTAINER */}
           <div className="flex justify-between w-full flex-row items-end">
@@ -199,20 +199,16 @@ export default function QabasatBox({ Qabasat }: { Qabasat: Qabasat[] }) {
 
           <div
             ref={contentRef}
-            className={`flex flex-col justify-center transition-all duration-[2000ms] ease-in-out ${
+            className={`flex flex-col justify-center transition-all duration-[2000ms] min-h-fit ease-in-out ${
               hasImage ? "mt-4" : "mt-6"
             }`}
-            style={{
-              minHeight: hasImage ? "150px" : "100px",
-              height: "auto",
-            }}
           >
             {/* DESCRIPTION - Crossfade Animation Container */}
             <div className="relative">
               {/* Current Description */}
               <p
                 style={{ direction: "rtl" }}
-                className={`text-justify font-tajawal text-[18px] font-[400] leading-8 text-gray-200 sm:text-[18px] sm:leading-[25px] lg:text-[16px] xl:text-[18px] transition-opacity duration-[2000ms] ease-in-out ${
+                className={` font-tajawal text-sm font-[400] leading-8 text-gray-200 sm:text-base sm:leading-[25px]  xl:text-[18px] transition-opacity duration-[2000ms] ease-in-out ${
                   isTransitioning ? "opacity-0" : "opacity-100"
                 }`}
               >
@@ -223,7 +219,7 @@ export default function QabasatBox({ Qabasat }: { Qabasat: Qabasat[] }) {
               {isTransitioning && nextQuote && (
                 <p
                   style={{ direction: "rtl" }}
-                  className={`absolute top-0 left-0 right-0 text-justify font-tajawal text-[18px] font-[400] leading-8 text-gray-200 sm:text-[18px] sm:leading-[25px] lg:text-[16px] xl:text-[18px] transition-opacity duration-[2000ms] ease-in-out ${
+                  className={`absolute top-0 left-0 right-0 font-tajawal text-sm font-[400] leading-8 text-gray-200 sm:text-base sm:leading-[25px] xl:text-[18px] transition-opacity duration-[2000ms] ease-in-out ${
                     isTransitioning ? "opacity-100" : "opacity-0"
                   }`}
                 >
@@ -235,7 +231,7 @@ export default function QabasatBox({ Qabasat }: { Qabasat: Qabasat[] }) {
 
           {/* SOURCE */}
           <div
-            className={`transition-all duration-[2000ms] ease-in-out ${
+            className={`transition-all duration-[2000ms] ease-in-out mt-auto ${
               currentQuote.source ? "opacity-100" : "opacity-0"
             }`}
           >

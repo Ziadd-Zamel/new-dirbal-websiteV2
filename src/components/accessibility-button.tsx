@@ -2,14 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import {
-  ChevronUpIcon,
-  ChevronDownIcon,
-  EyeIcon,
-  TextIcon,
-  Settings,
-  BookOpen,
-} from "lucide-react";
+import { Plus, Minus } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 import { IoAccessibilitySharp } from "react-icons/io5";
 
@@ -414,56 +407,24 @@ export default function AccessibilityButton({
       {/* Main accessibility button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="group relative flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-blue-700 text-white shadow-2xl transition-all duration-300 hover:from-blue-500 hover:to-blue-600 hover:scale-105 hover:shadow-blue-600/50 focus:outline-none focus:ring-4 focus:ring-blue-400/30"
+        className="group relative flex h-8 w-8 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-blue-700 text-white shadow-2xl transition-all duration-300 hover:from-blue-500 hover:to-blue-600 hover:scale-105 hover:shadow-blue-600/50 focus:outline-none focus:ring-4 focus:ring-blue-400/30"
         aria-label="إعدادات إمكانية الوصول"
         aria-expanded={isOpen}
         data-accessibility-button
       >
-        {/* Glow effect */}
-        <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-300/30 to-blue-500/30 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-
         {/* Icon */}
         <div className="relative z-10">
-          <IoAccessibilitySharp className="h-6 w-6 transition-transform duration-200 group-hover:rotate-90" />
+          <IoAccessibilitySharp className="h-4 w-4 transition-transform duration-200 group-hover:rotate-90" />
         </div>
-
-        {/* Status dot */}
-        {isOpen && (
-          <div className="absolute -top-1 -right-1 h-3 w-3 rounded-full bg-gradient-to-r from-emerald-400 to-green-500 animate-pulse">
-            <div className="absolute inset-0 rounded-full bg-white/40 animate-ping"></div>
-          </div>
-        )}
       </button>
 
       {/* Accessibility options panel */}
       {isOpen && (
         <div className="absolute bottom-16 left-0 mb-3 w-72 rounded-3xl bg-white/95 backdrop-blur-xl shadow-2xl border border-white/20 overflow-hidden">
-          {/* Header with gradient */}
-          <div className="relative bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 px-6 py-4">
-            <div className="flex items-center justify-center gap-3 space-x-3 space-x-reverse">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 backdrop-blur-sm">
-                <Settings className="h-5 w-5 text-white" />
-              </div>
-              <div>
-                <h3 className="text-white font-bold text-md">
-                  إعدادات إمكانية الوصول
-                </h3>
-                <p className="text-slate-300 text-xs">تخصيص تجربة التصفح</p>
-              </div>
-            </div>
-          </div>
-
           {/* Content */}
           <div className="p-6 space-y-6">
             {/* Font scale control */}
             <div className="space-y-3">
-              <label className="flex items-center gap-2 text-sm font-semibold text-slate-700">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-50 mr-3">
-                  <TextIcon className="h-4 w-4 text-blue-600" />
-                </div>
-                حجم الخط
-              </label>
-
               <div className="flex items-center justify-between bg-slate-50 rounded-xl p-3">
                 <button
                   onClick={() =>
@@ -472,14 +433,15 @@ export default function AccessibilityButton({
                   className="flex h-10 w-10 items-center justify-center rounded-lg bg-white text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-all duration-200 shadow-sm border border-slate-200 hover:border-blue-300 hover:scale-105"
                   aria-label="تصغير الخط"
                 >
-                  <span className="text-lg font-bold">A-</span>
+                  <span className="text-lg font-bold">
+                    <Minus />
+                  </span>
                 </button>
 
                 <div className="text-center">
                   <div className="text-2xl font-bold text-slate-800">
                     {scalePercentage}%
                   </div>
-                  <div className="text-xs text-slate-500">من الحجم الأصلي</div>
                 </div>
 
                 <button
@@ -489,55 +451,33 @@ export default function AccessibilityButton({
                   className="flex h-10 w-10 items-center justify-center rounded-lg bg-white text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-all duration-200 shadow-sm border border-slate-200 hover:border-blue-300 hover:scale-105"
                   aria-label="تكبير الخط"
                 >
-                  <span className="text-lg font-bold">A+</span>
+                  <span className="text-lg font-bold">
+                    <Plus />
+                  </span>
                 </button>
               </div>
             </div>
 
             {/* Reading mask toggle */}
-            <div className="space-y-3">
-              <label className="flex items-center gap-2 text-sm font-semibold text-slate-700">
-                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-green-50 mr-3">
-                  <BookOpen className="h-4 w-4 text-green-600" />
-                </div>
-                قناع القراءة
-              </label>
 
-              <div className="space-y-3">
-                <button
-                  onClick={toggleReadingMask}
-                  className={cn(
-                    "w-full py-3 px-4 rounded-xl text-sm font-semibold transition-all duration-200 border-2 shadow-sm",
-                    isReadingMaskActive
-                      ? "bg-green-100 text-green-800 border-green-300 hover:bg-green-200 hover:border-green-400"
-                      : "bg-slate-100 text-slate-700 border-slate-300 hover:bg-slate-200 hover:border-slate-400"
-                  )}
-                >
-                  <div className="flex items-center justify-center space-x-2 space-x-reverse">
-                    <div
-                      className={cn(
-                        "h-2.5 w-2.5 rounded-full transition-all duration-200",
-                        isReadingMaskActive
-                          ? "bg-green-500 animate-pulse"
-                          : "bg-slate-400"
-                      )}
-                    >
-                      {isReadingMaskActive && (
-                        <div className="absolute inset-0 rounded-full bg-green-300/50 animate-ping"></div>
-                      )}
-                    </div>
-                    <span>{isReadingMaskActive ? "مفعل" : "غير مفعل"}</span>
-                  </div>
-                </button>
-              </div>
-            </div>
+            <button
+              onClick={toggleReadingMask}
+              className={cn(
+                "w-full py-2 px-2 rounded-xl text-sm font-semibold transition-all duration-200 border-2 shadow-sm",
+                isReadingMaskActive
+                  ? "bg-green-100 text-green-800 border-green-300 hover:bg-green-200 hover:border-green-400"
+                  : "bg-slate-100 text-slate-700 border-slate-300 hover:bg-slate-200 hover:border-slate-400"
+              )}
+            >
+              القناع
+            </button>
 
             {/* Reset button */}
             <button
               onClick={resetAccessibility}
-              className="w-full py-3 px-4 bg-gradient-to-r from-slate-100 to-slate-200 text-slate-700 rounded-xl text-sm font-semibold border border-slate-300 hover:from-slate-200 hover:to-slate-300 hover:border-slate-400 transition-all duration-200 shadow-sm hover:shadow-md"
+              className="w-full py-2 px-2 bg-gradient-to-r from-slate-100 to-slate-200 text-slate-700 rounded-xl text-sm font-semibold border border-slate-300 hover:from-slate-200 hover:to-slate-300 hover:border-slate-400 transition-all duration-200 shadow-sm hover:shadow-md"
             >
-              إعادة تعيين الإعدادات
+              افتراضي{" "}
             </button>
           </div>
         </div>

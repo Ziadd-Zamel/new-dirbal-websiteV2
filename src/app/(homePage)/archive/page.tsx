@@ -44,7 +44,7 @@ export default function Archive() {
         <div className="flex-row-center">
           <SectionLogo LogoUrl={"/assets/sectionLogo-5.svg"} />
         </div>
-        <div className="flex-row-center -mt-2">
+        <div className="flex-row-center -mt-2 mr-1.5">
           <HeadingText
             align="left"
             title=""

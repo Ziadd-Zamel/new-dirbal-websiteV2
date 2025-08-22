@@ -8,6 +8,7 @@ import { FaFacebookF, FaWhatsapp } from "react-icons/fa";
 import { SiMessenger } from "react-icons/si";
 import { BsTwitterX } from "react-icons/bs";
 import { motion, AnimatePresence } from "framer-motion";
+import { FileDown, MessageCircle, Share2 } from "lucide-react";
 
 interface SidebarProps {
   articleById?: Article;
@@ -227,10 +228,10 @@ const Sidebar = ({ articleById }: SidebarProps) => {
 
   return (
     <div className="w-full mt-2">
-      <div className="flex w-[78px] flex-col items-center justify-center border border-gray-500 text-white bg-gray-900">
+      <div className="flex w-[70px] flex-col items-center justify-center border border-gray-500 text-white bg-gray-900">
         {/* Add to Favorites */}
         <div
-          className="flex h-[78px] w-full  cursor-pointer items-center justify-center border-b border-gray-500 text-center text-sm transition-colors hover:bg-gray-800"
+          className="flex h-[70px] w-full  cursor-pointer items-center justify-center border-b border-gray-500 text-center text-sm transition-colors hover:bg-gray-800"
           title="إضافة إلى المفضلة"
         >
           <div className="-mr-3">
@@ -240,18 +241,17 @@ const Sidebar = ({ articleById }: SidebarProps) => {
 
         {/* Share Icon with Dropdown */}
         <div
-          className="relative flex h-[78px]  w-full cursor-pointer items-center justify-center border-b border-gray-500 transition-colors hover:bg-gray-800"
+          className="relative flex h-[70px]  w-full cursor-pointer items-center justify-center border-b border-gray-500 transition-colors hover:bg-gray-800"
           onMouseEnter={() => setShowShareDropdown(true)}
           onMouseLeave={() => setShowShareDropdown(false)}
           title="مشاركة المقال"
         >
-          <ShareIcon height={30} width={30} />
-
+          <Share2 strokeWidth={1} size={35} />
           {/* Enhanced Share Dropdown */}
           <AnimatePresence>
             {showShareDropdown && (
               <motion.div
-                className="absolute right-full h-[80px] -top-[2px] flex flex-row bg-gray-800 shadow-2xl overflow-hidden border border-gray-600 z-[-1]"
+                className="absolute right-full h-[73px] -top-[2px] flex flex-row bg-gray-800 shadow-2xl overflow-hidden border border-gray-600 z-[-1]"
                 initial={{ opacity: 0, x: 50 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 50 }}
@@ -259,7 +259,7 @@ const Sidebar = ({ articleById }: SidebarProps) => {
               >
                 {/* Facebook */}
                 <div
-                  className="flex w-[78px] cursor-pointer items-center justify-center border border-gray-500 transition-colors hover:bg-gray-700 group"
+                  className="flex w-[70px] cursor-pointer items-center justify-center border border-gray-500 transition-colors hover:bg-gray-700 group"
                   onClick={() => handleShare("facebook")}
                   title="مشاركة على فيسبوك"
                 >
@@ -311,26 +311,20 @@ const Sidebar = ({ articleById }: SidebarProps) => {
 
         {/* PDF Download */}
         <div
-          className="flex h-[78px] w-full cursor-pointer items-center justify-center border-b border-gray-500 transition-colors hover:bg-gray-800"
+          className="flex h-[70px] w-full cursor-pointer items-center justify-center border-b border-gray-500 transition-colors hover:bg-gray-800"
           onClick={handleDownloadPDF}
           title="تحميل PDF"
         >
-          <Image
-            src={"/assets/Download3_WHT.svg"}
-            alt="تحميل PDF"
-            width={35}
-            height={35}
-            className="transition-transform hover:scale-110"
-          />
+          <FileDown strokeWidth={1} size={35} className="text-white" />
         </div>
 
         {/* Comment Icon - Scroll to Comments */}
         <div
-          className="flex h-[78px] w-full cursor-pointer items-center justify-center transition-colors hover:bg-gray-800"
+          className="flex h-[70px] w-full cursor-pointer items-center justify-center transition-colors hover:bg-gray-800"
           onClick={handleScrollToComments}
           title="الانتقال إلى التعليقات"
         >
-          <CommnetIcon height={30} width={30} />
+          <MessageCircle strokeWidth={1} size={35} className="text-white" />
         </div>
       </div>
     </div>
