@@ -7,6 +7,7 @@ const nextConfig = {
   },
   compress: true,
   optimizeFonts: true,
+  output: "standalone",
 };
 
 module.exports = nextConfig;
