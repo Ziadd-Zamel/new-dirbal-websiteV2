@@ -29,7 +29,7 @@ export async function generateMetadata({
 
   if (!sub?.data) {
     return {
-      title: "الصفحة غير موجودة | ديربال",
+      title: "الصفحة غير موجودة | دربال",
       description: "الصفحة المطلوبة غير موجودة",
     };
   }

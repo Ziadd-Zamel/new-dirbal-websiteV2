@@ -6,8 +6,8 @@ export function generateGlobalMetadata(
   customUrl?: string,
   customImage?: string
 ): Metadata {
-  const siteName = "ديربال";
-  const siteDescription = "موقع ديربال للمقالات والقبسات والمواضيع المختارة";
+  const siteName = "دربال";
+  const siteDescription = "موقع دربال للمقالات والقبسات والمواضيع المختارة";
   const siteUrl = "https://yoursite.com";
 
   const title = customTitle ? `${customTitle} | ${siteName}` : siteName;
@@ -18,10 +18,10 @@ export function generateGlobalMetadata(
   return {
     title,
     description,
-    keywords: ["ديربال", "مقالات", "قبسات", "مواضيع", "موقع"],
-    authors: [{ name: "ديربال" }],
-    creator: "ديربال",
-    publisher: "ديربال",
+    keywords: ["دربال", "مقالات", "قبسات", "مواضيع", "موقع"],
+    authors: [{ name: "دربال" }],
+    creator: "دربال",
+    publisher: "دربال",
     robots: {
       index: true,
       follow: true,
@@ -102,12 +102,12 @@ export async function generateSubCategoryMetadata(
   categoryName?: string
 ): Promise<Metadata> {
   const pageTitle = subSubCategory
-    ? `${subSubCategory.name} - ${subCategory.name} | ديربال`
-    : `${subCategory.name} | ديربال`;
+    ? `${subSubCategory.name} - ${subCategory.name} | دربال`
+    : `${subCategory.name} | دربال`;
 
   const pageDescription = subSubCategory
-    ? `اكتشف مقالات ${subSubCategory.name} في قسم ${subCategory.name} على موقع ديربال`
-    : `اكتشف مقالات ${subCategory.name} على موقع ديربال. ${
+    ? `اكتشف مقالات ${subSubCategory.name} في قسم ${subCategory.name} على موقع دربال`
+    : `اكتشف مقالات ${subCategory.name} على موقع دربال. ${
         subCategory.description || ""
       }`;
 
@@ -126,7 +126,7 @@ export async function generateSubCategoryMetadata(
       subCategory.name,
       subSubCategory?.name,
       "مقالات",
-      "ديربال",
+      "دربال",
     ].filter((keyword): keyword is string => Boolean(keyword)),
     openGraph: {
       title: pageTitle,
@@ -173,12 +173,12 @@ export async function generateArticleMetadata(
   },
   categoryName?: string
 ): Promise<Metadata> {
-  const pageTitle = `${article.title} | ديربال`;
+  const pageTitle = `${article.title} | دربال`;
 
   // Clean description from HTML tags and limit length
   const cleanDescription =
     article.description?.replace(/<[^>]*>/g, "").substring(0, 160) ||
-    "اقرأ هذا المقال المميز على موقع ديربال";
+    "اقرأ هذا المقال المميز على موقع دربال";
 
   const pageUrl = `/${categoryName || article.sub_category.category.name}/${
     article.sub_category.name
@@ -191,7 +191,7 @@ export async function generateArticleMetadata(
       article.title,
       article.sub_category.name,
       "مقالات",
-      "ديربال",
+      "دربال",
     ].filter((keyword): keyword is string => Boolean(keyword)),
     openGraph: {
       title: pageTitle,
@@ -237,11 +237,11 @@ export async function generateActiveTabMetadata(
   },
   categoryName?: string
 ): Promise<Metadata> {
-  const pageTitle = `${activeTab.name} - ${subCategory.name} | ديربال`;
+  const pageTitle = `${activeTab.name} - ${subCategory.name} | دربال`;
 
   const pageDescription = `اكتشف مقالات ${activeTab.name} في قسم ${
     subCategory.name
-  } على موقع ديربال. ${subCategory.description || ""}`;
+  } على موقع دربال. ${subCategory.description || ""}`;
 
   const pageUrl = `/${
     categoryName || subCategory.category?.name || "category"
@@ -250,7 +250,7 @@ export async function generateActiveTabMetadata(
   return {
     title: pageTitle,
     description: pageDescription,
-    keywords: [activeTab.name, subCategory.name, "مقالات", "ديربال"].filter(
+    keywords: [activeTab.name, subCategory.name, "مقالات", "دربال"].filter(
       (keyword): keyword is string => Boolean(keyword)
     ),
     openGraph: {
@@ -286,14 +286,14 @@ export async function generateActiveTabMetadata(
 
 export async function generateArchiveMetadata(): Promise<Metadata> {
   return {
-    title: "المفضلة | ديربال",
+    title: "المفضلة | دربال",
     description:
-      "استعرض المقالات المفضلة والمحفوظة على موقع ديربال. احتفظ بمقالاتك المفضلة للقراءة لاحقاً",
-    keywords: ["المفضلة", "المحفوظة", "مقالات", "ديربال", "أرشيف"],
+      "استعرض المقالات المفضلة والمحفوظة على موقع دربال. احتفظ بمقالاتك المفضلة للقراءة لاحقاً",
+    keywords: ["المفضلة", "المحفوظة", "مقالات", "دربال", "أرشيف"],
     openGraph: {
-      title: "المفضلة | ديربال",
+      title: "المفضلة | دربال",
       description:
-        "استعرض المقالات المفضلة والمحفوظة على موقع ديربال. احتفظ بمقالاتك المفضلة للقراءة لاحقاً",
+        "استعرض المقالات المفضلة والمحفوظة على موقع دربال. احتفظ بمقالاتك المفضلة للقراءة لاحقاً",
       type: "website",
       locale: "ar_SA",
       url: "/archive",
@@ -302,15 +302,15 @@ export async function generateArchiveMetadata(): Promise<Metadata> {
           url: "/assets/sectionLogo-5.svg",
           width: 1200,
           height: 630,
-          alt: "المفضلة - ديربال",
+          alt: "المفضلة - دربال",
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: "المفضلة | ديربال",
+      title: "المفضلة | دربال",
       description:
-        "استعرض المقالات المفضلة والمحفوظة على موقع ديربال. احتفظ بمقالاتك المفضلة للقراءة لاحقاً",
+        "استعرض المقالات المفضلة والمحفوظة على موقع دربال. احتفظ بمقالاتك المفضلة للقراءة لاحقاً",
       images: ["/assets/sectionLogo-5.svg"],
     },
     alternates: {
@@ -329,12 +329,12 @@ export async function generateSearchMetadata(
   if (query) {
     // Search results page
     return {
-      title: `نتائج البحث عن "${query}" | ديربال`,
-      description: `نتائج البحث عن "${query}" على موقع ديربال. اكتشف المقالات والمحتوى المتعلق ببحثك`,
-      keywords: [query, "بحث", "نتائج", "مقالات", "ديربال"],
+      title: `نتائج البحث عن "${query}" | دربال`,
+      description: `نتائج البحث عن "${query}" على موقع دربال. اكتشف المقالات والمحتوى المتعلق ببحثك`,
+      keywords: [query, "بحث", "نتائج", "مقالات", "دربال"],
       openGraph: {
-        title: `نتائج البحث عن "${query}" | ديربال`,
-        description: `نتائج البحث عن "${query}" على موقع ديربال. اكتشف المقالات والمحتوى المتعلق ببحثك`,
+        title: `نتائج البحث عن "${query}" | دربال`,
+        description: `نتائج البحث عن "${query}" على موقع دربال. اكتشف المقالات والمحتوى المتعلق ببحثك`,
         type: "website",
         locale: "ar_SA",
         url: `/search?q=${encodeURIComponent(query)}`,
@@ -349,8 +349,8 @@ export async function generateSearchMetadata(
       },
       twitter: {
         card: "summary_large_image",
-        title: `نتائج البحث عن "${query}" | ديربال`,
-        description: `نتائج البحث عن "${query}" على موقع ديربال. اكتشف المقالات والمحتوى المتعلق ببحثك`,
+        title: `نتائج البحث عن "${query}" | دربال`,
+        description: `نتائج البحث عن "${query}" على موقع دربال. اكتشف المقالات والمحتوى المتعلق ببحثك`,
         images: ["/assets/search-icon.svg"],
       },
       alternates: {
@@ -365,14 +365,14 @@ export async function generateSearchMetadata(
 
   // Empty search page
   return {
-    title: "البحث | ديربال",
+    title: "البحث | دربال",
     description:
-      "ابحث في المقالات والمحتوى على موقع ديربال. استخدم كلمات البحث للعثور على المقالات المطلوبة",
-    keywords: ["بحث", "مقالات", "محتوى", "ديربال", "البحث"],
+      "ابحث في المقالات والمحتوى على موقع دربال. استخدم كلمات البحث للعثور على المقالات المطلوبة",
+    keywords: ["بحث", "مقالات", "محتوى", "دربال", "البحث"],
     openGraph: {
-      title: "البحث | ديربال",
+      title: "البحث | دربال",
       description:
-        "ابحث في المقالات والمحتوى على موقع ديربال. استخدم كلمات البحث للعثور على المقالات المطلوبة",
+        "ابحث في المقالات والمحتوى على موقع دربال. استخدم كلمات البحث للعثور على المقالات المطلوبة",
       type: "website",
       locale: "ar_SA",
       url: "/search",
@@ -381,15 +381,15 @@ export async function generateSearchMetadata(
           url: "/assets/search-icon.svg",
           width: 1200,
           height: 630,
-          alt: "البحث - ديربال",
+          alt: "البحث - دربال",
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: "البحث | ديربال",
+      title: "البحث | دربال",
       description:
-        "ابحث في المقالات والمحتوى على موقع ديربال. استخدم كلمات البحث للعثور على المقالات المطلوبة",
+        "ابحث في المقالات والمحتوى على موقع دربال. استخدم كلمات البحث للعثور على المقالات المطلوبة",
       images: ["/assets/search-icon.svg"],
     },
     alternates: {
@@ -406,12 +406,12 @@ export async function generateTagsMetadata(tag?: string): Promise<Metadata> {
   if (tag) {
     // Tag results page
     return {
-      title: `مقالات الوسم "${tag}" | ديربال`,
-      description: `اكتشف جميع المقالات المرتبطة بالوسم "${tag}" على موقع ديربال. تصفح المحتوى المنظم حسب المواضيع`,
-      keywords: [tag, "وسم", "مقالات", "مواضيع", "ديربال", "تصنيف"],
+      title: `مقالات الوسم "${tag}" | دربال`,
+      description: `اكتشف جميع المقالات المرتبطة بالوسم "${tag}" على موقع دربال. تصفح المحتوى المنظم حسب المواضيع`,
+      keywords: [tag, "وسم", "مقالات", "مواضيع", "دربال", "تصنيف"],
       openGraph: {
-        title: `مقالات الوسم "${tag}" | ديربال`,
-        description: `اكتشف جميع المقالات المرتبطة بالوسم "${tag}" على موقع ديربال. تصفح المحتوى المنظم حسب المواضيع`,
+        title: `مقالات الوسم "${tag}" | دربال`,
+        description: `اكتشف جميع المقالات المرتبطة بالوسم "${tag}" على موقع دربال. تصفح المحتوى المنظم حسب المواضيع`,
         type: "website",
         locale: "ar_SA",
         url: `/tags?tag=${encodeURIComponent(tag)}`,
@@ -426,8 +426,8 @@ export async function generateTagsMetadata(tag?: string): Promise<Metadata> {
       },
       twitter: {
         card: "summary_large_image",
-        title: `مقالات الوسم "${tag}" | ديربال`,
-        description: `اكتشف جميع المقالات المرتبطة بالوسم "${tag}" على موقع ديربال. تصفح المحتوى المنظم حسب المواضيع`,
+        title: `مقالات الوسم "${tag}" | دربال`,
+        description: `اكتشف جميع المقالات المرتبطة بالوسم "${tag}" على موقع دربال. تصفح المحتوى المنظم حسب المواضيع`,
         images: ["/assets/tag-icon.svg"],
       },
       alternates: {
@@ -442,14 +442,14 @@ export async function generateTagsMetadata(tag?: string): Promise<Metadata> {
 
   // Empty tags page
   return {
-    title: "الوسوم | ديربال",
+    title: "الوسوم | دربال",
     description:
-      "تصفح المقالات حسب الوسوم والمواضيع على موقع ديربال. اكتشف المحتوى المنظم حسب التصنيفات",
-    keywords: ["وسوم", "تصنيف", "مقالات", "مواضيع", "ديربال", "تصفح"],
+      "تصفح المقالات حسب الوسوم والمواضيع على موقع دربال. اكتشف المحتوى المنظم حسب التصنيفات",
+    keywords: ["وسوم", "تصنيف", "مقالات", "مواضيع", "دربال", "تصفح"],
     openGraph: {
-      title: "الوسوم | ديربال",
+      title: "الوسوم | دربال",
       description:
-        "تصفح المقالات حسب الوسوم والمواضيع على موقع ديربال. اكتشف المحتوى المنظم حسب التصنيفات",
+        "تصفح المقالات حسب الوسوم والمواضيع على موقع دربال. اكتشف المحتوى المنظم حسب التصنيفات",
       type: "website",
       locale: "ar_SA",
       url: "/tags",
@@ -458,15 +458,15 @@ export async function generateTagsMetadata(tag?: string): Promise<Metadata> {
           url: "/assets/tag-icon.svg",
           width: 1200,
           height: 630,
-          alt: "الوسوم - ديربال",
+          alt: "الوسوم - دربال",
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: "الوسوم | ديربال",
+      title: "الوسوم | دربال",
       description:
-        "تصفح المقالات حسب الوسوم والمواضيع على موقع ديربال. اكتشف المحتوى المنظم حسب التصنيفات",
+        "تصفح المقالات حسب الوسوم والمواضيع على موقع دربال. اكتشف المحتوى المنظم حسب التصنيفات",
       images: ["/assets/tag-icon.svg"],
     },
     alternates: {

@@ -55,9 +55,9 @@ export default function Seconde() {
     platform: "facebook" | "messenger" | "twitter" | "whatsapp" | "viber"
   ) => {
     const websiteUrl = window.location.origin;
-    const websiteName = "موقع ديربال";
+    const websiteName = "موقع دربال";
     const websiteDescription =
-      "موقع ديربال - مصدر موثوق للمعلومات الإسلامية والقانونية";
+      "موقع دربال - مصدر موثوق للمعلومات الإسلامية والقانونية";
 
     try {
       switch (platform) {

@@ -2,9 +2,9 @@ export function generateHomeStructuredData() {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "ديربال",
+    name: "دربال",
     url: "https://yoursite.com",
-    description: "موقع ديربال للمقالات والقبسات والمواضيع المختارة",
+    description: "موقع دربال للمقالات والقبسات والمواضيع المختارة",
     inLanguage: "ar-SA",
     potentialAction: {
       "@type": "SearchAction",
@@ -21,7 +21,7 @@ export function generateGlobalStructuredData() {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: "ديربال",
+    name: "دربال",
     url: "https://yoursite.com",
     logo: {
       "@type": "ImageObject",
@@ -29,7 +29,7 @@ export function generateGlobalStructuredData() {
       width: 200,
       height: 200,
     },
-    description: "موقع ديربال للمقالات والقبسات والمواضيع المختارة",
+    description: "موقع دربال للمقالات والقبسات والمواضيع المختارة",
     sameAs: [
       "https://facebook.com/dirbal",
       "https://twitter.com/dirbal",
@@ -139,7 +139,7 @@ export function generateArticleStructuredData(
   // Clean description from HTML tags
   const cleanDescription =
     article.description?.replace(/<[^>]*>/g, "").substring(0, 160) ||
-    "اقرأ هذا المقال المميز على موقع ديربال";
+    "اقرأ هذا المقال المميز على موقع دربال";
 
   return {
     "@context": "https://schema.org",
@@ -153,7 +153,7 @@ export function generateArticleStructuredData(
     },
     publisher: {
       "@type": "Organization",
-      name: "ديربال",
+      name: "دربال",
       logo: {
         "@type": "ImageObject",
         url: "https://yoursite.com/assets/logo.png",
@@ -263,8 +263,8 @@ export function generateArchiveStructuredData() {
   return {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    name: "المفضلة - ديربال",
-    description: "استعرض المقالات المفضلة والمحفوظة على موقع ديربال",
+    name: "المفضلة - دربال",
+    description: "استعرض المقالات المفضلة والمحفوظة على موقع دربال",
     url: "https://yoursite.com/archive",
     inLanguage: "ar-SA",
     image: "/assets/sectionLogo-5.svg",
@@ -295,7 +295,7 @@ export function generateSearchStructuredData(query?: string) {
       "@context": "https://schema.org",
       "@type": "SearchResultsPage",
       name: `نتائج البحث عن "${query}"`,
-      description: `نتائج البحث عن "${query}" على موقع ديربال`,
+      description: `نتائج البحث عن "${query}" على موقع دربال`,
       url: `https://yoursite.com/search?q=${encodeURIComponent(query)}`,
       inLanguage: "ar-SA",
       image: "/assets/search-icon.svg",
@@ -337,8 +337,8 @@ export function generateSearchStructuredData(query?: string) {
   return {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    name: "البحث - ديربال",
-    description: "ابحث في المقالات والمحتوى على موقع ديربال",
+    name: "البحث - دربال",
+    description: "ابحث في المقالات والمحتوى على موقع دربال",
     url: "https://yoursite.com/search",
     inLanguage: "ar-SA",
     image: "/assets/search-icon.svg",
@@ -377,7 +377,7 @@ export function generateTagsStructuredData(tag?: string) {
       "@context": "https://schema.org",
       "@type": "CollectionPage",
       name: `مقالات الوسم "${tag}"`,
-      description: `جميع المقالات المرتبطة بالوسم "${tag}" على موقع ديربال`,
+      description: `جميع المقالات المرتبطة بالوسم "${tag}" على موقع دربال`,
       url: `https://yoursite.com/tags?tag=${encodeURIComponent(tag)}`,
       inLanguage: "ar-SA",
       image: "/assets/tag-icon.svg",
@@ -416,8 +416,8 @@ export function generateTagsStructuredData(tag?: string) {
   return {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    name: "الوسوم - ديربال",
-    description: "تصفح المقالات حسب الوسوم والمواضيع على موقع ديربال",
+    name: "الوسوم - دربال",
+    description: "تصفح المقالات حسب الوسوم والمواضيع على موقع دربال",
     url: "https://yoursite.com/tags",
     inLanguage: "ar-SA",
     image: "/assets/tag-icon.svg",

@@ -27,7 +27,7 @@ export default function RecentIcons({ article }: { article: Article }) {
     platform: "facebook" | "messenger" | "twitter" | "whatsapp" | "copy"
   ) => {
     const url = window.location.href;
-    const title = article?.title || "مقال من موقع ديربال";
+    const title = article?.title || "مقال من موقع دربال";
     const description =
       article?.description?.replace(/<[^>]*>/g, "").slice(0, 180) ||
       "اقرأ هذا المقال المميز";

@@ -24,7 +24,7 @@ export async function generateMetadata({
 
   if (!article?.data) {
     return {
-      title: "المقال غير موجود | ديربال",
+      title: "المقال غير موجود | دربال",
       description: "المقال المطلوب غير موجود",
     };
   }

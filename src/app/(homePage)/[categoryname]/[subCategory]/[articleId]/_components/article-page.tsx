@@ -79,7 +79,7 @@ const ArticlePage = ({
     const description =
       articleById.description ||
       articleById.description?.replace(/<[^>]*>/g, "").substring(0, 160) ||
-      "اقرأ هذا المقال المميز على موقع ديربال";
+      "اقرأ هذا المقال المميز على موقع دربال";
 
     // Ensure image URL is absolute
     const imageUrl = articleById.image?.startsWith("http")
@@ -87,11 +87,11 @@ const ArticlePage = ({
       : `${siteUrl}${articleById.image || "/assets/default-article.jpg"}`;
 
     return {
-      title: `${articleById.title} | ديربال`,
+      title: `${articleById.title} | دربال`,
       description,
       imageUrl,
       currentUrl,
-      author: articleById.published_at || "ديربال",
+      author: articleById.published_at || "دربال",
       publishedTime: articleById.published_at || new Date().toISOString(),
       modifiedTime:
         articleById.published_at ||
@@ -117,7 +117,7 @@ const ArticlePage = ({
       },
       publisher: {
         "@type": "Organization",
-        name: "ديربال",
+        name: "دربال",
         logo: {
           "@type": "ImageObject",
           url: `${
@@ -157,7 +157,7 @@ const ArticlePage = ({
         <meta property="og:image:alt" content={articleById.title} />
         <meta property="og:url" content={metaData.currentUrl} />
         <meta property="og:type" content="article" />
-        <meta property="og:site_name" content="ديربال" />
+        <meta property="og:site_name" content="دربال" />
         <meta property="og:locale" content="ar_AR" />
 
         {/* Article specific Open Graph tags */}

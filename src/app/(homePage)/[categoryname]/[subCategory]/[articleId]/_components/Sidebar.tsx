@@ -28,7 +28,7 @@ const Sidebar = ({ articleById }: SidebarProps) => {
       | "copy"
   ) => {
     const url = window.location.href;
-    const title = articleById?.title || "مقال من موقع ديربال";
+    const title = articleById?.title || "مقال من موقع دربال";
     const description =
       articleById?.title ||
       articleById?.description?.replace(/<[^>]*>/g, "").substring(0, 200) +
