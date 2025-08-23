@@ -28,7 +28,7 @@ const NewActiveTaps: React.FC<TapsProps> = ({
             activeTab === tab || hoverTab === tab
               ? "border-transparent bg-gradient-to-r from-[#B5975C]/50 to-[#B5975C] text-white"
               : "border-[#d7d7d7] bg-white text-[#191514]"
-          }`}
+          } hover:shadow-md`}
         >
           <span className="-mt-[4px] font-tajawal text-base font-[500] xl:text-lg">
             {tab}

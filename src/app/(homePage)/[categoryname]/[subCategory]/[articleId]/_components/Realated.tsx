@@ -7,7 +7,6 @@ import { useState } from "react";
 interface RelatedTopicsProps {
   articlesByCategory: Article[];
   onSearch?: (searchTerm: string) => void;
-  articlesByTag: Article[];
 }
 
 const RelatedTopics = ({
@@ -92,7 +91,7 @@ const RelatedTopics = ({
   return (
     <div className=" text-right text-white">
       {/* Search Section */}
-      <div className="mb-6 mt-3 flex">
+      <div className="mb-6 mt-3 hidden md:flex">
         <div className="relative flex-grow">
           <input
             type="text"
@@ -100,7 +99,7 @@ const RelatedTopics = ({
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             onKeyPress={handleKeyPress}
-            className="flex h-[42px] w-full items-center placeholder:text-sm text-sm border border-gray-300 bg-white px-4 pr-4 text-black outline-none placeholder:font-tajawal focus:border-[#B5975C] focus:ring-1 focus:ring-[#B5975C]"
+            className="flex h-[42px] w-full font-tajawal items-center placeholder:text-sm text-sm border border-gray-300 bg-white px-4 pr-4 text-black outline-none placeholder:font-tajawal focus:border-[#B5975C] focus:ring-1 focus:ring-[#B5975C]"
           />
           {searchTerm && (
             <button
@@ -122,7 +121,7 @@ const RelatedTopics = ({
 
       {/* Search Results Info */}
       {searchTerm && (
-        <div className="mb-4 text-sm text-[#B5975C]">
+        <div className="mb-4 text-sm text-[#B5975C] font-tajawal">
           البحث عن: {searchTerm}
         </div>
       )}

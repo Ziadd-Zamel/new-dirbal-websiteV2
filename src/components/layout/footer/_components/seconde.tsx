@@ -108,7 +108,7 @@ export default function Seconde() {
 
   return (
     <>
-      <div className="flex w-full border-x-3 border-[#21262C] flex-col space-y-4 py-10 text-right lg:w-[30%] lg:pb-0 lg:pl-5 lg:pr-5 lg:pt-4">
+      <div className="flex w-full lg:border-x-3 border-[#21262C] flex-col space-y-4 py-10 text-right lg:w-[30%] lg:pb-0 lg:pl-5 lg:pr-5 lg:pt-4">
         <div className="items-cente mb-2 flex justify-start">
           <h3 className="font-tajawal text-lg font-[500] uppercase">
             شارك الصفحة بواسطة :

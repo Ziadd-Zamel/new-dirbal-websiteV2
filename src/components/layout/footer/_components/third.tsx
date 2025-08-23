@@ -69,14 +69,14 @@ export default function Third() {
               disabled={isLoading}
               style={{ direction: "rtl" }}
               placeholder=" بريدك الإلكتروني"
-              className="-mt-[2px] w-full bg-transparent text-right placeholder:font-tajawal placeholder:text-sm placeholder:text-gray-500 focus:border-amber-600 focus:outline-none disabled:opacity-50"
+              className="-mt-[2px] w-full bg-transparent font-tajawal text-right placeholder:font-tajawal placeholder:text-sm placeholder:text-gray-500 focus:border-amber-600 focus:outline-none disabled:opacity-50"
             />
           </div>
           <textarea
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             disabled={isLoading}
-            className="w-full mt-[18px] resize-none rounded-[2px] border border-gray-700 bg-[#474747]/70 px-2 placeholder:font-tajawal placeholder:text-sm placeholder:text-gray-500 disabled:opacity-50"
+            className="w-full mt-[18px] font-tajawal resize-none rounded-[2px] border border-gray-700 bg-[#474747]/70 px-2 placeholder:font-tajawal placeholder:text-sm placeholder:text-gray-500 disabled:opacity-50"
             placeholder="اكتب رسالتك إلى إدارة الموقع"
             rows={12}
           />

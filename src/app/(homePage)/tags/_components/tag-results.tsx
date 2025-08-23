@@ -88,7 +88,7 @@ export default function TagResults({
             tagResults.data.articles.length > 0 ? (
             <>
               {/* Articles List */}
-              <div className="space-y-0 lg:mr-24 max-w-[80%]">
+              <div className="space-y-0 lg:mr-24 w-full md:max-w-[80%]">
                 {tagResults.data.articles.map((article) => (
                   <ArticleCard
                     key={article.id}

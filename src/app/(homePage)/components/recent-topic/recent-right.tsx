@@ -84,7 +84,7 @@ export default function RecentRightSection({
   }
 
   return (
-    <div className="mt-3 flex w-full flex-col items-start justify-end sm:w-[80%] lg:w-[48%] lg:pr-5">
+    <div className="mt-3 flex w-full flex-col items-start justify-end sm:w-[80%] lg:w-[48%] sm:-5 md:pr-0 lg:pr-5">
       <div className="w-full">
         <div className="flex w-full flex-col items-start space-y-2">
           {articleGroups[currentIndex]?.map((article, cardIndex) => {
@@ -149,6 +149,7 @@ export default function RecentRightSection({
               }`}
               onClick={() => handleNavigation(index)}
               disabled={isTransitioning}
+              aria-label={`Go to group ${index + 1}`}
             />
           ))}
         </div>

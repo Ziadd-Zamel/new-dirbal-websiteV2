@@ -4,7 +4,7 @@
 import HeadingSection from "@/components/common/heading-section";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import Taps from "./taps";
 import ArticleSectoin from "./article-sectoin";
 import ArticleSearch from "./article-serach";
@@ -30,6 +30,7 @@ const MainPage = ({
   // Get search query from URL
   const searchQuery = searchParams.get("search") || "";
   console.log(subCategory);
+
   // Tabs initialization
   const tabs =
     subCategory.subSubCategory?.map((sub) => ({
@@ -78,25 +79,31 @@ const MainPage = ({
     });
   }, [articles, searchQuery]);
 
-  // Handle tab change function
-  const handleTabChange = (tabUuid: string) => {
-    setActiveTab(tabUuid);
-    const params = new URLSearchParams(searchParams.toString());
-    params.set("subSubCategory", tabUuid);
-    params.delete("page"); // Reset to first page when changing tabs
-    router.replace(`?${params.toString()}`, { scroll: false });
-  };
+  // Simple tab change handler
+  const handleTabChange = useCallback(
+    (tabUuid: string) => {
+      setActiveTab(tabUuid);
+      const params = new URLSearchParams(searchParams.toString());
+      params.set("subSubCategory", tabUuid);
+      params.delete("page"); // Reset to first page when changing tabs
+      router.replace(`?${params.toString()}`, { scroll: false });
+    },
+    [searchParams, router]
+  );
 
   // Handle page change function
-  const handlePageChange = (page: number) => {
-    const params = new URLSearchParams(searchParams.toString());
-    if (page === 1) {
-      params.delete("page"); // Remove page param if it's page 1
-    } else {
-      params.set("page", page.toString());
-    }
-    router.replace(`?${params.toString()}`, { scroll: false });
-  };
+  const handlePageChange = useCallback(
+    (page: number) => {
+      const params = new URLSearchParams(searchParams.toString());
+      if (page === 1) {
+        params.delete("page"); // Remove page param if it's page 1
+      } else {
+        params.set("page", page.toString());
+      }
+      router.replace(`?${params.toString()}`, { scroll: false });
+    },
+    [searchParams, router]
+  );
 
   // Effect to update active tab when selectedSubSubCategory changes
   useEffect(() => {
@@ -201,7 +208,7 @@ const MainPage = ({
         {/* Main items */}
         <div
           className={`mt-10 w-full md:mt-0 ${
-            hasTabs ? "md:w-[70%]" : "md:w-full max-w-[80%] lg:mr-24"
+            hasTabs ? "md:w-[70%]" : "w-full md:max-w-[80%] lg:mr-24"
           }`}
         >
           <ArticleSectoin
@@ -210,7 +217,7 @@ const MainPage = ({
             }
             articles={filteredArticles}
             pagination={searchPagination}
-            currentPage={searchQuery ? 1 : currentPage}
+            currentPage={searchQuery ? 1 : pagination.current_page}
             onPageChange={handlePageChange}
             searchQuery={searchQuery}
           />

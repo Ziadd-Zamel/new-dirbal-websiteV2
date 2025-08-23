@@ -23,7 +23,6 @@ const ArticlePage = ({
   const [sidebarOffset, setSidebarOffset] = useState(0);
   const searchParams = useSearchParams();
 
-  // Read search parameter from URL when component mounts
   useEffect(() => {
     const searchQuery = searchParams.get("search");
     if (searchQuery) {
@@ -31,28 +30,22 @@ const ArticlePage = ({
     }
   }, [searchParams]);
 
-  // Dynamic scroll-based sidebar animation
   useEffect(() => {
     let scrollTimeout: NodeJS.Timeout;
 
     const handleScroll = () => {
       const scrollY = window.scrollY;
 
-      // Clear previous timeout
       clearTimeout(scrollTimeout);
 
-      // Wait for user to stop scrolling (300ms delay)
       scrollTimeout = setTimeout(() => {
-        // Ignore first 600px of scroll, then move sidebar 1:1 with remaining scroll
         if (scrollY <= 500) {
           setSidebarOffset(0);
           return;
         }
 
-        // Calculate offset after ignoring first 400px
         const dynamicOffset = scrollY - 400;
 
-        // Limit to 80% of the main content div height
         const mainContent = document.querySelector(".main-content");
         const maxOffset = mainContent
           ? mainContent.scrollHeight * 0.8
@@ -269,11 +262,14 @@ const ArticlePage = ({
             >
               <Sidebar articleById={articleById} />
             </div>
-            <div className="w-[87px]" />
+            <div className="w-[87px] hidden md:block" />
             {/* Main Content */}
             <div className="w-full md:w-[65%]">
               <Mawdooa articleById={articleById} searchTerm={searchTerm} />
-              {/* Add id or data attribute for comments section */}
+              <RelatedTopics
+                articlesByCategory={articlesByCategory}
+                onSearch={handleSearch}
+              />
               <div id="comments-section" data-comments>
                 <CommentForm />
               </div>
@@ -283,7 +279,6 @@ const ArticlePage = ({
             <div className="hidden w-[25%] md:block">
               <RelatedTopics
                 articlesByCategory={articlesByCategory}
-                articlesByTag={articlesByTag}
                 onSearch={handleSearch}
               />
             </div>

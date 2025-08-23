@@ -64,7 +64,7 @@ const MawdooaHeading: React.FC<MawdooaHeadingProps> = ({
           dir="rtl"
         >
           <div dir="rtl" className="text-right relative">
-            <div className="mt-10 sm:mt-20 lg:mt-36">
+            <div className="mt-36">
               <div className="flex flex-col justify-between sm:flex-row sm:items-center lg:w-[70%]">
                 <div className="flex items-center gap-5">
                   <div className="relative flex h-24 w-42 flex-col items-center justify-center">
@@ -76,16 +76,16 @@ const MawdooaHeading: React.FC<MawdooaHeadingProps> = ({
                     />
                     <div className="absolute inset-0 bg-black/30"></div>
                     <div className="relative z-20 flex flex-col items-center">
-                      <p className="-mt-3 text-5xl font-semibold text-white">
+                      <p className="-mt-3 text-3xl sm:text-5xl font-semibold text-white">
                         {articleById?.title_number}
                       </p>
-                      <p className="mt-1 font-tajawal text-3xl font-semibold text-white">
+                      <p className="mt-1 font-tajawal text-xl sm:text-3xl font-semibold text-white">
                         {articleById?.title_short}
                       </p>
                     </div>
                   </div>
                   <motion.h2
-                    className="text-right font-tajawal text-xl font-semibold text-[#B5975C] sm:text-3xl"
+                    className="text-right font-tajawal text-md font-semibold text-[#B5975C] sm:text-3xl"
                     initial={{ opacity: 0, y: 50 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}

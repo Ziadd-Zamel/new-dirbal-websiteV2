@@ -155,6 +155,7 @@ const ArticleSectoin = ({
 
   return (
     <div className="relative z-30 pb-20 pt-10 ">
+      {/* Loading Indicator */}
       {/* Page Title */}
       <h4 className="mb-[65px] mt-7 text-right font-tajawal text-4xl font-bold text-[#B5975C]">
         {title}

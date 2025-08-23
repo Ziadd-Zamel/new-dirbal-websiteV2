@@ -1,17 +1,21 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
+
+import { useCallback, useEffect, useState } from "react";
+import useEmblaCarousel from "embla-carousel-react";
+import dynamic from "next/dynamic";
 import LeftArrowIcon from "@/components/Icons/LeftArrowIcon";
 import ArrowIcon from "@/components/Icons/RightArrowIcon";
-
-import useEmblaCarousel from "embla-carousel-react";
-import { useEffect, useState } from "react";
 import MainSlide from "./main-slide";
-import DynamicSlide from "./dynamic-slide";
+
+const DynamicSlide = dynamic(() => import("./dynamic-slide"));
 
 interface Props {
   categories: Category[];
   Qabasat: Qabasat[];
   backgroundHomeImage: string;
 }
+
 export default function HeroSection({
   Qabasat,
   categories,
@@ -19,6 +23,7 @@ export default function HeroSection({
 }: Props) {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const totalSlides = 1 + (categories?.length || 0);
+
   const [emblaRef, emblaApi] = useEmblaCarousel({
     loop: true,
     align: "center",
@@ -26,12 +31,21 @@ export default function HeroSection({
     dragFree: false,
   });
 
+  const goToPrev = useCallback(() => {
+    if (!emblaApi) return;
+    emblaApi.scrollPrev();
+  }, [emblaApi]);
+
+  const goToNext = useCallback(() => {
+    if (!emblaApi) return;
+    emblaApi.scrollNext();
+  }, [emblaApi]);
+
   useEffect(() => {
     if (!emblaApi) return;
 
     const onSelect = () => {
-      const index = emblaApi.selectedScrollSnap();
-      setSelectedIndex(index);
+      setSelectedIndex(emblaApi.selectedScrollSnap());
     };
 
     emblaApi.on("select", onSelect);
@@ -42,18 +56,6 @@ export default function HeroSection({
     };
   }, [emblaApi]);
 
-  const goToPrev = () => {
-    if (!emblaApi) return;
-    const prevIndex = selectedIndex === 0 ? totalSlides - 1 : selectedIndex - 1;
-    emblaApi.scrollTo(prevIndex);
-  };
-
-  const goToNext = () => {
-    if (!emblaApi) return;
-    const nextIndex = selectedIndex === totalSlides - 1 ? 0 : selectedIndex + 1;
-    emblaApi.scrollTo(nextIndex);
-  };
-
   return (
     <div
       style={{ direction: "ltr" }}
@@ -63,12 +65,10 @@ export default function HeroSection({
         <div className="flex h-full w-full">
           {/* First slide - always present */}
           <div className="relative min-w-full flex-none overflow-hidden">
-            <div className="h-full w-full">
-              <MainSlide
-                backgroundHomeImage={backgroundHomeImage}
-                Qabasat={Qabasat}
-              />
-            </div>
+            <MainSlide
+              backgroundHomeImage={backgroundHomeImage}
+              Qabasat={Qabasat}
+            />
           </div>
 
           {/* Dynamic slides based on categories */}
@@ -77,9 +77,7 @@ export default function HeroSection({
               key={category.uuid}
               className="relative min-w-full flex-none overflow-hidden"
             >
-              <div className="h-full w-full">
-                <DynamicSlide category={category} />
-              </div>
+              <DynamicSlide category={category} />
             </div>
           ))}
         </div>
@@ -89,13 +87,16 @@ export default function HeroSection({
         className="pointer-events-auto absolute -left-32 top-1/2 z-[100] flex h-[40px] w-[40px] -translate-y-1/2 items-center justify-center rounded-full bg-[#D7D7D71A] text-white transition-all hover:bg-[#D7D7D730] md:left-4"
         onClick={goToPrev}
         type="button"
+        aria-label="الشريحة السابقة"
       >
         <LeftArrowIcon width={20} height={20} dark={false} />
       </button>
+
       <button
         className="pointer-events-auto absolute -right-32 top-1/2 z-[100] flex h-[40px] w-[40px] -translate-y-1/2 items-center justify-center rounded-full bg-[#D7D7D71A] text-white transition-all hover:bg-[#D7D7D730] md:right-4"
         onClick={goToNext}
         type="button"
+        aria-label="الشريحة التالية"
       >
         <ArrowIcon width={20} height={20} dark={false} />
       </button>

@@ -27,7 +27,7 @@ export default function MainSlide({
         className={`absolute inset-0 z-10 h-full flex-[0_0_100%] opacity-100 transition-opacity duration-1000 ease-in-out`}
       >
         <Image
-          className="absolute left-1/2 -translate-x-1/2 top-1 z-40"
+          className="absolute left-1/2 -translate-x-1/2 top-20 md:top-1 z-40"
           src={"/assets/Basmala.png"}
           alt="basmala"
           width={150}

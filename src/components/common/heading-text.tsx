@@ -28,7 +28,7 @@ const HeadingText: React.FC<HeadingTextProps> = ({
     >
       <div className="flex w-full flex-col items-center justify-center">
         <div className="flex items-end gap-4 md:gap-16 lg:gap-28">
-          <h3
+          <h2
             className={cn(
               "text-center font-tajawal text-base font-bold text-white md:text-2xl xl:text-[38px]",
               className
@@ -36,7 +36,7 @@ const HeadingText: React.FC<HeadingTextProps> = ({
           >
             {goldenText && <span className="text-[#B5975C]">{goldenText}</span>}
             {title}
-          </h3>
+          </h2>
         </div>
 
         <p

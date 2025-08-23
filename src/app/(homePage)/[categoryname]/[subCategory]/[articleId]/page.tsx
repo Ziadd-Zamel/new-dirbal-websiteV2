@@ -3,14 +3,45 @@ import {
   getArticlesBySubCategory,
   getArticlesByTag,
 } from "@/lib/api/article.api";
+import { generateArticleMetadata } from "@/lib/metadata/data";
+import { generateArticleStructuredData } from "@/lib/Seo/data";
 import ArticlePage from "./_components/article-page";
+import Script from "next/script";
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{
+    articleId: string;
+    subCategory: string;
+    categoryname: string;
+  }>;
+}) {
+  const { articleId, categoryname } = await params;
+
+  const article = await getArticleById(articleId);
+
+  if (!article?.data) {
+    return {
+      title: "المقال غير موجود | ديربال",
+      description: "المقال المطلوب غير موجود",
+    };
+  }
+
+  return generateArticleMetadata(article.data, categoryname);
+}
+
 export default async function Page({
   params,
 }: {
-  params: Promise<{ articleId: string; subCategory: string }>;
+  params: Promise<{
+    articleId: string;
+    subCategory: string;
+    categoryname: string;
+  }>;
 }) {
-  const { articleId, subCategory } = await params;
+  const { articleId, subCategory, categoryname } = await params;
   const articlesByCategory = await getArticlesBySubCategory(subCategory);
   const articleById = await getArticleById(articleId);
 
@@ -25,8 +56,25 @@ export default async function Page({
     }
   }
 
+  if (!articleById?.data) {
+    return null;
+  }
+
+  const structuredData = generateArticleStructuredData(
+    articleById.data,
+    categoryname
+  );
+
   return (
     <>
+      {/* ✅ Structured data via next/script */}
+      <Script
+        id="article-structured-data"
+        type="application/ld+json"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+
       <ArticlePage
         articlesByCategory={articlesByCategory.data}
         articleById={articleById.data}
