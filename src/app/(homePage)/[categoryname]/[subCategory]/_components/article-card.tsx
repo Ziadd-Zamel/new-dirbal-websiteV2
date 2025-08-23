@@ -63,7 +63,6 @@ const ArticleCard = ({
   };
 
   const hasVideo = article.video_url;
-  console.log(article);
   useEffect(() => {
     const handleCloseOthers = (event: CustomEvent) => {
       if (event.detail.exceptId !== article.uuid && isExpanded) {

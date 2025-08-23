@@ -28,7 +28,6 @@ export default function SearchResults({
 }: SearchResultsProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  console.log(searchResults);
   const handlePageChange = (page: number) => {
     const params = new URLSearchParams(searchParams.toString());
     if (page === 1) {

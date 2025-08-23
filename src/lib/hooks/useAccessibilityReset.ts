@@ -51,8 +51,6 @@ export function useAccessibilityReset() {
         if (typeof window !== "undefined") {
           localStorage.removeItem("accessibility-font-scale");
         }
-
-        console.log("Accessibility settings reset on page navigation");
       } catch (error) {
         console.warn("Error resetting accessibility settings:", error);
       }
