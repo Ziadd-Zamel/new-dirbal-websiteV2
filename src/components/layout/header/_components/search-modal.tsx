@@ -3,7 +3,7 @@ import SearchIcon from "@/components/Icons/SearchIcon";
 import { Dialog, DialogClose, DialogContent } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { motion } from "framer-motion";
-import { X } from "lucide-react";
+import { Search, X } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -27,8 +27,8 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="h-[500px] !max-w-4xl border-0 bg-[#161D27] p-0">
-        <div className="relative h-[500px] w-full bg-[#161D27] bg-opacity-95">
+      <DialogContent className="h-[500px] !max-w-4xl border-0 bg-background p-0">
+        <div className="relative h-[500px] w-full bg-background bg-opacity-95">
           <div className="absolute inset-0 mt-0 h-full">
             <Image
               src={"/assets/mainbg-5.png"}
@@ -39,24 +39,17 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
             />
           </div>
 
-          <DialogClose
-            onClick={onClose}
-            className="absolute right-8 top-7 z-50 text-white hover:opacity-75"
-          >
-            <X className="h-6 w-6" />
-          </DialogClose>
-
           <div className="relative flex h-[500px] items-center justify-center px-6">
             <form
               onSubmit={handleSearch}
               className="relative flex w-full !max-w-4xl items-center"
             >
               <div className="relative w-full">
-                <div className="absolute left-0 top-1/2 -translate-y-1/2 text-white">
-                  <SearchIcon dark={false} width={30} height={30} />
+                <div className="absolute left-0 top-1/2 -translate-y-1/2 text-white light:text-black">
+                  <Search className="text-white light:text-black" />
                 </div>
                 <Input
-                  className="border-0 bg-transparent font-tajawal text-right !text-[30px] text-white placeholder:text-[30px] placeholder:font-tajawal placeholder:text-[#FFFFFF4D] focus-visible:ring-0"
+                  className="border-0 bg-transparent font-tajawal light:placeholder:text-black text-right !text-[30px] text-white light:text-black placeholder:text-[30px] placeholder:font-tajawal placeholder:text-[#FFFFFF4D] focus-visible:ring-0"
                   dir="rtl"
                   placeholder="كلمة/كلمات البحث..."
                   autoFocus
@@ -65,7 +58,7 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
                   style={{ direction: "rtl" }}
                 />
                 <motion.div
-                  className="absolute -bottom-2 left-0 z-50 h-[1px] w-full origin-right bg-white"
+                  className="absolute -bottom-2 left-0 z-50 h-[1px] w-full origin-right bg-white light:bg-black"
                   initial={{ scaleX: 0 }}
                   animate={{ scaleX: 1 }}
                   transition={{

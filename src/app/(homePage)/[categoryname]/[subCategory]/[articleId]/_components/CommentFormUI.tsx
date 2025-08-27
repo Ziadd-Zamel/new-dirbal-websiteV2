@@ -54,7 +54,7 @@ const CommentForm = () => {
     <>
       <div
         style={{ direction: "rtl" }}
-        className="mb-10 mt-24 w-full rounded-lg text-right text-white"
+        className="mb-10 mt-24 w-full rounded-lg text-right text-white light:text-black"
       >
         <h2 className="flex items-center gap-2 text-md font-semibold font-tajawal">
           <FaRegComment className="text-[#D9A760]" /> أضف تعليقاً
@@ -65,7 +65,7 @@ const CommentForm = () => {
             value={comment}
             onChange={(e) => setComment(e.target.value)}
             disabled={isLoading}
-            className="mt-4 h-44 w-full bg-[#F2F2F2] p-3 text-base placeholder:text-base font-tajawal text-black placeholder:font-tajawal focus:outline-none disabled:opacity-50"
+            className="mt-4 h-44 w-full bg-[#F2F2F2] light:bg-white p-3 text-base placeholder:text-base font-tajawal text-black placeholder:font-tajawal focus:outline-none disabled:opacity-50"
             placeholder="نص التعليق"
             required
           />
@@ -76,7 +76,7 @@ const CommentForm = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               disabled={isLoading}
-              className="w-1/2 bg-[#F2F2F2] text-base placeholder:text-base font-tajawal p-2 text-black placeholder:font-tajawal focus:outline-none disabled:opacity-50"
+              className="w-1/2 bg-[#F2F2F2] light:bg-white text-base placeholder:text-base font-tajawal p-2 text-black placeholder:font-tajawal focus:outline-none disabled:opacity-50"
               placeholder="البريد الإلكتروني"
               required
             />
@@ -85,7 +85,7 @@ const CommentForm = () => {
               value={name}
               onChange={(e) => setName(e.target.value)}
               disabled={isLoading}
-              className="w-1/2 bg-[#F2F2F2] text-base placeholder:text-base font-tajawal p-2 text-black placeholder:font-tajawal focus:outline-none disabled:opacity-50"
+              className="w-1/2 bg-[#F2F2F2] light:bg-white text-base placeholder:text-base font-tajawal p-2 text-black placeholder:font-tajawal focus:outline-none disabled:opacity-50"
               placeholder="الاسم (اختياري)"
             />
           </div>

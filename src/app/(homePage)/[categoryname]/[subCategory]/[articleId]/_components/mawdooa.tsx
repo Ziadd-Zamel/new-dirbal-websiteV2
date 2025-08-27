@@ -4,6 +4,7 @@ import { Pause, Play } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import Sidebar from "./row-bar";
 
 interface CustomAudioPlayerProps {
   audioUrl: string;
@@ -306,6 +307,9 @@ const Mawdooa = ({ articleById, searchTerm }: MawdooaProps) => {
       className="w-full pb-5 pl-2 border-[#B5975C]  main-content"
       ref={contentRef}
     >
+      <div className="block sm:hidden -mt-10 mb-10">
+        <Sidebar articleById={articleById} />
+      </div>
       <div
         style={{ direction: "rtl" }}
         className="flex w-full items-center gap-5"
@@ -314,7 +318,7 @@ const Mawdooa = ({ articleById, searchTerm }: MawdooaProps) => {
           <span className="font-tajawal text-[12px] font-bold text-[#B5975C] sm:text-[16px] md:text-[16px] xl:text-2xl">
             {articleById.title_number} {articleById.title_short}:{" "}
           </span>
-          <span className="font-tajawal text-[12px] font-bold text-white sm:text-[16px] md:text-[16px] xl:text-2xl">
+          <span className="font-tajawal text-[12px] font-bold text-white light:text-black sm:text-[16px] md:text-[16px] xl:text-2xl">
             {articleById.title}
           </span>
         </div>
@@ -322,7 +326,7 @@ const Mawdooa = ({ articleById, searchTerm }: MawdooaProps) => {
 
       <div
         style={{ direction: "rtl" }}
-        className="-mr-2 flex items-center gap-10 text-white"
+        className="-mr-2 flex items-center gap-10 text-white light:text-black"
       >
         <div className="mt-1 flex items-center">
           <Image
@@ -354,7 +358,7 @@ const Mawdooa = ({ articleById, searchTerm }: MawdooaProps) => {
 
       <p
         style={{ direction: "rtl" }}
-        className="-mr-[11px] mt-12 text-center text-gray-300 font-tajawal text-[12px] font-medium text-gray sm:text-[16px] md:text-[16px]"
+        className="-mr-[11px] mt-12 text-center text-gray-300 light:text-black font-tajawal text-[12px] font-medium text-gray sm:text-[16px] md:text-[16px]"
       >
         {articleById.sub_title}
       </p>
@@ -379,7 +383,7 @@ const Mawdooa = ({ articleById, searchTerm }: MawdooaProps) => {
               ? "ltr"
               : "rtl",
           }}
-          className={`mt-5 font-tajawal text-sm text-gray-300 ${
+          className={`mt-5 font-tajawal text-sm text-gray-300 light:text-gray-600 ${
             isSubjectEnglish(articleById.description)
               ? "text-left"
               : "text-justify"
@@ -410,7 +414,7 @@ const Mawdooa = ({ articleById, searchTerm }: MawdooaProps) => {
                   </h6>
                   <p
                     style={{ direction: isEnglish ? "ltr" : "rtl" }}
-                    className={`font-tajawal text-sm text-gray-300 ${
+                    className={`font-tajawal text-sm text-gray-300 light:text-gray-600 ${
                       isEnglish ? "text-left" : "text-justify"
                     }`}
                     dangerouslySetInnerHTML={{

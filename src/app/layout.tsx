@@ -40,7 +40,9 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${tajawal.variable} font-sans antialiased`}>
+      <body
+        className={`${tajawal.variable} font-sans antialiased bg-background`}
+      >
         <Providers>
           {children}
           {/* Accessibility Button - Left side, resets on every page navigation */}

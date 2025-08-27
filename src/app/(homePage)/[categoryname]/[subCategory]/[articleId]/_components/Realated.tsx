@@ -128,7 +128,9 @@ const RelatedTopics = ({
 
       {/* Latest Branch Topics Section */}
       <div className="mt-20">
-        <h2 className="mb-2 font-tajawal text-lg">آخر موضوعات الفرع:</h2>
+        <h2 className="mb-2 font-tajawal text-lg light:text-black">
+          آخر موضوعات الفرع:
+        </h2>
         <div className="overflow-hidden  bg-white text-black">
           {latestTopics.map((article) => {
             const { day, month } = formatDateForDisplay(article.published_at);

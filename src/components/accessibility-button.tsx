@@ -2,9 +2,10 @@
 
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { Plus, Minus } from "lucide-react";
+import { Plus, Minus, Sun, Moon } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 import { IoAccessibilitySharp } from "react-icons/io5";
+import { useTheme } from "next-themes";
 
 interface AccessibilityButtonProps {
   className?: string;
@@ -21,6 +22,7 @@ export default function AccessibilityButton({
     new Map()
   );
   const pathname = usePathname();
+  const { theme, setTheme } = useTheme();
 
   useEffect(() => {
     // Don't load saved settings since we reset on every page navigation
@@ -399,6 +401,27 @@ export default function AccessibilityButton({
 
   const scalePercentage = Math.round(fontScale * 100);
 
+  const toggleTheme = () => {
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+
+    // Direct DOM manipulation as fallback
+    const html = document.documentElement;
+    const body = document.body;
+
+    if (newTheme === "dark") {
+      html.setAttribute("data-theme", "dark");
+      body.style.backgroundColor = "#0f172a";
+      body.style.color = "#f8fafc";
+    } else {
+      html.setAttribute("data-theme", "light");
+      body.style.backgroundColor = "#f3f3f3";
+      body.style.color = "#0f172a";
+    }
+  };
+
+  const isDarkTheme = theme === "dark";
+
   return (
     <div
       className={cn("fixed bottom-3 left-3 z-50", className)}
@@ -455,6 +478,57 @@ export default function AccessibilityButton({
                     <Plus />
                   </span>
                 </button>
+              </div>
+            </div>
+
+            {/* Theme switcher */}
+            <div className="space-y-3">
+              <div className="flex items-center justify-between bg-slate-50 rounded-xl p-3">
+                <button
+                  onClick={toggleTheme}
+                  className={cn(
+                    "flex h-10 w-10 items-center justify-center rounded-lg transition-all duration-200 shadow-sm border hover:scale-105",
+                    isDarkTheme
+                      ? "bg-slate-800 text-yellow-400 border-slate-700 hover:bg-slate-700 hover:border-yellow-300"
+                      : "bg-white text-slate-700 border-slate-200 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-300"
+                  )}
+                  aria-label={
+                    isDarkTheme
+                      ? "تبديل إلى الوضع الفاتح"
+                      : "تبديل إلى الوضع الداكن"
+                  }
+                >
+                  {isDarkTheme ? (
+                    <Sun className="h-5 w-5" />
+                  ) : (
+                    <Moon className="h-5 w-5" />
+                  )}
+                </button>
+
+                <div className="text-center">
+                  <div className="text-sm font-medium text-slate-600">
+                    {isDarkTheme ? "داكن" : "فاتح"}
+                  </div>
+                  <div className="text-xs text-slate-500">
+                    {isDarkTheme ? "Dark" : "Light"}
+                  </div>
+                </div>
+
+                <div
+                  className={cn(
+                    "flex h-10 w-10 items-center justify-center rounded-lg border-2 transition-all duration-200",
+                    isDarkTheme
+                      ? "bg-slate-800 border-slate-600"
+                      : "bg-white border-slate-300"
+                  )}
+                >
+                  <div
+                    className={cn(
+                      "w-6 h-6 rounded-full transition-all duration-300",
+                      isDarkTheme ? "bg-slate-600" : "bg-blue-500"
+                    )}
+                  />
+                </div>
               </div>
             </div>
 

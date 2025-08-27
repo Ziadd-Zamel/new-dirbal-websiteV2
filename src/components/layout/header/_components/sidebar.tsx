@@ -45,17 +45,17 @@ export default function Sidebar() {
   };
 
   return (
-    <div className="relative" style={{ direction: "rtl" }}>
+    <div className="relative " style={{ direction: "rtl" }}>
       <Sheet open={open} onOpenChange={handleOpenChange}>
         <SheetTrigger asChild>
-          <button className="mt-5 cursor-pointer block border-solid md:mt-0 md:pl-[16px] ">
+          <button className="mt-5  md:mt-0 cursor-pointer block border-solid pl-5 md:pl-[16px] ">
             <HamburgerIcon dark={false} />
           </button>
         </SheetTrigger>
 
         <SheetContent
           side="right"
-          className="flex w-full flex-col justify-between bg-[#161D27] py-10 text-white sm:w-[350px]"
+          className="flex w-full flex-col justify-between bg-background py-10 text-white light:text-black sm:w-[350px]"
         >
           <div className="flex w-full justify-end pl-6">
             <Image
@@ -72,13 +72,13 @@ export default function Sidebar() {
               <p className="text-center text-red-500">حدث خطأ أثناء التحميل</p>
             )}
             <div>
-              <div className="mr-1 flex cursor-pointer items-center justify-start gap-2 rounded-sm px-1 py-2 text-white transition-colors hover:bg-white/10">
+              <div className="mr-1 flex cursor-pointer items-center justify-start gap-2 rounded-sm px-1 py-2 light:text-black  text-white transition-colors hover:bg-white/10 light:hover:bg-black/10 ">
                 <Link href="/" passHref>
                   <div
                     className="flex w-full items-center justify-end gap-2 rounded-sm"
                     onClick={handleLinkClick}
                   >
-                    <FiMinus className="text-xl text-white" />
+                    <FiMinus className="text-xl light:text-black  text-white" />
                     <span className="text-right font-tajawal text-lg font-medium">
                       الرئيسة
                     </span>
@@ -90,7 +90,7 @@ export default function Sidebar() {
               <div key={item.id}>
                 <motion.div
                   onClick={() => handleExpand(item.id)}
-                  className="flex cursor-pointer items-center justify-start gap-2 text-white"
+                  className="flex cursor-pointer items-center justify-start gap-2 light:text-black  text-white"
                   initial={false}
                   animate={{
                     backgroundColor:
@@ -109,11 +109,11 @@ export default function Sidebar() {
                     transition={{ duration: 0.2 }}
                   >
                     {!item.SubCategory ? (
-                      <IoIosArrowBack className="text-xl text-white" />
+                      <IoIosArrowBack className="text-xl light:text-black  text-white" />
                     ) : expandedId === item.id ? (
-                      <FiMinus className="text-xl text-white" />
+                      <FiMinus className="text-xl light:text-black  text-white" />
                     ) : (
-                      <FiPlus className="text-xl text-white" />
+                      <FiPlus className="text-xl light:text-black  text-white" />
                     )}
                   </motion.div>
                   <span className="text-right font-tajawal text-lg font-medium">
@@ -158,8 +158,8 @@ export default function Sidebar() {
                                   }}
                                   onClick={handleLinkClick}
                                 >
-                                  <IoIosArrowBack className="text-sm text-white" />
-                                  <span className="text-right font-tajawal text-base font-normal">
+                                  <IoIosArrowBack className="text-sm light:text-black  text-white" />
+                                  <span className="text-right font-tajawal text-base font-normal light:text-gray-700">
                                     {SubCategory.name}
                                   </span>
                                 </motion.div>

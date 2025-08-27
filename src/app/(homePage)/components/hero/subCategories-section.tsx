@@ -37,13 +37,13 @@ export default function SubCategorySection({ SubCategory, categoryId }: Props) {
               <Link
                 href={`/${categoryId}/${sub.uuid}`}
                 aria-label={`انتقل إلى ${sub.name}`}
-                className="flex w-full items-center justify-end rounded-lg bg-black/20 p-4 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:bg-black/30 focus:outline-none focus:ring-2 focus:ring-[#B5975C]"
+                className="flex flex-row-reverse w-full items-center justify-end rounded-lg bg-black/20 p-4 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:bg-black/30 focus:outline-none focus:ring-2 focus:ring-[#B5975C]"
               >
                 <div className="mr-3 flex flex-col text-right">
-                  <h3 className="font-tajawal text-base font-bold text-[#B5975C] sm:text-lg">
+                  <h3 className="font-tajawal font-bold text-[#B5975C] sm:text-lg">
                     {sub.name}
                   </h3>
-                  <p className="text-xl text-white font-tajawal">
+                  <p className=" text-xs sm:text-xl text-white font-tajawal">
                     {sub.sub_title || "نص تعريفي"}
                   </p>
                 </div>

@@ -11,12 +11,14 @@ interface BookmarkButtonProps {
   article: Article;
   width?: number;
   height?: number;
+  white?: boolean;
 }
 
 export default function BookmarkButton({
   article,
   width = 80,
   height = 80,
+  white,
 }: BookmarkButtonProps) {
   const [bookmarked, setBookmarked] = useState(false);
 
@@ -47,7 +49,9 @@ export default function BookmarkButton({
           <TfiBookmark
             strokeWidth={0.01}
             size={30}
-            className="transition-colors text-white duration-300"
+            className={`transition-colors  duration-300 ${
+              white ? "text-white" : "text-white light:text-black "
+            }`}
           />
         )}
       </button>

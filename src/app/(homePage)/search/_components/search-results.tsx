@@ -3,6 +3,7 @@ import ArticleCard from "../../[categoryname]/[subCategory]/_components/article-
 import ArticlePagintation from "../../[categoryname]/[subCategory]/_components/articles-pagination";
 import HeadingText from "@/components/common/heading-text";
 import SectionLogo from "@/components/common/section-logo";
+import { useTheme } from "next-themes";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -37,7 +38,7 @@ export default function SearchResults({
     }
     router.replace(`?${params.toString()}`, { scroll: false });
   };
-
+  const { theme } = useTheme();
   return (
     <section id="SearchResults" className="relative min-h-[100vh] pb-24">
       {/* Background image */}
@@ -62,13 +63,14 @@ export default function SearchResults({
             text="نتائج البحث"
             containerClassName="-mr-4"
             className="text-3xl"
+            black={theme === "light"}
           />
         </div>
 
         {/* Search Query Display */}
         {query && (
           <div className="mt-6 text-center">
-            <p className="text-white font-tajawal text-lg">
+            <p className="text-white light:text-black font-tajawal text-lg">
               البحث عن:{" "}
               <span className="text-[#B5975C] font-bold">
                 &ldquo;{query}&rdquo;
@@ -80,7 +82,7 @@ export default function SearchResults({
         {/* Search Results */}
         <div className="mt-8">
           {!query ? (
-            <div className="text-center text-gray-300 font-tajawal text-lg">
+            <div className="text-center text-gray-300 light:text-gray-600 font-tajawal text-lg">
               أدخل كلمة البحث للبدء
             </div>
           ) : searchResults &&
@@ -113,7 +115,7 @@ export default function SearchResults({
                 )}
             </>
           ) : (
-            <div className="text-center text-gray-300 font-tajawal text-lg">
+            <div className="text-center text-gray-300 light:text-gray-600 font-tajawal text-lg">
               لم يتم العثور على نتائج لـ &ldquo;{query}&rdquo;
             </div>
           )}

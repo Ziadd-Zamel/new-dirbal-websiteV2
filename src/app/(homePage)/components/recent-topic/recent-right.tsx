@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function RecentRightSection({
@@ -103,7 +104,7 @@ export default function RecentRightSection({
                 }}
                 onClick={() => handleCardClick(article)}
               >
-                <div>
+                <Link href={"#left-recent"} className="lg:hidden">
                   <div
                     className="flex h-[200x] w-full cursor-pointer flex-col bg-white p-6 pr-10 shadow-md transition-shadow hover:shadow-lg sm:flex-row sm:items-center sm:py-[18px] sm:pl-5 sm:pr-[44px]"
                     style={{ direction: "rtl" }}
@@ -120,11 +121,39 @@ export default function RecentRightSection({
                     </p>
 
                     {/* Subcategory - hidden on small screens */}
-                    <span className="mt-2 hidden items-center gap-1 font-tajawal text-xs font-medium text-[#B49471] sm:absolute sm:bottom-3 sm:left-4 sm:mt-0 sm:flex sm:text-sm">
+                    <span className="mt-2 justify-end items-center gap-1 font-tajawal text-xs font-medium text-[#B49471] absolute bottom-3 left-4 flex">
                       <p>{article.sub_category.name}</p>
                     </span>
                   </div>
-                  <div className="absolute -right-6 top-[50%] z-30 hidden translate-y-[-50%] flex-col items-center bg-[#2E3A47] font-tajawal text-white sm:flex">
+                  <div className="absolute -right-6 top-[50%] z-30  translate-y-[-50%] flex-col items-center bg-[#2E3A47] font-tajawal text-white flex">
+                    <span className="py-1 text-md font-bold">{day}</span>
+                    <span className="min-w-[20px] bg-[#B5975C] px-[12px] py-1 text-[10px] text-white">
+                      {month}
+                    </span>
+                  </div>
+                </Link>
+                <div className="lg:block hidden">
+                  <div
+                    className="flex h-[200x] w-full cursor-pointer flex-col bg-white p-6 pr-10 shadow-md transition-shadow hover:shadow-lg sm:flex-row sm:items-center sm:py-[18px] sm:pl-5 sm:pr-[44px]"
+                    style={{ direction: "rtl" }}
+                  >
+                    {/* Title and content */}
+                    <p className="mb-2 mr-2 mt-1 h-auto font-tajawal text-sm font-medium leading-[30px] text-[#3A4553] sm:mb-0 sm:h-[80px] sm:text-base md:text-lg">
+                      <span className="text-[18px] font-medium text-[#B5975C] sm:text-[20px]">
+                        {article.title_number}
+                        {article.title_short}:{" "}
+                      </span>
+                      {article.title.length > 100
+                        ? `${article.title.substring(0, 100)}...`
+                        : article.title}
+                    </p>
+
+                    {/* Subcategory - hidden on small screens */}
+                    <span className="mt-2 justify-end items-center gap-1 font-tajawal text-xs font-medium text-[#B49471] absolute bottom-3 left-4 flex">
+                      <p>{article.sub_category.name}</p>
+                    </span>
+                  </div>
+                  <div className="absolute -right-6 top-[50%] z-30  translate-y-[-50%] flex-col items-center bg-[#2E3A47] font-tajawal text-white flex">
                     <span className="py-1 text-md font-bold">{day}</span>
                     <span className="min-w-[20px] bg-[#B5975C] px-[12px] py-1 text-[10px] text-white">
                       {month}

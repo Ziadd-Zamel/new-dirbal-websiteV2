@@ -1,5 +1,3 @@
-import HeadingText from "@/components/common/heading-text";
-import SectionLogo from "@/components/common/section-logo";
 import { getAboutMe } from "@/lib/api/settings.api";
 import Image from "next/image";
 
@@ -9,8 +7,8 @@ export default async function Resmu() {
   const aboutMe = await getAboutMe();
 
   return (
-    <section id="Resmu" className="relative min-h-[100vh] pb-24">
-      <div className="absolute inset-0 -mt-5 h-full">
+    <section id="Resmu" className="relative min-h-[100vh] pb-24 bg-background">
+      <div className="absolute inset-0 -mt-5 h-full bg-background">
         <Image
           src={"/assets/mainbg-9.png"}
           alt=""
@@ -32,7 +30,7 @@ export default async function Resmu() {
 
         <div className="mt-6 max-w-[70%] mx-auto">
           <div
-            className=" p-8 text-gray-300 font-tajawal leading-relaxed"
+            className=" p-8 text-gray-300 light:text-gray-600 font-tajawal leading-relaxed"
             dangerouslySetInnerHTML={{ __html: aboutMe }}
           />
         </div>

@@ -64,7 +64,7 @@ const MawdooaHeading: React.FC<MawdooaHeadingProps> = ({
           dir="rtl"
         >
           <div dir="rtl" className="text-right relative">
-            <div className="mt-36">
+            <div className=" mt-44 sm:mt-36">
               <div className="flex flex-col justify-between sm:flex-row sm:items-center lg:w-[70%]">
                 <div className="flex items-center gap-5">
                   <div className="relative flex h-24 w-42 flex-col items-center justify-center">

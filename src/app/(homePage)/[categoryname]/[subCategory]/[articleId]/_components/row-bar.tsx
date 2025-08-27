@@ -225,9 +225,10 @@ const Sidebar = ({ articleById }: SidebarProps) => {
 
   return (
     <div className="w-full mt-2">
-      <div className="flex w-[70px] flex-col items-center justify-center border border-gray-500 light:border-gray-300 light:bg-white light:text-black">
+      <div className="flex h-[70px] flex-row items-center justify-center border border-gray-500 text-white bg-gray-900">
+        {/* Add to Favorites */}
         <div
-          className="flex h-[70px] w-full  cursor-pointer items-center justify-center border-b light:border-b-gray-300  border-gray-500 light:border-gray-300 text-center text-sm transition-colors hover:bg-gray-800 light:hover:bg-gray-300 "
+          className="flex h-full w-[70px] cursor-pointer items-center justify-center border-r border-gray-500 text-center text-sm transition-colors hover:bg-gray-800"
           title="إضافة إلى المفضلة"
         >
           <div className="-mr-3">
@@ -235,8 +236,9 @@ const Sidebar = ({ articleById }: SidebarProps) => {
           </div>
         </div>
 
+        {/* Share Icon with Dropdown */}
         <div
-          className="relative flex h-[70px]  w-full cursor-pointer items-center justify-center border-b light:border-b-gray-300 border-gray-500 light:border-gray-300 transition-colors hover:bg-gray-800 light:hover:bg-gray-300"
+          className="relative flex h-full w-[70px] cursor-pointer items-center justify-center border-r border-gray-500 transition-colors hover:bg-gray-800"
           onMouseEnter={() => setShowShareDropdown(true)}
           onMouseLeave={() => setShowShareDropdown(false)}
           title="مشاركة المقال"
@@ -246,57 +248,57 @@ const Sidebar = ({ articleById }: SidebarProps) => {
           <AnimatePresence>
             {showShareDropdown && (
               <motion.div
-                className="absolute right-full h-[73px] -top-[2px] flex flex-row bg-gray-800 light:border-gray-300 light:bg-white shadow-2xl overflow-hidden border border-gray-600 z-[-1]"
-                initial={{ opacity: 0, x: 50 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 50 }}
+                className="absolute top-full w-[73px] -left-[2px] flex flex-col bg-gray-800 shadow-2xl overflow-hidden border border-gray-600 z-10"
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 50 }}
                 transition={{ duration: 0.1, ease: "easeOut" }}
               >
                 {/* Facebook */}
                 <div
-                  className="flex w-[70px] cursor-pointer items-center justify-center border border-gray-500 light:border-gray-300 transition-colors light:hover:bg-gray-300 hover:bg-gray-700  group"
+                  className="flex h-[70px] cursor-pointer items-center justify-center border border-gray-500 transition-colors hover:bg-gray-700 group"
                   onClick={() => handleShare("facebook")}
                   title="مشاركة على فيسبوك"
                 >
                   <FaFacebookF
                     size={20}
-                    className="light:text-black  group-hover:text-[#B5975C] transition-colors"
+                    className="text-white group-hover:text-[#B5975C] transition-colors"
                   />
                 </div>
 
                 {/* Messenger */}
                 <div
-                  className="flex w-[78px] cursor-pointer items-center justify-center border border-gray-500 light:border-gray-300 transition-colors light:hover:bg-gray-300 hover:bg-gray-700 group"
+                  className="flex h-[70px] cursor-pointer items-center justify-center border border-gray-500 transition-colors hover:bg-gray-700 group"
                   onClick={() => handleShare("messenger")}
                   title="مشاركة على ماسنجر"
                 >
                   <SiMessenger
                     size={20}
-                    className="light:text-black group-hover:text-[#B5975C] transition-colors"
+                    className="text-white group-hover:text-[#B5975C] transition-colors"
                   />
                 </div>
 
                 {/* Twitter */}
                 <div
-                  className="flex w-[78px] cursor-pointer items-center justify-center border border-gray-500 light:border-gray-300 transition-colors light:hover:bg-gray-300 hover:bg-gray-700 group"
+                  className="flex h-[70px] cursor-pointer items-center justify-center border border-gray-500 transition-colors hover:bg-gray-700 group"
                   onClick={() => handleShare("twitter")}
                   title="مشاركة على تويتر"
                 >
                   <BsTwitterX
                     size={20}
-                    className="light:text-black group-hover:text-[#B5975C] transition-colors"
+                    className="text-white group-hover:text-[#B5975C] transition-colors"
                   />
                 </div>
 
                 {/* WhatsApp */}
                 <div
-                  className="flex w-[78px] cursor-pointer items-center justify-center border border-gray-500 light:border-gray-300 transition-colors light:hover:bg-gray-300 hover:bg-gray-700 group"
+                  className="flex h-[70px] cursor-pointer items-center justify-center border border-gray-500 transition-colors hover:bg-gray-700 group"
                   onClick={() => handleShare("whatsapp")}
                   title="مشاركة على واتساب"
                 >
                   <FaWhatsapp
                     size={20}
-                    className="light:text-black group-hover:text-[#B5975C] transition-colors"
+                    className="text-white group-hover:text-[#B5975C] transition-colors"
                   />
                 </div>
               </motion.div>
@@ -306,24 +308,20 @@ const Sidebar = ({ articleById }: SidebarProps) => {
 
         {/* PDF Download */}
         <div
-          className="flex h-[70px] w-full cursor-pointer items-center justify-center border-b light:border-b-gray-300 border-gray-500 light:border-gray-300 transition-colors hover:bg-gray-800 light:hover:bg-gray-300"
+          className="flex h-full w-[70px] cursor-pointer items-center justify-center border-r border-gray-500 transition-colors hover:bg-gray-800"
           onClick={handleDownloadPDF}
           title="تحميل PDF"
         >
-          <FileDown strokeWidth={1} size={35} className="light:text-black" />
+          <FileDown strokeWidth={1} size={35} className="text-white" />
         </div>
 
         {/* Comment Icon - Scroll to Comments */}
         <div
-          className="flex h-[70px] w-full cursor-pointer items-center justify-center transition-colors hover:bg-gray-800 light:hover:bg-gray-300"
+          className="flex h-full w-[70px] cursor-pointer items-center justify-center border-r border-gray-500  transition-colors hover:bg-gray-800"
           onClick={handleScrollToComments}
           title="الانتقال إلى التعليقات"
         >
-          <MessageCircle
-            strokeWidth={1}
-            size={35}
-            className="light:text-black"
-          />
+          <MessageCircle strokeWidth={1} size={35} className="text-white" />
         </div>
       </div>
     </div>

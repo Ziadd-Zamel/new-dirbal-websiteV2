@@ -1,5 +1,5 @@
 "use client";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, File, SearchIcon } from "lucide-react";
 import ArticlePagintation from "./articles-pagination";
 import ArticleCard from "./article-card";
 
@@ -31,20 +31,8 @@ const ArticleSectoin = ({
           <div className="mx-auto max-w-md text-center">
             {/* Search empty state icon */}
             <div className="mb-6">
-              <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-gray-100">
-                <svg
-                  className="h-12 w-12 text-gray-400"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1.5}
-                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                  />
-                </svg>
+              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-gray-100 light:bg-black">
+                <SearchIcon size={30} className="text-black light:text-white" />
               </div>
             </div>
 
@@ -62,7 +50,7 @@ const ArticleSectoin = ({
             <div className="flex flex-col justify-center gap-3 sm:flex-row">
               <button
                 onClick={() => window.history.back()}
-                className="flex items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white px-6 py-2.5 font-tajawal text-gray-700 transition-colors duration-200 hover:bg-gray-50"
+                className="flex items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white light:bg-black light:text-white px-6 py-2.5 font-tajawal text-gray-700 transition-colors duration-200 hover:bg-gray-50"
               >
                 العودة للخلف
               </button>
@@ -94,20 +82,8 @@ const ArticleSectoin = ({
         <div className="mx-auto max-w-md text-center">
           {/* Empty state icon */}
           <div className="mb-6">
-            <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-gray-100">
-              <svg
-                className="h-12 w-12 text-gray-400"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={1.5}
-                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                />
-              </svg>
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-gray-100 light:bg-black">
+              <File size={30} className="text-black light:text-white" />
             </div>
           </div>
 
@@ -123,7 +99,7 @@ const ArticleSectoin = ({
           <div className="flex flex-col justify-center gap-3 sm:flex-row">
             <button
               onClick={() => window.history.back()}
-              className="flex items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white py-2.5 pl-4 pr-2 font-tajawal text-gray-700 transition-colors duration-200 hover:bg-gray-50"
+              className="flex items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white light:bg-black light:text-white py-2.5 pl-4 pr-2 font-tajawal text-gray-700 transition-colors duration-200 hover:bg-gray-50"
             >
               <ChevronRight />
               العودة للخلف
@@ -163,7 +139,7 @@ const ArticleSectoin = ({
 
       {/* Search results count */}
       {isSearching && hasResults && (
-        <div className="mb-4 text-right font-tajawal text-sm text-gray-600">
+        <div className="mb-4 mt-1 text-right font-tajawal text-sm text-gray-600">
           تم العثور على {articles.length} نتيجة
         </div>
       )}
@@ -181,7 +157,6 @@ const ArticleSectoin = ({
           : renderEmptyState()}
       </div>
 
-      {/* Pagination - only show if not searching and has multiple pages */}
       {!isSearching && pagination.last_page > 1 && (
         <ArticlePagintation
           currentPage={currentPage}

@@ -26,7 +26,6 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* ✅ Structured data via next/script */}
       <Script
         id="home-structured-data"
         type="application/ld+json"

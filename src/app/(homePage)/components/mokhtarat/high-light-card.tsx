@@ -15,19 +15,21 @@ export default function HighLightCard({ article }: { article: Article }) {
 
   return (
     <article
-      className="flex w-full flex-col pb-10 pt-5 md:w-[350px] lg:w-[500px] xl:w-[630px]"
+      className="flex w-full flex-col  pb-10 pt-5 md:w-[350px] lg:w-[500px] xl:w-[630px]"
       aria-labelledby={`article-${article.uuid}`}
     >
-      {/* Icon for subcategory (if available) */}
-      {article.sub_category.icon_url && (
-        <Image
-          src={article.sub_category.icon_url}
-          alt={`${article.sub_category.name} icon`}
-          width={30}
-          height={30}
-          className="mt-5"
-        />
-      )}
+      <div className="w-full flex justify-center mb-3">
+        {/* Icon for subcategory (if available) */}
+        {article.sub_category.icon_url && (
+          <Image
+            src={article.sub_category.icon_url}
+            alt={`${article.sub_category.name} icon`}
+            width={40}
+            height={40}
+            className="mt-5"
+          />
+        )}
+      </div>
 
       {/* Subcategory Name */}
       <h3

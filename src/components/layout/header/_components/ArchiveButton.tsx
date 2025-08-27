@@ -28,7 +28,7 @@ export default function ArchiveButton() {
   return (
     <button
       onClick={() => router.push("/archive")}
-      className="relative hidden border-r-[1px] border-solid border-[#B5975C] px-[16px] md:block"
+      className="relative am:border-r-[1px] border-solid border-[#B5975C] px-5 sm:px-[16px] mt-5  md:mt-0 "
     >
       <TabIcon dark={false} />
       {bookmarkCount > 0 && (

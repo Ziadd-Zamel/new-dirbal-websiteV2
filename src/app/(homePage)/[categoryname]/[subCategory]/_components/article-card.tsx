@@ -41,6 +41,30 @@ function getYouTubeVideoId(url: string): string | null {
   return match && match[2].length === 11 ? match[2] : null;
 }
 
+// Function to intelligently scroll to bring content into view
+function scrollToElement(element: HTMLElement, targetElement: HTMLElement) {
+  const elementRect = element.getBoundingClientRect();
+  const targetRect = targetElement.getBoundingClientRect();
+  const viewportHeight = window.innerHeight;
+
+  // If the target element is below the viewport, scroll to show it
+  if (targetRect.bottom > viewportHeight) {
+    const scrollAmount = targetRect.bottom - viewportHeight + 100; // Add 100px buffer
+    window.scrollBy({
+      top: scrollAmount,
+      behavior: "smooth",
+    });
+  }
+  // If the target element is above the viewport, scroll to show it
+  else if (targetRect.top < 0) {
+    const scrollAmount = targetRect.top - 100; // Add 100px buffer
+    window.scrollBy({
+      top: scrollAmount,
+      behavior: "smooth",
+    });
+  }
+}
+
 // Global state to track which article is currently expanded
 let currentlyExpandedArticle: string | null = null;
 
@@ -54,7 +78,6 @@ const ArticleCard = ({
   const [isAnimating, setIsAnimating] = useState(false);
   const [isCollapsing, setIsCollapsing] = useState(false);
   const plainText = stripHtmlTags(article.description);
-  const pathname = usePathname();
   const hasImage = article.image_url;
   const handleDelete = () => {
     if (onDelete) {
@@ -108,9 +131,15 @@ const ArticleCard = ({
       setIsAnimating(true);
       currentlyExpandedArticle = article.uuid;
 
+      setIsExpanded(true);
+      // Scroll to bring the expanded content into view
       setTimeout(() => {
-        setIsExpanded(true);
-      }, 250);
+        const element = document.getElementById(`article-${article.uuid}`);
+        if (element) {
+          // Use intelligent scrolling to bring content into view
+          scrollToElement(element, element);
+        }
+      }, 300);
     }
   };
 
@@ -176,7 +205,7 @@ const ArticleCard = ({
     return (
       <div
         style={{ direction: "rtl" }}
-        className="mt-5 text-justify font-tajawal text-gray-300 lg:text-base"
+        className="mt-5 text-justify font-tajawal text-gray-300 light:text-gray-600 lg:text-base"
         dangerouslySetInnerHTML={{
           __html: searchTerm ? highlightText(plainText, searchTerm) : plainText,
         }}
@@ -185,7 +214,7 @@ const ArticleCard = ({
   };
 
   return (
-    <div className={`w-full ${className}`}>
+    <div id={`article-${article.uuid}`} className={`w-full ${className}`}>
       {/* Article Title */}
       <div
         style={{ direction: "rtl" }}
@@ -193,11 +222,11 @@ const ArticleCard = ({
         onClick={toggleExpand}
       >
         <div>
-          <span className="font-tajawal text-[12px] text-[#FAE1C6] sm:text-[16px] md:text-[16px] xl:text-[22px]">
+          <span className="font-tajawal text-[12px] text-[#B5975C] sm:text-[16px] md:text-[16px] xl:text-[22px]">
             {article.title_number} {article.title_short}:{" "}
           </span>
           <span
-            className="font-tajawal text-[12px] text-white sm:text-[16px] md:text-[16px] xl:text-[22px]"
+            className="font-tajawal text-[12px] text-white light:text-black sm:text-[16px] md:text-[16px] xl:text-[22px]"
             dangerouslySetInnerHTML={{
               __html: searchTerm
                 ? highlightText(article.title, searchTerm)

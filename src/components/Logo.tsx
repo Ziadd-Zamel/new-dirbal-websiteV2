@@ -1,5 +1,5 @@
-'use client';
-import Image from 'next/image';
+"use client";
+import Image from "next/image";
 
 const Logo = ({
   width = 200,
@@ -14,19 +14,19 @@ const Logo = ({
     <>
       {dark ? (
         <Image
-          src={'/assets/LogoShortWht.png'}
+          src={"/assets/LogoShortWht.png"}
           alt="Mr Dirbal Logo"
           width={width}
           height={height}
-          className="mt-3 w-[150px] sm:mt-0 sm:w-[170px]"
+          className="mt-3 w-[100px] sm:mt-0 sm:w-[170px]"
         />
       ) : (
         <Image
-          src={'/assets/LogoShortWht.png'}
+          src={"/assets/LogoShortWht.png"}
           alt="Mr Dirbal Logo"
           width={width}
           height={height}
-          className="mt-3 w-[150px] sm:mt-0 sm:w-[170px]"
+          className="mt-3 w-[100px] sm:mt-0 sm:w-[170px]"
         />
       )}
     </>

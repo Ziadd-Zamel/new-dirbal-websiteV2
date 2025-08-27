@@ -125,7 +125,7 @@ export default function RecentIcons({ article }: { article: Article }) {
     <div className="relative flex w-fit items-center gap-3 -mb-1">
       {/* Bookmark */}
       <div className="px-2 py-1.5">
-        <BookmarkButton article={article} width={25} height={25} />
+        <BookmarkButton white article={article} width={25} height={25} />
       </div>
 
       {/* Copy */}

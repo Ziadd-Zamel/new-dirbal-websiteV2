@@ -13,7 +13,6 @@ import MawdooaHeading from "./mawdooa-heading";
 const ArticlePage = ({
   articlesByCategory,
   articleById,
-  articlesByTag,
 }: {
   articleById: Article;
   articlesByCategory: Article[];
@@ -229,7 +228,7 @@ const ArticlePage = ({
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="relative min-h-screen">
+      <div className="relative min-h-screen bg-background">
         {/* Page Heading with Background */}
         <MawdooaHeading
           bgImageSrc={
@@ -237,6 +236,7 @@ const ArticlePage = ({
           }
           title={articleById.title}
           articleById={articleById}
+          showOverlay={articleById.sub_category.light}
         />
 
         {/* Page Layout */}
@@ -266,10 +266,12 @@ const ArticlePage = ({
             {/* Main Content */}
             <div className="w-full md:w-[65%]">
               <Mawdooa articleById={articleById} searchTerm={searchTerm} />
-              <RelatedTopics
-                articlesByCategory={articlesByCategory}
-                onSearch={handleSearch}
-              />
+              <div className="md:hidden">
+                <RelatedTopics
+                  articlesByCategory={articlesByCategory}
+                  onSearch={handleSearch}
+                />
+              </div>
               <div id="comments-section" data-comments>
                 <CommentForm />
               </div>

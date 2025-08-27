@@ -32,6 +32,7 @@ declare type Article = {
     image_url: string;
     category: Category;
     icon_url: string;
+    light: boolean;
   };
   subjects: Subject[];
   status: boolean;

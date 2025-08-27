@@ -1,19 +1,8 @@
 "use client";
 
+import { stripHtmlTags } from "@/lib/utils/stripHtml";
 import Image from "next/image";
 import { useEffect, useState, useMemo, useRef } from "react";
-
-const stripHtml = (html: string) => {
-  return html
-    .replace(/<[^>]*>/g, "")
-    .replace(/&nbsp;/g, " ")
-    .replace(/&amp;/g, "&")
-    .replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">")
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'")
-    .trim();
-};
 
 export default function QabasatBox({ Qabasat }: { Qabasat: Qabasat[] }) {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -98,7 +87,7 @@ export default function QabasatBox({ Qabasat }: { Qabasat: Qabasat[] }) {
   const minBoxHeight = useMemo(() => {
     if (!currentQuote) return 200;
 
-    const text = stripHtml(currentQuote.description);
+    const text = stripHtmlTags(currentQuote.description);
     const wordCount = text.split(" ").length;
 
     // Base height + height for content (roughly 6px per word)
@@ -108,18 +97,18 @@ export default function QabasatBox({ Qabasat }: { Qabasat: Qabasat[] }) {
   if (!currentQuote) return null;
 
   return (
-    <div className="relative flex h-full items-center px-10 lg:px-20 xl:px-[70px] 2xl:box-container">
+    <div className="relative flex h-full  items-center px-10 lg:px-20 xl:px-[70px] 2xl:box-container">
       <div className="flex w-full flex-col items-center gap-5 lg:flex-row-reverse lg:justify-between">
         <Image
           alt="Aya"
           height={800}
           width={400}
           src="/assets/Aya.png"
-          className="w-[300px] sm:mt-[50px] lg:mt-[30px] lg:w-[40%]"
+          className=" w-[200px] -mt-40 sm:w-[300px] sm:mt-[50px] lg:mt-[30px] lg:w-[40%]"
         />
 
         <div
-          className="hover:border-1 hover:border-[#B5975C] w-full rounded-[12px] border border-[#2E394780] bg-[#FFFFFF26] px-[10px] pb-[16px] pt-10 transition-all duration-[2000ms] ease-in-out sm:px-[20px] md:w-[80%] lg:mt-16 lg:w-[51%] lg:px-[15px] xl:mt-28 xl:px-[45px] xl:py-[15px] cursor-pointer flex flex-col"
+          className="hover:border-1 hover:border-[#B5975C] w-full rounded-[12px] border border-[#2E394780] bg-[#FFFFFF26] px-[10px] pb-[16px] pt-5 sm:pt-10 transition-all duration-[2000ms] ease-in-out sm:px-[20px] md:w-[80%] lg:mt-16 lg:w-[51%] lg:px-[15px] xl:mt-28 xl:px-[45px] xl:py-[15px] cursor-pointer flex flex-col"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
           style={{
@@ -127,7 +116,7 @@ export default function QabasatBox({ Qabasat }: { Qabasat: Qabasat[] }) {
           }}
         >
           {/* HEADER AND IMAGE CONTAINER */}
-          <div className="flex justify-between w-full flex-row items-end">
+          <div className="flex justify-between gap-5 w-full flex-row items-end">
             {/* IMAGE CONTAINER - Smooth collapse/expand */}
             <div
               className={`overflow-hidden transition-all duration-1000 ease-in-out ${
@@ -156,7 +145,7 @@ export default function QabasatBox({ Qabasat }: { Qabasat: Qabasat[] }) {
                 hasImage ? "flex-1 mr-4" : "w-full"
               }`}
             >
-              <p className="text-end font-tajawal text-[20px] font-bold text-[#B5975C] sm:text-[40px] xl:text-2xl transition-all duration-1000 ease-in-out">
+              <p className="text-end font-tajawal font-bold text-[#B5975C] sm:text-[40px] xl:text-2xl transition-all duration-1000 ease-in-out">
                 {getCurrentCategoryName()}
               </p>
 
@@ -178,7 +167,7 @@ export default function QabasatBox({ Qabasat }: { Qabasat: Qabasat[] }) {
                         }
                       }
                     }}
-                    className={`w-3 h-3 rounded-full transition-all duration-300 ease-in-out ${
+                    className={` w-2  h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ease-in-out ${
                       index === currentCategoryIndex
                         ? "bg-[#B5975C] scale-110"
                         : "bg-[#B5975C40] hover:bg-[#B5975C80]"
@@ -212,7 +201,7 @@ export default function QabasatBox({ Qabasat }: { Qabasat: Qabasat[] }) {
                   isTransitioning ? "opacity-0" : "opacity-100"
                 }`}
               >
-                {stripHtml(currentQuote.description)}
+                {stripHtmlTags(currentQuote.description)}
               </p>
 
               {/* Next Description - Overlaid during transition */}
@@ -223,7 +212,7 @@ export default function QabasatBox({ Qabasat }: { Qabasat: Qabasat[] }) {
                     isTransitioning ? "opacity-100" : "opacity-0"
                   }`}
                 >
-                  {stripHtml(nextQuote.description)}
+                  {stripHtmlTags(nextQuote.description)}
                 </p>
               )}
             </div>

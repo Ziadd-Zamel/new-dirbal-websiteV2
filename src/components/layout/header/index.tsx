@@ -2,7 +2,7 @@
 import Basmala from "@/components/Basmala";
 import SearchIcon from "@/components/Icons/SearchIcon";
 import Logo from "@/components/Logo";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState, memo } from "react";
 import Sidebar from "./_components/sidebar";
 import SearchModal from "./_components/search-modal";
@@ -14,18 +14,28 @@ interface NavbarProps {
 
 const Navbar = ({ selectedIndex }: NavbarProps) => {
   const router = useRouter();
+  const pathname = usePathname();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+  const shouldHideLine =
+    pathname.startsWith("/tags") ||
+    pathname.startsWith("/search") ||
+    pathname.startsWith("/resume");
 
   return (
     <nav
-      className="main-padding absolute left-0 right-0 top-0 z-30 bg-transparent pt-2"
+      className={`main-padding absolute left-0 right-0 top-0 z-30 pt-2 ${
+        shouldHideLine ? "bg-black/50" : "bg-transparent"
+      }`}
       role="navigation"
       aria-label="Main Navigation"
     >
       {/* Top divider line */}
-      <div className="absolute inset-x-0 top-[70px] z-30 w-full px-10 lg:px-20 xl:pl-[70px] xl:pr-[78px]">
-        <div className="h-px w-full bg-[#B5975C]" aria-hidden="true" />
-      </div>
+      {!shouldHideLine && (
+        <div className="absolute inset-x-0 top-[70px] z-30 w-full px-5 lg:px-20 xl:pl-[70px] xl:pr-[78px]">
+          <div className="h-px w-full bg-[#B5975C]" aria-hidden="true" />
+        </div>
+      )}
 
       <div className="flex flex-row-reverse items-center justify-between">
         {/* Logo - better for SEO + accessibility */}
@@ -34,7 +44,7 @@ const Navbar = ({ selectedIndex }: NavbarProps) => {
           aria-label="Go to homepage"
           className="focus:outline-none"
         >
-          <Logo dark />
+          <Logo dark={true} />
         </button>
 
         {/* Right Section */}
@@ -43,7 +53,7 @@ const Navbar = ({ selectedIndex }: NavbarProps) => {
           <button
             onClick={() => setIsSearchOpen(true)}
             aria-label="Open search"
-            className="hidden border-r border-[#B5975C] px-[15px] md:block"
+            className="sm:border-r border-[#B5975C] sm:px-[15px] mt-5  md:mt-0 "
           >
             <SearchIcon dark={false} />
           </button>
