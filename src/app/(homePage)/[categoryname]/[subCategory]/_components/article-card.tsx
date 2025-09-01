@@ -336,19 +336,23 @@ const ArticleCard = ({
             {renderVideoOrText()}
 
             <div className="mt-5 flex w-full items-end justify-start">
-              <Link
-                href={`/${article.sub_category.category.uuid}/${
-                  article.sub_category.uuid
-                }/${article.uuid}${
-                  searchTerm ? `?search=${encodeURIComponent(searchTerm)}` : ""
-                }`}
-                className="flex w-fit items-center gap-2 self-end rounded-[2px] bg-[#B5975C] px-2 pb-1 font-tajawal text-lg text-white hover:bg-[#C18F59]"
-              >
-                المزيد
-                <span className="mr-2 mt-0.5">
-                  <LeftArrowIcon height={10} width={10} dark={false} />
-                </span>
-              </Link>
+              {article.description && (
+                <Link
+                  href={`/${article.sub_category.category.uuid}/${
+                    article.sub_category.uuid
+                  }/${article.uuid}${
+                    searchTerm
+                      ? `?search=${encodeURIComponent(searchTerm)}`
+                      : ""
+                  }`}
+                  className="flex w-fit items-center gap-2 self-end rounded-[2px] bg-[#B5975C] px-2 pb-1 font-tajawal text-lg text-white hover:bg-[#C18F59]"
+                >
+                  المزيد
+                  <span className="mr-2 mt-0.5">
+                    <LeftArrowIcon height={10} width={10} dark={false} />
+                  </span>
+                </Link>
+              )}
             </div>
           </motion.div>
         )}
