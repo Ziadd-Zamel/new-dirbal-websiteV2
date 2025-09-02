@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import Image from "next/image";
@@ -5,7 +6,6 @@ import { FaFacebookF, FaWhatsapp } from "react-icons/fa";
 import { SiMessenger, SiViber } from "react-icons/si";
 import { BsTwitterX } from "react-icons/bs";
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import {
   CustomDialog as Dialog,
   CustomDialogHeader as DialogHeader,

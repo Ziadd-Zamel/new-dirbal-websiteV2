@@ -423,7 +423,8 @@ export default function AccessibilityButton({
     });
 
     setBaseFontSizes(new Map());
-    document.body.offsetHeight;
+    // Force reflow to ensure styles are applied
+    void document.body.offsetHeight;
   };
 
   const scalePercentage = Math.round(fontScale * 100);

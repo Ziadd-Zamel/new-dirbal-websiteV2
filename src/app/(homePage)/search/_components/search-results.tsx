@@ -4,7 +4,6 @@ import ArticlePagintation from "../../[categoryname]/[subCategory]/_components/a
 import HeadingText from "@/components/common/heading-text";
 import SectionLogo from "@/components/common/section-logo";
 import { useTheme } from "next-themes";
-import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 
 interface SearchResultsProps {
@@ -41,17 +40,6 @@ export default function SearchResults({
   const { theme } = useTheme();
   return (
     <section id="SearchResults" className="relative min-h-[100vh] pb-24">
-      {/* Background image */}
-      <div className="absolute inset-0 mt-0 h-full">
-        <Image
-          src={"/assets/mainbg-9.png"}
-          alt=""
-          height={1000}
-          width={100}
-          className="h-full w-full"
-        />
-      </div>
-
       <div className="main-padding relative z-50 py-6 mt-20">
         <div className="flex-row-center">
           <SectionLogo LogoUrl={"/assets/sectionLogo-5.svg"} />

@@ -30,6 +30,7 @@ export async function subscribe(email: string, recaptchaToken: string) {
 
     return { success: true, message: "تم الاشتراك بنجاح" };
   } catch (error) {
+    console.error("Subscribe error:", error);
     return { success: false, message: "فشل في الاشتراك" };
   }
 }

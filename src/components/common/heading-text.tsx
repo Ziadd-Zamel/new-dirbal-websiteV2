@@ -17,7 +17,6 @@ const HeadingText: React.FC<HeadingTextProps> = ({
   containerClassName,
   title,
   goldenText,
-  black,
 }) => {
   return (
     <div

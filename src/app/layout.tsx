@@ -3,10 +3,10 @@ import { Tajawal } from "next/font/google";
 import "./globals.css";
 import Providers from "@/components/providers";
 import AccessibilityWrapper from "@/components/accessibility-wrapper";
-import ScrollToTopButton from "@/components/scroll-to-top-button";
 import Script from "next/script";
 import { generateGlobalMetadata } from "@/lib/metadata/data";
 import { generateGlobalStructuredData } from "@/lib/Seo/data";
+import ScrollToTopButton from "@/components/scroll-to-top-button";
 
 const tajawal = Tajawal({
   subsets: ["arabic", "latin"],

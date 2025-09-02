@@ -16,8 +16,6 @@ interface BookmarkButtonProps {
 
 export default function BookmarkButton({
   article,
-  width = 80,
-  height = 80,
   white,
 }: BookmarkButtonProps) {
   const [bookmarked, setBookmarked] = useState(false);

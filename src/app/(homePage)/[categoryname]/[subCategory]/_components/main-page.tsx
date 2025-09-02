@@ -54,7 +54,6 @@ const MainPage = ({
   articles,
   pagination,
   selectedSubSubCategory,
-  currentPage,
 }: {
   subCategory: SubCategory;
   articles: Article[];

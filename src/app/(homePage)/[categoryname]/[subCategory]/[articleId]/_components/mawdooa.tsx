@@ -435,7 +435,7 @@ const Mawdooa = ({ articleById, searchTerm }: MawdooaProps) => {
 
       {/* Search navigation controls */}
       {searchTerm && (
-        <div className="fixed bottom-4 right-4 z-[100] rounded-lg bg-black bg-opacity-80 p-3 text-white shadow-lg">
+        <div className="fixed bottom-4 right-20 z-[100] rounded-lg bg-black bg-opacity-80 p-3 text-white shadow-lg">
           <div className="flex items-center gap-2 text-sm">
             <span className="text-[#B5975C]">البحث:</span>
             <span>{searchTerm}</span>

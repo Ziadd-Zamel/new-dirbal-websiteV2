@@ -18,8 +18,6 @@ const ArticleContent = ({
   article,
   searchTerm,
   isExpanded,
-  isAnimating,
-  onAnimationComplete,
 }: ArticleContentProps) => {
   const plainText = stripHtmlTags(article.description);
   const hasVideo = article.video_url;

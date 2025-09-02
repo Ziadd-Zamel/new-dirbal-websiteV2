@@ -4,7 +4,6 @@ import LeftArrowIcon from "@/components/Icons/LeftArrowIcon";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 
 interface ArticleCardProps {
@@ -43,7 +42,6 @@ function getYouTubeVideoId(url: string): string | null {
 
 // Function to intelligently scroll to bring content into view
 function scrollToElement(element: HTMLElement, targetElement: HTMLElement) {
-  const elementRect = element.getBoundingClientRect();
   const targetRect = targetElement.getBoundingClientRect();
   const viewportHeight = window.innerHeight;
 

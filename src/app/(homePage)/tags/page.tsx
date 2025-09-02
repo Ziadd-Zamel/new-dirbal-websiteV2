@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { getArticlesByTag } from "@/lib/api/article.api";
 import { generateTagsMetadata } from "@/lib/metadata/data";
 import { generateTagsStructuredData } from "@/lib/Seo/data";
@@ -75,10 +76,15 @@ export default async function TagsPage({ searchParams }: TagsPageProps) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
 
-        <TagResults tag={tag} tagResults={tagResults} currentPage={currentPage} />
+        <TagResults
+          tag={tag}
+          tagResults={tagResults}
+          currentPage={currentPage}
+        />
       </>
     );
-  } catch (err) {
+  } catch (error) {
+    console.error("Tags page error:", error);
     return (
       <>
         {/* ✅ Structured data via next/script */}

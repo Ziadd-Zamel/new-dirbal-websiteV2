@@ -2,7 +2,6 @@
 import HeadingText from "@/components/common/heading-text";
 import SectionLogo from "@/components/common/section-logo";
 import { getBookmarkedArticles, removeBookmark } from "@/lib/utils/articles";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import ArticleCard from "../[categoryname]/[subCategory]/_components/article-card";
 

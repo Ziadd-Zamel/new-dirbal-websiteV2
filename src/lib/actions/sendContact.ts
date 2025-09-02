@@ -20,6 +20,7 @@ export async function sendContact(
 
     return { success: true };
   } catch (error) {
+    console.error("Send contact error:", error);
     return { success: false, error: "Failed to send contact message" };
   }
 }

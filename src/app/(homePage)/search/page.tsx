@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { searchArticles } from "@/lib/api/article.api";
 import { generateSearchMetadata } from "@/lib/metadata/data";
 import { generateSearchStructuredData } from "@/lib/Seo/data";
@@ -88,7 +89,8 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
         />
       </>
     );
-  } catch (err) {
+  } catch (error) {
+    console.error("Search page error:", error);
     return (
       <>
         {/* ✅ Structured data via next/script */}

@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import RelatedTopics from "./Realated";
@@ -80,17 +79,6 @@ const ArticlePage = ({
 
         {/* Page Layout */}
         <section className="relative z-50 min-h-screen pb-32 pt-20">
-          {/* Background Image */}
-          <div className="absolute inset-0 h-full w-full">
-            <Image
-              src="/assets/mainbg-10.png"
-              alt="Background Image"
-              layout="fill"
-              objectFit="cover"
-              className="object-cover"
-            />
-          </div>
-
           <div className="relative z-50 flex min-h-screen w-full justify-between main-padding gap-2">
             {/* Sidebar Container */}
             <div
