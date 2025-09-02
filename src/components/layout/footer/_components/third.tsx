@@ -5,11 +5,10 @@ import { MdEmail } from "react-icons/md";
 import { useState } from "react";
 import { sendContact } from "@/lib/actions/sendContact";
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+  CustomDialog as Dialog,
+  CustomDialogHeader as DialogHeader,
+  CustomDialogTitle as DialogTitle,
+} from "@/components/ui/custom-dialog";
 
 export default function Third() {
   const [email, setEmail] = useState("");
@@ -94,36 +93,40 @@ export default function Third() {
       </div>
 
       {/* Success Dialog */}
-      <Dialog open={showSuccessDialog} onOpenChange={setShowSuccessDialog}>
-        <DialogContent className="mx-4 w-[300px] py-10 px-10 border-none">
-          <DialogHeader>
-            <DialogTitle className=" sr-only text-center font-tajawal text-xl font-bold text-[#D4AF37]">
-              تم إرسال رسالتك
-            </DialogTitle>
-          </DialogHeader>
-          <div className="text-center">
-            <p className="font-tajawal text-gray-300 text-sm">
-              {" "}
-              استلمنا تعليقك. شكراً لمشاركتك.
-            </p>
-          </div>
-        </DialogContent>
+      <Dialog
+        open={showSuccessDialog}
+        onOpenChange={setShowSuccessDialog}
+        className="mx-4 w-[300px] py-10 px-10 border-none"
+      >
+        <DialogHeader>
+          <DialogTitle className=" sr-only text-center font-tajawal text-xl font-bold text-[#D4AF37]">
+            تم إرسال رسالتك
+          </DialogTitle>
+        </DialogHeader>
+        <div className="text-center">
+          <p className="font-tajawal text-gray-300 text-sm light:text-black">
+            {" "}
+            استلمنا رسالتك. شكراً لمشاركتك.
+          </p>
+        </div>
       </Dialog>
 
       {/* Error Dialog */}
-      <Dialog open={showErrorDialog} onOpenChange={setShowErrorDialog}>
-        <DialogContent className="mx-4 w-[300px] py-10 px-10 border-none">
-          <DialogHeader>
-            <DialogTitle className="text-center font-tajawal text-xl font-bold text-red-500">
-              معذرة
-            </DialogTitle>
-          </DialogHeader>
-          <div className="text-center">
-            <p className="font-tajawal text-gray-300">
-              لا يمكنك إرسال رسالة فارغة
-            </p>
-          </div>
-        </DialogContent>
+      <Dialog
+        open={showErrorDialog}
+        onOpenChange={setShowErrorDialog}
+        className="mx-4 w-[300px] py-10 px-10 border-none"
+      >
+        <DialogHeader>
+          <DialogTitle className="text-center font-tajawal text-xl font-bold text-red-500">
+            معذرة
+          </DialogTitle>
+        </DialogHeader>
+        <div className="text-center">
+          <p className="font-tajawal text-gray-300 light:text-black">
+            لا يمكنك إرسال رسالة فارغة
+          </p>
+        </div>
       </Dialog>
     </>
   );

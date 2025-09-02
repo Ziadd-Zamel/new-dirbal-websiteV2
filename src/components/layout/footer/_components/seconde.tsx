@@ -7,11 +7,10 @@ import { BsTwitterX } from "react-icons/bs";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+  CustomDialog as Dialog,
+  CustomDialogHeader as DialogHeader,
+  CustomDialogTitle as DialogTitle,
+} from "@/components/ui/custom-dialog";
 
 export default function Seconde() {
   const [email, setEmail] = useState("");
@@ -118,7 +117,7 @@ export default function Seconde() {
           <div
             className="cursor-pointer transition-colors hover:text-[#B5975C]"
             onClick={() => handleShareWebsite("facebook")}
-            title="مشاركة الموقع على فيسبوك"
+            title="مشاركة الصفحة على فيسبوك"
           >
             <FaFacebookF size={"25px"} />
           </div>
@@ -126,7 +125,7 @@ export default function Seconde() {
           <div
             className="cursor-pointer transition-colors hover:text-[#B5975C]"
             onClick={() => handleShareWebsite("messenger")}
-            title="مشاركة الموقع على ماسنجر"
+            title="مشاركة الصفحة على ماسنجر"
           >
             <SiMessenger size={"25px"} />
           </div>
@@ -134,7 +133,7 @@ export default function Seconde() {
           <div
             className="cursor-pointer transition-colors hover:text-[#B5975C]"
             onClick={() => handleShareWebsite("twitter")}
-            title="مشاركة الموقع على تويتر"
+            title="مشاركة الصفحة على تويتر"
           >
             <BsTwitterX size={"25px"} />
           </div>
@@ -142,7 +141,7 @@ export default function Seconde() {
           <div
             className="cursor-pointer transition-colors hover:text-[#B5975C]"
             onClick={() => handleShareWebsite("viber")}
-            title="مشاركة الموقع على فايبر"
+            title="مشاركة الصفحة على فايبر"
           >
             <SiViber size={"25px"} />
           </div>
@@ -150,7 +149,7 @@ export default function Seconde() {
           <div
             className="cursor-pointer transition-colors hover:text-[#B5975C]"
             onClick={() => handleShareWebsite("whatsapp")}
-            title="مشاركة الموقع على واتساب"
+            title="مشاركة الصفحة على واتساب"
           >
             <FaWhatsapp size={"30px"} />
           </div>
@@ -160,7 +159,7 @@ export default function Seconde() {
         </div>
         <form className=" w-full mt-3" onSubmit={handleSubmit}>
           <p className="text-right font-tajawal text-lg">
-            اشترك في نشرة أخبار الموقع
+            اشترك في نشرة أخبار الصفحة
           </p>
           <p className="mt-2 text-right font-tajawal text-[14px]">
             لاستقبال إشعارات المواضيع الجديدة، يرجى الاشتراك
@@ -201,20 +200,22 @@ export default function Seconde() {
       </div>
 
       {/* Success Dialog */}
-      <Dialog open={showDialog} onOpenChange={setShowDialog}>
-        <DialogContent className="mx-4 w-[350px] border-none py-10 px-10">
-          <DialogHeader>
-            <DialogTitle className="text-center font-tajawal text-xl font-medium text-[#B5975C]">
-              شكراً
-            </DialogTitle>
-          </DialogHeader>
-          <div className="text-center">
-            <p className="font-tajawal text-gray-300 text-sm">
-              اشتركتَ بنجاح في نشرة أخبار موقع د. دربال. بإذنه تعالى، ستصلك
-              إشعارات الموضوعات الجديدة عبر حسابك على فيسبوك والبريد الإلكتروني.{" "}
-            </p>
-          </div>
-        </DialogContent>
+      <Dialog
+        open={showDialog}
+        onOpenChange={setShowDialog}
+        className="mx-4 w-[350px] border-none py-10 px-10"
+      >
+        <DialogHeader>
+          <DialogTitle className="text-center font-tajawal text-xl font-medium text-[#B5975C]">
+            شكراً
+          </DialogTitle>
+        </DialogHeader>
+        <div className="text-center">
+          <p className="font-tajawal text-gray-300 text-sm">
+            اشتركتَ بنجاح في نشرة أخبار موقع د. دربال. بإذنه تعالى، ستصلك
+            إشعارات الموضوعات الجديدة عبر حسابك على فيسبوك والبريد الإلكتروني.{" "}
+          </p>
+        </div>
       </Dialog>
     </>
   );

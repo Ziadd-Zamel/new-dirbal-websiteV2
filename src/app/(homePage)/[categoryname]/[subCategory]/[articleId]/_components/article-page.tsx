@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Head from "next/head";
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import RelatedTopics from "./Realated";
@@ -65,169 +64,9 @@ const ArticlePage = ({
   const handleSearch = (term: string) => {
     setSearchTerm(term);
   };
-
-  // Generate meta data for the article
-  const generateMetaData = () => {
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://yoursite.com";
-    const currentUrl =
-      typeof window !== "undefined"
-        ? window.location.href
-        : `${siteUrl}/articles/${articleById.uuid || articleById.id}`;
-
-    // Clean description from HTML tags
-    const description =
-      articleById.description ||
-      articleById.description?.replace(/<[^>]*>/g, "").substring(0, 160) ||
-      "اقرأ هذا المقال المميز على موقع دربال";
-
-    // Ensure image URL is absolute
-    const imageUrl = articleById.image?.startsWith("http")
-      ? articleById.image
-      : `${siteUrl}${articleById.image || "/assets/default-article.jpg"}`;
-
-    return {
-      title: `${articleById.title} | دربال`,
-      description,
-      imageUrl,
-      currentUrl,
-      author: articleById.published_at || "دربال",
-      publishedTime: articleById.published_at || new Date().toISOString(),
-      modifiedTime:
-        articleById.published_at ||
-        articleById.published_at ||
-        new Date().toISOString(),
-      section: articleById.sub_category.name || "عام",
-    };
-  };
-
-  const metaData = generateMetaData();
-
-  // Generate JSON-LD structured data
-  const generateStructuredData = () => {
-    return {
-      "@context": "https://schema.org",
-      "@type": "Article",
-      headline: articleById.title,
-      description: metaData.description,
-      image: metaData.imageUrl,
-      author: {
-        "@type": "Person",
-        name: metaData.author,
-      },
-      publisher: {
-        "@type": "Organization",
-        name: "دربال",
-        logo: {
-          "@type": "ImageObject",
-          url: `${
-            process.env.NEXT_PUBLIC_SITE_URL || "https://yoursite.com"
-          }/logo.png`,
-        },
-      },
-      datePublished: metaData.publishedTime,
-      dateModified: metaData.modifiedTime,
-      articleSection: metaData.section,
-      inLanguage: "ar",
-      url: metaData.currentUrl,
-      mainEntityOfPage: {
-        "@type": "WebPage",
-        "@id": metaData.currentUrl,
-      },
-      wordCount:
-        articleById.description?.replace(/<[^>]*>/g, "").split(" ").length || 0,
-    };
-  };
+  console.log(articleById);
   return (
     <>
-      {/* Dynamic Meta Tags */}
-      <Head>
-        {/* Basic Meta Tags */}
-        <title>{metaData.title}</title>
-        <meta name="description" content={metaData.description} />
-        <meta name="author" content={metaData.author} />
-        <link rel="canonical" href={metaData.currentUrl} />
-
-        {/* Open Graph Meta Tags for Facebook */}
-        <meta property="og:title" content={articleById.title} />
-        <meta property="og:description" content={metaData.description} />
-        <meta property="og:image" content={metaData.imageUrl} />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content={articleById.title} />
-        <meta property="og:url" content={metaData.currentUrl} />
-        <meta property="og:type" content="article" />
-        <meta property="og:site_name" content="دربال" />
-        <meta property="og:locale" content="ar_AR" />
-
-        {/* Article specific Open Graph tags */}
-        <meta property="article:author" content={metaData.author} />
-        <meta
-          property="article:published_time"
-          content={metaData.publishedTime}
-        />
-        <meta
-          property="article:modified_time"
-          content={metaData.modifiedTime}
-        />
-        <meta property="article:section" content={metaData.section} />
-
-        {/* Twitter Card Meta Tags */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={articleById.title} />
-        <meta name="twitter:description" content={metaData.description} />
-        <meta name="twitter:image" content={metaData.imageUrl} />
-        <meta name="twitter:site" content="@derbal" />
-        <meta
-          name="twitter:creator"
-          content={`@${metaData.author.replace(/\s+/g, "")}`}
-        />
-
-        {/* Facebook App ID (if you have one) */}
-        {process.env.NEXT_PUBLIC_FACEBOOK_APP_ID && (
-          <meta
-            property="fb:app_id"
-            content={process.env.NEXT_PUBLIC_FACEBOOK_APP_ID}
-          />
-        )}
-
-        {/* Additional Meta Tags */}
-        <meta name="robots" content="index, follow" />
-        <meta
-          name="googlebot"
-          content="index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1"
-        />
-
-        {/* Language alternates */}
-        <link rel="alternate" hrefLang="ar" href={metaData.currentUrl} />
-        <link rel="alternate" hrefLang="x-default" href={metaData.currentUrl} />
-
-        {/* JSON-LD Structured Data */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(generateStructuredData()),
-          }}
-        />
-
-        {/* Prevent automatic telephone number detection */}
-        <meta name="format-detection" content="telephone=no" />
-
-        {/* Viewport meta tag for mobile */}
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1, maximum-scale=5"
-        />
-
-        {/* Theme color */}
-        <meta name="theme-color" content="#1f2937" />
-
-        {/* Apple touch icon */}
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-
-        {/* Favicon */}
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
       <div className="relative min-h-screen bg-background">
         {/* Page Heading with Background */}
         <MawdooaHeading
@@ -273,7 +112,7 @@ const ArticlePage = ({
                 />
               </div>
               <div id="comments-section" data-comments>
-                <CommentForm />
+                <CommentForm uuid={articleById.uuid} />
               </div>
             </div>
             {/* Related Topics - Hidden on Mobile */}

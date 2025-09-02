@@ -20,19 +20,20 @@ const Navbar = ({ selectedIndex }: NavbarProps) => {
   const shouldHideLine =
     pathname.startsWith("/tags") ||
     pathname.startsWith("/search") ||
+    pathname.startsWith("/archive") ||
     pathname.startsWith("/resume");
 
   return (
     <nav
       className={`main-padding absolute left-0 right-0 top-0 z-30 pt-2 ${
-        shouldHideLine ? "bg-black/50" : "bg-transparent"
+        shouldHideLine ? "bg-black/50  pb-3" : "bg-transparent"
       }`}
       role="navigation"
       aria-label="Main Navigation"
     >
       {/* Top divider line */}
       {!shouldHideLine && (
-        <div className="absolute inset-x-0 top-[70px] z-30 w-full px-5 lg:px-20 xl:pl-[70px] xl:pr-[78px]">
+        <div className="absolute inset-x-0 top-[70px] z-30 w-full px-5 lg:px-20 xl:pl-[70px] xl:pr-[70px]">
           <div className="h-px w-full bg-[#B5975C]" aria-hidden="true" />
         </div>
       )}
@@ -53,7 +54,7 @@ const Navbar = ({ selectedIndex }: NavbarProps) => {
           <button
             onClick={() => setIsSearchOpen(true)}
             aria-label="Open search"
-            className="sm:border-r border-[#B5975C] sm:px-[15px] mt-5  md:mt-0 "
+            className="sm:border-x border-[#B5975C] sm:px-[12px] mt-5  md:mt-0 "
           >
             <SearchIcon dark={false} />
           </button>

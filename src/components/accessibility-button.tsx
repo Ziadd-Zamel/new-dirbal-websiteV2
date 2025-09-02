@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { Plus, Minus, Sun, Moon } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
@@ -23,10 +23,14 @@ export default function AccessibilityButton({
   );
   const pathname = usePathname();
   const { theme, setTheme } = useTheme();
+  const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Don't load saved settings since we reset on every page navigation
-  }, []);
+    // Set light theme as default
+    if (!theme || theme === "system") {
+      setTheme("light");
+    }
+  }, [theme, setTheme]);
 
   // Reset internal state when page changes
   useEffect(() => {
@@ -35,6 +39,26 @@ export default function AccessibilityButton({
     setBaseFontSizes(new Map());
     removeReadingMask();
   }, [pathname]);
+
+  // Close panel when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        panelRef.current &&
+        !panelRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
 
   const storeBaseFontSizes = () => {
     const newBaseFontSizes = new Map<Element, number>();
@@ -385,6 +409,9 @@ export default function AccessibilityButton({
     setIsReadingMaskActive(false);
     removeReadingMask();
 
+    // Reset theme to light
+    setTheme("light");
+
     const root = document.documentElement;
     root.style.removeProperty("--accessibility-font-scale");
     document.body.style.removeProperty("fontSize");
@@ -443,9 +470,12 @@ export default function AccessibilityButton({
 
       {/* Accessibility options panel */}
       {isOpen && (
-        <div className="absolute bottom-16 left-0 mb-3 w-72 rounded-3xl bg-white/95 backdrop-blur-xl shadow-2xl border border-white/20 overflow-hidden">
+        <div
+          ref={panelRef}
+          className="absolute bottom-16 left-0 mb-3 w-64 rounded-2xl bg-white/95 backdrop-blur-xl shadow-2xl border border-white/20 overflow-hidden"
+        >
           {/* Content */}
-          <div className="p-6 space-y-6">
+          <div className="p-4 space-y-4">
             {/* Font scale control */}
             <div className="space-y-3">
               <div className="flex items-center justify-between bg-slate-50 rounded-xl p-3">
@@ -453,16 +483,16 @@ export default function AccessibilityButton({
                   onClick={() =>
                     handleFontScaleChange(Math.max(0.5, fontScale - 0.1))
                   }
-                  className="flex h-10 w-10 items-center justify-center rounded-lg bg-white text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-all duration-200 shadow-sm border border-slate-200 hover:border-blue-300 hover:scale-105"
+                  className="flex h-8 w-8 items-center justify-center rounded-lg bg-white text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-all duration-200 shadow-sm border border-slate-200 hover:border-blue-300 hover:scale-105"
                   aria-label="تصغير الخط"
                 >
-                  <span className="text-lg font-bold">
-                    <Minus />
+                  <span className="text-sm font-bold">
+                    <Minus className="h-4 w-4" />
                   </span>
                 </button>
 
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-slate-800">
+                  <div className="text-lg font-bold text-slate-800">
                     {scalePercentage}%
                   </div>
                 </div>
@@ -471,19 +501,19 @@ export default function AccessibilityButton({
                   onClick={() =>
                     handleFontScaleChange(Math.min(2.0, fontScale + 0.1))
                   }
-                  className="flex h-10 w-10 items-center justify-center rounded-lg bg-white text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-all duration-200 shadow-sm border border-slate-200 hover:border-blue-300 hover:scale-105"
+                  className="flex h-8 w-8 items-center justify-center rounded-lg bg-white text-slate-700 hover:bg-blue-50 hover:text-blue-600 transition-all duration-200 shadow-sm border border-slate-200 hover:border-blue-300 hover:scale-105"
                   aria-label="تكبير الخط"
                 >
-                  <span className="text-lg font-bold">
-                    <Plus />
+                  <span className="text-sm font-bold">
+                    <Plus className="h-4 w-4" />
                   </span>
                 </button>
               </div>
             </div>
 
-            {/* Theme switcher */}
+            {/* Theme switcher - icon only */}
             <div className="space-y-3">
-              <div className="flex items-center justify-between bg-slate-50 rounded-xl p-3">
+              <div className="flex items-center justify-center bg-slate-50 rounded-xl p-3">
                 <button
                   onClick={toggleTheme}
                   className={cn(
@@ -504,36 +534,10 @@ export default function AccessibilityButton({
                     <Moon className="h-5 w-5" />
                   )}
                 </button>
-
-                <div className="text-center">
-                  <div className="text-sm font-medium text-slate-600">
-                    {isDarkTheme ? "داكن" : "فاتح"}
-                  </div>
-                  <div className="text-xs text-slate-500">
-                    {isDarkTheme ? "Dark" : "Light"}
-                  </div>
-                </div>
-
-                <div
-                  className={cn(
-                    "flex h-10 w-10 items-center justify-center rounded-lg border-2 transition-all duration-200",
-                    isDarkTheme
-                      ? "bg-slate-800 border-slate-600"
-                      : "bg-white border-slate-300"
-                  )}
-                >
-                  <div
-                    className={cn(
-                      "w-6 h-6 rounded-full transition-all duration-300",
-                      isDarkTheme ? "bg-slate-600" : "bg-blue-500"
-                    )}
-                  />
-                </div>
               </div>
             </div>
 
             {/* Reading mask toggle */}
-
             <button
               onClick={toggleReadingMask}
               className={cn(
@@ -551,7 +555,7 @@ export default function AccessibilityButton({
               onClick={resetAccessibility}
               className="w-full py-2 px-2 bg-gradient-to-r from-slate-100 to-slate-200 text-slate-700 rounded-xl text-sm font-semibold border border-slate-300 hover:from-slate-200 hover:to-slate-300 hover:border-slate-400 transition-all duration-200 shadow-sm hover:shadow-md"
             >
-              افتراضي{" "}
+              افتراضي
             </button>
           </div>
         </div>

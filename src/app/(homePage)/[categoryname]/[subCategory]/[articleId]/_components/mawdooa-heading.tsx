@@ -39,10 +39,7 @@ const MawdooaHeading: React.FC<MawdooaHeadingProps> = ({
 
   return (
     <div className="overflow-hidden" ref={sectionRef}>
-      <div
-        className="relative h-fit flex-[0_0_100%] bg-cover bg-center"
-        style={{ position: "relative" }}
-      >
+      <div className="relative h-fit flex-[0_0_100%] bg-cover bg-center">
         <motion.div
           style={{
             position: "absolute",
@@ -67,7 +64,7 @@ const MawdooaHeading: React.FC<MawdooaHeadingProps> = ({
             <div className=" mt-44 sm:mt-36">
               <div className="flex flex-col justify-between sm:flex-row sm:items-center lg:w-[70%]">
                 <div className="flex items-center gap-5">
-                  <div className="relative flex h-24 w-42 flex-col items-center justify-center">
+                  <div className="relative flex max-h-16 min-h-16 sm:min-h-24 sm:max-h-24 sm:min-w-32 sm:max-w-32 min-w-20 max-w-24  flex-col items-center justify-center">
                     <Image
                       className="absolute z-0"
                       src={"/assets/bgbooks.jpg"}
@@ -76,10 +73,10 @@ const MawdooaHeading: React.FC<MawdooaHeadingProps> = ({
                     />
                     <div className="absolute inset-0 bg-black/30"></div>
                     <div className="relative z-20 flex flex-col items-center">
-                      <p className="-mt-3 text-3xl sm:text-5xl font-semibold text-white">
+                      <p className="-mt-3 text-xl sm:text-5xl font-semibold text-white">
                         {articleById?.title_number}
                       </p>
-                      <p className="mt-1 font-tajawal text-xl sm:text-3xl font-semibold text-white">
+                      <p className="mt-1 font-tajawal text-md sm:text-3xl font-semibold text-white">
                         {articleById?.title_short}
                       </p>
                     </div>

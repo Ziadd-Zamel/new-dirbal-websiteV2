@@ -4,13 +4,12 @@ import { useState } from "react";
 import { FaRegComment } from "react-icons/fa";
 import { sendMessage } from "@/lib/actions/sendMessage";
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+  CustomDialog,
+  CustomDialogHeader,
+  CustomDialogTitle,
+} from "@/components/ui/custom-dialog";
 
-const CommentForm = () => {
+const CommentForm = ({ uuid }: { uuid: string }) => {
   const [isChecked, setIsChecked] = useState(false);
   const [comment, setComment] = useState("");
   const [email, setEmail] = useState("");
@@ -18,12 +17,29 @@ const CommentForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showSuccessDialog, setShowSuccessDialog] = useState(false);
   const [showErrorDialog, setShowErrorDialog] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleCloseErrorDialog = (open: boolean) => {
+    setShowErrorDialog(open);
+    if (!open) {
+      setErrorMessage("");
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     // Check if comment and email are provided
     if (!comment.trim() || !email.trim()) {
+      setErrorMessage("يرجى التأكد من إدخال التعليق والبريد الإلكتروني");
+      setShowErrorDialog(true);
+      return;
+    }
+
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setErrorMessage("يرجى إدخال بريد إلكتروني صحيح");
       setShowErrorDialog(true);
       return;
     }
@@ -32,18 +48,23 @@ const CommentForm = () => {
 
     try {
       // Use the sendMessage server action
-      const result = await sendMessage(email, comment, name);
+      const result = await sendMessage(email, comment, name, uuid);
 
       if (result.success) {
         setShowSuccessDialog(true);
         setComment("");
         setEmail("");
         setName("");
+        setIsChecked(false);
       } else {
+        setErrorMessage("حدث خطأ في إرسال التعليق. يرجى المحاولة مرة أخرى");
         setShowErrorDialog(true);
       }
     } catch (error) {
       console.error("Comment send failed:", error);
+      setErrorMessage(
+        "حدث خطأ في الاتصال. يرجى التحقق من اتصال الإنترنت والمحاولة مرة أخرى"
+      );
       setShowErrorDialog(true);
     } finally {
       setIsLoading(false);
@@ -118,36 +139,36 @@ const CommentForm = () => {
       </div>
 
       {/* Success Dialog */}
-      <Dialog open={showSuccessDialog} onOpenChange={setShowSuccessDialog}>
-        <DialogContent className="mx-4 w-[350px] border-none py-10 px-10">
-          <DialogHeader>
-            <DialogTitle className="text-center font-tajawal text-xl font-medium text-[#B5975C]">
-              شكراً لك
-            </DialogTitle>
-          </DialogHeader>
-          <div className="text-center">
-            <p className="font-tajawal text-gray-300 text-sm">
-              تم إرسال تعليقك بنجاح. شكراً لمشاركتك معنا!
-            </p>
-          </div>
-        </DialogContent>
-      </Dialog>
+      <CustomDialog
+        open={showSuccessDialog}
+        onOpenChange={setShowSuccessDialog}
+      >
+        <CustomDialogHeader>
+          <CustomDialogTitle className="text-center font-tajawal text-xl font-medium text-[#B5975C]">
+            شكراً لك
+          </CustomDialogTitle>
+        </CustomDialogHeader>
+        <div className="text-center">
+          <p className="font-tajawal text-gray-300 light:text-black py-8 text-sm">
+            تم إرسال تعليقك بنجاح. شكراً لمشاركتك معنا!
+          </p>
+        </div>
+      </CustomDialog>
 
       {/* Error Dialog */}
-      <Dialog open={showErrorDialog} onOpenChange={setShowErrorDialog}>
-        <DialogContent className="mx-4 w-[350px] border-none py-10 px-10">
-          <DialogHeader>
-            <DialogTitle className="text-center font-tajawal text-xl font-medium text-red-500">
-              تنبيه
-            </DialogTitle>
-          </DialogHeader>
-          <div className="text-center">
-            <p className="font-tajawal text-gray-300 text-sm">
-              يرجى التأكد من إدخال التعليق والبريد الإلكتروني
-            </p>
-          </div>
-        </DialogContent>
-      </Dialog>
+      <CustomDialog
+        open={showErrorDialog}
+        onOpenChange={handleCloseErrorDialog}
+      >
+        <CustomDialogHeader>
+          <CustomDialogTitle className="text-center font-tajawal text-xl font-medium text-red-500">
+            تنبيه
+          </CustomDialogTitle>
+        </CustomDialogHeader>
+        <div className="text-center py-8">
+          <p className="font-tajawal text-gray-300 text-sm">{errorMessage}</p>
+        </div>
+      </CustomDialog>
     </>
   );
 };

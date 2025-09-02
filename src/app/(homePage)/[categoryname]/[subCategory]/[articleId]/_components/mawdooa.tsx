@@ -307,7 +307,7 @@ const Mawdooa = ({ articleById, searchTerm }: MawdooaProps) => {
       className="w-full pb-5 pl-2 border-[#B5975C]  main-content"
       ref={contentRef}
     >
-      <div className="block sm:hidden -mt-10 mb-10">
+      <div className="flex justify-center sm:hidden -mt-10 mb-10">
         <Sidebar articleById={articleById} />
       </div>
       <div
@@ -336,7 +336,7 @@ const Mawdooa = ({ articleById, searchTerm }: MawdooaProps) => {
             height={0}
           />{" "}
           <span className="font-tajawal text-[12px] text-[#B5975C] sm:text-[14px] xl:text-[16px]">
-            {new Date(articleById.published_at)
+            {new Date(articleById.updated_at)
               .toLocaleDateString()
               .split("/")
               .reverse()
@@ -435,7 +435,7 @@ const Mawdooa = ({ articleById, searchTerm }: MawdooaProps) => {
 
       {/* Search navigation controls */}
       {searchTerm && (
-        <div className="fixed bottom-4 right-4 z-50 rounded-lg bg-black bg-opacity-80 p-3 text-white shadow-lg">
+        <div className="fixed bottom-4 right-4 z-[100] rounded-lg bg-black bg-opacity-80 p-3 text-white shadow-lg">
           <div className="flex items-center gap-2 text-sm">
             <span className="text-[#B5975C]">البحث:</span>
             <span>{searchTerm}</span>

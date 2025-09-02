@@ -6,7 +6,7 @@ export function generateGlobalMetadata(
   customUrl?: string,
   customImage?: string
 ): Metadata {
-  const siteName = "دربال";
+  const siteName = "موقع د. عياد دربال";
   const siteDescription = "موقع دربال للمقالات والقبسات والمواضيع المختارة";
   const siteUrl = "https://yoursite.com";
 

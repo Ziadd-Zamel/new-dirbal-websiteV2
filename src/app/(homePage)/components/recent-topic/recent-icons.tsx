@@ -132,7 +132,6 @@ export default function RecentIcons({ article }: { article: Article }) {
       <button
         className="cursor-pointer border-x border-gray-400 px-5 py-1.5"
         onClick={handleCopyDescription}
-        title="نسخ وصف المقال"
       >
         <Files strokeWidth={1} size={32} color="white" />
       </button>
@@ -142,14 +141,13 @@ export default function RecentIcons({ article }: { article: Article }) {
         className="relative cursor-pointer px-1.5 py-1.5"
         onMouseEnter={() => setShowShareDropdown(true)}
         onMouseLeave={() => setShowShareDropdown(false)}
-        title="مشاركة المقال"
       >
         <Share2 color="white" strokeWidth={1} size={32} />
 
         <AnimatePresence>
           {showShareDropdown && (
             <motion.div
-              className="absolute top-full left-0 mt-2 flex flex-col overflow-hidden border border-gray-600 bg-gray-800 shadow-2xl z-50"
+              className="absolute top-full left-1.5 flex flex-col overflow-hidden border border-gray-600 bg-gray-800 shadow-2xl z-50"
               initial={{ opacity: 0, y: -15 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
@@ -163,7 +161,7 @@ export default function RecentIcons({ article }: { article: Article }) {
               ].map(({ id, Icon, label }, i, arr) => (
                 <div
                   key={id}
-                  className={`flex h-[40px] w-[40px] items-center justify-center cursor-pointer transition-colors hover:bg-gray-700 group ${
+                  className={`flex h-[35px] w-[35px] items-center justify-center cursor-pointer transition-colors hover:bg-gray-700 group ${
                     i !== arr.length - 1 ? "border-b border-gray-500" : ""
                   }`}
                   onClick={() =>

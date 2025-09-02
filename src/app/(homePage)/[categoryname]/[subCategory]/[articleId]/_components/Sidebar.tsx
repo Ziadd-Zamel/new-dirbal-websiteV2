@@ -14,6 +14,46 @@ interface SidebarProps {
 const Sidebar = ({ articleById }: SidebarProps) => {
   const [showShareDropdown, setShowShareDropdown] = useState(false);
 
+  // Smooth scroll function to comments section
+  const scrollToComments = () => {
+    const commentsSection = document.getElementById("comments-section");
+    if (commentsSection) {
+      // Get the current scroll position
+      const currentScrollY = window.scrollY;
+
+      // Get the target position (comments section position minus some offset for better visibility)
+      const targetPosition = commentsSection.offsetTop - 100;
+
+      // Custom smooth scroll function
+      const smoothScroll = (start: number, end: number, duration: number) => {
+        const startTime = performance.now();
+
+        const animateScroll = (currentTime: number) => {
+          const elapsed = currentTime - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+
+          // Easing function for smooth animation
+          const easeInOutCubic = (t: number) =>
+            t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+
+          const currentPosition =
+            start + (end - start) * easeInOutCubic(progress);
+
+          window.scrollTo(0, currentPosition);
+
+          if (progress < 1) {
+            requestAnimationFrame(animateScroll);
+          }
+        };
+
+        requestAnimationFrame(animateScroll);
+      };
+
+      // Start the smooth scroll animation
+      smoothScroll(currentScrollY, targetPosition, 0);
+    }
+  };
+
   // Enhanced share functionality
   const handleShare = (
     platform:
@@ -56,28 +96,28 @@ const Sidebar = ({ articleById }: SidebarProps) => {
           break;
 
         case "messenger":
-          // For Messenger, you need a Facebook App ID
-          const appId = process.env.NEXT_PUBLIC_FACEBOOK_APP_ID;
-          if (!appId) {
-            console.warn("Facebook App ID not configured");
-            handleFallbackShare(url, title, cleanDescription);
-            return;
-          }
-
-          const messengerUrl =
-            `https://www.facebook.com/dialog/send?` +
-            `app_id=${appId}&` +
-            `link=${encodeURIComponent(url)}&` +
-            `redirect_uri=${encodeURIComponent(window.location.origin)}`;
+          // Use Messenger web sharing (no app ID required)
+          const messengerText = `${title}\n\n${cleanDescription}\n\n${url}`;
+          const messengerUrl = `https://m.me/?text=${encodeURIComponent(
+            messengerText
+          )}`;
 
           const messengerWindow = window.open(
             messengerUrl,
-            "messenger-share-dialog",
-            "width=626,height=436"
+            "_blank",
+            "width=500,height=600"
           );
 
           if (!messengerWindow) {
-            handleFallbackShare(url, title, cleanDescription);
+            // Fallback: try to open Messenger app or copy to clipboard
+            if (navigator.userAgent.includes("Mobile")) {
+              // For mobile, try to open the Messenger app
+              window.location.href = `fb-messenger://share?link=${encodeURIComponent(
+                url
+              )}`;
+            } else {
+              handleFallbackShare(url, title, cleanDescription);
+            }
           }
           break;
 
@@ -202,30 +242,9 @@ const Sidebar = ({ articleById }: SidebarProps) => {
     }
   };
 
-  // Scroll to comments section
-  const handleScrollToComments = () => {
-    const commentsSection =
-      document.querySelector("#comments-section") ||
-      document.querySelector("[data-comments]") ||
-      document.querySelector("form"); // Fallback to comment form
-
-    if (commentsSection) {
-      commentsSection.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    } else {
-      // If no comments section found, scroll to bottom
-      window.scrollTo({
-        top: document.body.scrollHeight,
-        behavior: "smooth",
-      });
-    }
-  };
-
   return (
     <div className="w-full mt-2">
-      <div className="flex w-[70px] flex-col items-center justify-center border border-gray-500 light:border-gray-300 light:bg-white light:text-black">
+      <div className="flex w-[70px] flex-col items-center justify-center border border-gray-500 light:border-gray-300 light:bg-transparent light:text-black">
         <div
           className="flex h-[70px] w-full  cursor-pointer items-center justify-center border-b light:border-b-gray-300  border-gray-500 light:border-gray-300 text-center text-sm transition-colors hover:bg-gray-800 light:hover:bg-gray-300 "
           title="إضافة إلى المفضلة"
@@ -314,17 +333,17 @@ const Sidebar = ({ articleById }: SidebarProps) => {
         </div>
 
         {/* Comment Icon - Scroll to Comments */}
-        <div
+        <button
+          onClick={scrollToComments}
           className="flex h-[70px] w-full cursor-pointer items-center justify-center transition-colors hover:bg-gray-800 light:hover:bg-gray-300"
-          onClick={handleScrollToComments}
-          title="الانتقال إلى التعليقات"
+          title="أضف تعليقاً"
         >
           <MessageCircle
             strokeWidth={1}
             size={35}
             className="light:text-black"
           />
-        </div>
+        </button>
       </div>
     </div>
   );

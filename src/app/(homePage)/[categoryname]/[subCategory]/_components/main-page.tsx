@@ -211,16 +211,16 @@ const MainPage = ({
     }
   }, [selectedSubSubCategory, hasTabs, tabs]);
 
-  // Effect to stop loading when articles change (new data arrives)
+  // Effect to stop loading after exactly 3 seconds
   useEffect(() => {
-    if (isLoadingArticles && articles.length > 0) {
+    if (isLoadingArticles) {
       const timer = setTimeout(() => {
         setIsLoadingArticles(false);
       }, 2000);
 
       return () => clearTimeout(timer);
     }
-  }, [articles, isLoadingArticles]);
+  }, [isLoadingArticles]);
 
   // Memoize breadcrumbs to prevent recreation
   const breadcrumbs = useMemo(

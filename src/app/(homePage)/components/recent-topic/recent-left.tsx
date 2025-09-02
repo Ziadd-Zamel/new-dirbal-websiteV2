@@ -16,18 +16,29 @@ export default function RecentLeftSection({
     const cleanDescription = stripHtmlTags(description);
     const words = cleanDescription.split(" ");
 
-    if (words.length <= 120) return cleanDescription;
+    if (words.length <= 130) return cleanDescription;
 
-    const beforeFade = words.slice(0, 120).join(" ");
-    const fadeWords = words.slice(120, 130).join(" ");
-    const hasMoreWords = words.length > 130;
+    const beforeFade = words.slice(0, 90).join(" ");
+    const fadeWords = words.slice(90, 100);
+    const hasMoreWords = words.length > 100;
 
     return (
-      <>
+      <span>
         {beforeFade}
-        {fadeWords && <span className="fade-text"> {fadeWords}</span>}
-        {hasMoreWords && " ..."}
-      </>
+        {fadeWords.length > 0 && (
+          <span>
+            {fadeWords.map((word, index) => {
+              const opacity = 1 - index / fadeWords.length;
+              return (
+                <span key={index} style={{ opacity: opacity }}>
+                  {" " + word}
+                </span>
+              );
+            })}
+          </span>
+        )}
+        {hasMoreWords && <span style={{ opacity: 0 }}>...</span>}
+      </span>
     );
   };
 
@@ -73,16 +84,6 @@ export default function RecentLeftSection({
         </Link>
         <RecentIcons article={selectedArticle} />
       </div>
-
-      {/* ✅ Fade Gradient */}
-      <style jsx>{`
-        .fade-text {
-          background: linear-gradient(to right, rgb(209 213 219), transparent);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-        }
-      `}</style>
     </div>
   );
 }

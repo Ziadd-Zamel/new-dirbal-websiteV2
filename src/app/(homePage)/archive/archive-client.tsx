@@ -30,15 +30,6 @@ export default function ArchiveClient() {
 
   return (
     <section id="RecentTopics" className="relative min-h-[100vh] pb-24">
-      <div className="absolute inset-0 mt-0 h-full">
-        <Image
-          src={"/assets/mainbg-9.png"}
-          alt=""
-          height={1000}
-          width={100}
-          className="h-full w-full"
-        />
-      </div>
       <div className="main-padding relative z-50 py-6 mt-20">
         <div className="flex-row-center">
           <SectionLogo LogoUrl={"/assets/sectionLogo-5.svg"} />

@@ -3,7 +3,8 @@
 export async function sendMessage(
   email: string,
   message: string,
-  name?: string
+  name?: string,
+  uuid?: string
 ) {
   try {
     const response = await fetch(`${process.env.API}/messages`, {
@@ -11,15 +12,21 @@ export async function sendMessage(
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email, message, ...(name && { name }) }),
+      body: JSON.stringify({
+        email,
+        message,
+        ...(name && { name }),
+        ...(uuid && { article_uuid: uuid }),
+      }),
     });
-
+    console.log(response);
     if (!response.ok) {
       throw new Error("Failed to send message");
     }
 
     return { success: true };
   } catch (error) {
+    console.error("Send message error:", error);
     return { success: false, error: "Failed to send message" };
   }
 }

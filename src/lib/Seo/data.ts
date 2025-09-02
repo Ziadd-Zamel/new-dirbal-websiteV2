@@ -21,7 +21,7 @@ export function generateGlobalStructuredData() {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: "دربال",
+    name: "موقع د. عياد دربال",
     url: "https://yoursite.com",
     logo: {
       "@type": "ImageObject",

@@ -40,9 +40,7 @@ const HeadingText: React.FC<HeadingTextProps> = ({
         </div>
 
         <p
-          className={`mt-3 text-center font-tajawal text-[14px] md:text-md xl:text-[18px] ${
-            black ? "text-black" : "text-white"
-          }`}
+          className={`mt-3 text-center font-tajawal text-[14px] md:text-md xl:text-xl text-[#B5975C]`}
         >
           {" "}
           {text}
