@@ -336,8 +336,8 @@ const Mawdooa = ({ articleById, searchTerm }: MawdooaProps) => {
             height={0}
           />{" "}
           <span className="font-tajawal text-[12px] text-[#B5975C] sm:text-[14px] xl:text-[16px]">
-            {new Date(articleById.updated_at)
-              .toLocaleDateString()
+            {new Date(articleById.published_at)
+              .toLocaleDateString("en-GB")
               .split("/")
               .reverse()
               .join("-")}

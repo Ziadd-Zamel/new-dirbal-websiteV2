@@ -289,7 +289,7 @@ const ArticleCard = ({
               height={0}
             />{" "}
             <span className="font-tajawal text-[12px] text-[#B5975C] sm:text-[14px] xl:text-[16px]">
-              {new Date(article.created_at)
+              {new Date(article.published_at)
                 .toLocaleDateString("en-GB")
                 .split("/")
                 .reverse()
