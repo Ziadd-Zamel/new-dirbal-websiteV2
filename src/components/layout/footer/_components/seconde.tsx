@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import Image from "next/image";
 import { FaFacebookF, FaWhatsapp } from "react-icons/fa";
@@ -11,11 +9,14 @@ import {
   CustomDialogHeader as DialogHeader,
   CustomDialogTitle as DialogTitle,
 } from "@/components/ui/custom-dialog";
+import { subscribe } from "@/lib/actions/subscribe";
 
 export default function Seconde() {
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
+  const [showErrorDialog, setShowErrorDialog] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [showShareDropdown, setShowShareDropdown] = useState(false);
 
   const handleSubmit = async (e: any) => {
@@ -28,22 +29,22 @@ export default function Seconde() {
     setIsLoading(true);
 
     try {
-      // Fake endpoint - replace with your actual endpoint
-      const response = await fetch("/api//subscribe", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email }),
-      });
+      const response = await subscribe(email);
 
-      setShowDialog(true);
-      if (response.ok) {
+      if (response && response.success) {
         setShowDialog(true);
         setEmail("");
+      } else {
+        // Handle error case - show error dialog
+        console.error("Subscription failed:", response?.message);
+        setErrorMessage(response?.message || "فشل في الاشتراك");
+        setShowErrorDialog(true);
       }
     } catch (error) {
       console.error("Subscription failed:", error);
+      // Handle unexpected errors
+      setErrorMessage("فشل في الاشتراك");
+      setShowErrorDialog(true);
     } finally {
       setIsLoading(false);
     }
@@ -159,7 +160,7 @@ export default function Seconde() {
         </div>
         <form className=" w-full mt-3" onSubmit={handleSubmit}>
           <p className="text-right font-tajawal text-lg">
-            اشترك في نشرة أخبار الصفحة
+            اشترك في نشرة أخبار الموقع
           </p>
           <p className="mt-2 text-right font-tajawal text-[14px]">
             لاستقبال إشعارات المواضيع الجديدة، يرجى الاشتراك
@@ -211,9 +212,27 @@ export default function Seconde() {
           </DialogTitle>
         </DialogHeader>
         <div className="text-center">
-          <p className="font-tajawal text-gray-300 text-sm">
+          <p className="font-tajawal text-gray-300 light:text-black text-sm">
             اشتركتَ بنجاح في نشرة أخبار موقع د. دربال. بإذنه تعالى، ستصلك
             إشعارات الموضوعات الجديدة عبر حسابك على فيسبوك والبريد الإلكتروني.{" "}
+          </p>
+        </div>
+      </Dialog>
+
+      {/* Error Dialog */}
+      <Dialog
+        open={showErrorDialog}
+        onOpenChange={setShowErrorDialog}
+        className="mx-4 w-[350px] border-none py-10 px-10"
+      >
+        <DialogHeader>
+          <DialogTitle className="text-center font-tajawal text-xl font-medium text-red-500">
+            خطأ
+          </DialogTitle>
+        </DialogHeader>
+        <div className="text-center">
+          <p className="font-tajawal text-gray-300 light:text-black text-sm">
+            {errorMessage}
           </p>
         </div>
       </Dialog>

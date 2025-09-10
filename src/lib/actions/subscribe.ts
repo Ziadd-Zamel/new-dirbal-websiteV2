@@ -1,15 +1,15 @@
 "use server";
 
-export async function subscribe(email: string, recaptchaToken: string) {
+export async function subscribe(email: string) {
   try {
     const response = await fetch(`${process.env.API}/subscribe`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email, recaptchaToken }),
+      body: JSON.stringify({ email }),
     });
-
+    console.log(response);
     if (!response.ok) {
       // If the response indicates the email already exists
       if (response.status === 409 || response.status === 400) {

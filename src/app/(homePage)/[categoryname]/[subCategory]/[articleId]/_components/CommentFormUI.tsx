@@ -1,6 +1,6 @@
 "use client";
 import LeftArrowIcon from "@/components/Icons/LeftArrowIcon";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaRegComment } from "react-icons/fa";
 import { sendMessage } from "@/lib/actions/sendMessage";
 import {
@@ -8,6 +8,11 @@ import {
   CustomDialogHeader,
   CustomDialogTitle,
 } from "@/components/ui/custom-dialog";
+
+interface SavedUserData {
+  email: string;
+  name: string;
+}
 
 const CommentForm = ({ uuid }: { uuid: string }) => {
   const [isChecked, setIsChecked] = useState(false);
@@ -18,6 +23,53 @@ const CommentForm = ({ uuid }: { uuid: string }) => {
   const [showSuccessDialog, setShowSuccessDialog] = useState(false);
   const [showErrorDialog, setShowErrorDialog] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+
+  const STORAGE_KEY = "commentFormUserData";
+
+  // Load saved data from localStorage on component mount
+  useEffect(() => {
+    try {
+      const savedData = localStorage.getItem(STORAGE_KEY);
+      if (savedData) {
+        const parsedData: SavedUserData = JSON.parse(savedData);
+        setEmail(parsedData.email || "");
+        setName(parsedData.name || "");
+        setIsChecked(true); // If data exists, checkbox should be checked
+      }
+    } catch (error) {
+      console.error("Error loading saved data:", error);
+    }
+  }, []);
+
+  // Save data to localStorage when checkbox is checked and form is submitted
+  const saveUserData = () => {
+    if (isChecked && email.trim()) {
+      try {
+        const dataToSave: SavedUserData = {
+          email: email.trim(),
+          name: name.trim(),
+        };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(dataToSave));
+      } catch (error) {
+        console.error("Error saving data:", error);
+      }
+    }
+  };
+
+  // Remove data from localStorage when checkbox is unchecked
+  const handleCheckboxChange = () => {
+    const newCheckedState = !isChecked;
+    setIsChecked(newCheckedState);
+
+    if (!newCheckedState) {
+      // If unchecking, remove saved data
+      try {
+        localStorage.removeItem(STORAGE_KEY);
+      } catch (error) {
+        console.error("Error removing saved data:", error);
+      }
+    }
+  };
 
   const handleCloseErrorDialog = (open: boolean) => {
     setShowErrorDialog(open);
@@ -51,11 +103,17 @@ const CommentForm = ({ uuid }: { uuid: string }) => {
       const result = await sendMessage(email, comment, name, uuid);
 
       if (result.success) {
+        // Save user data if checkbox is checked
+        saveUserData();
+
         setShowSuccessDialog(true);
-        setComment("");
-        setEmail("");
-        setName("");
-        setIsChecked(false);
+        setComment(""); // Only clear comment, keep user data if saved
+
+        // Only clear user data if checkbox is not checked
+        if (!isChecked) {
+          setEmail("");
+          setName("");
+        }
       } else {
         setErrorMessage("حدث خطأ في إرسال التعليق. يرجى المحاولة مرة أخرى");
         setShowErrorDialog(true);
@@ -116,7 +174,7 @@ const CommentForm = ({ uuid }: { uuid: string }) => {
               type="checkbox"
               id="saveData"
               checked={isChecked}
-              onChange={() => setIsChecked(!isChecked)}
+              onChange={handleCheckboxChange}
               disabled={isLoading}
               className="h-4 w-4 disabled:opacity-50"
             />

@@ -13,7 +13,6 @@ export async function sendContact(
       },
       body: JSON.stringify({ email, message, ...(name && { name }) }),
     });
-
     if (!response.ok) {
       throw new Error("Failed to send contact message");
     }
