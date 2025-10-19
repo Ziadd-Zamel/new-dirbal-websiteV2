@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import { stripHtmlTags } from "@/lib/utils/stripHtml";
@@ -8,8 +7,7 @@ import { useEffect, useState, useMemo, useRef } from "react";
 export default function QabasatBox({ Qabasat }: { Qabasat: Qabasat[] }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const [nextIndex, setNextIndex] = useState(0);
+  const [boxHeight, setBoxHeight] = useState(200);
   const contentRef = useRef<HTMLDivElement>(null);
 
   // Group Qabasat by category
@@ -57,48 +55,39 @@ export default function QabasatBox({ Qabasat }: { Qabasat: Qabasat[] }) {
   };
 
   const currentQuote = flattenedQabasat[currentIndex];
-  const nextQuote = flattenedQabasat[nextIndex];
+
+  // Update box height based on current content
+  useEffect(() => {
+    if (contentRef.current) {
+      const newHeight = Math.min(
+        Math.max(contentRef.current.scrollHeight + 250, 200),
+        600
+      );
+      setBoxHeight(newHeight);
+    }
+  }, [currentIndex]);
 
   useEffect(() => {
     if (!currentQuote || isPaused) return;
 
     const duration = (currentQuote.time || 5) * 1000;
 
-    const startTransition = setTimeout(() => {
-      const newNextIndex = (currentIndex + 1) % flattenedQabasat.length;
-      setNextIndex(newNextIndex);
-      setIsTransitioning(true);
-    }, duration - 500);
-
-    const completeTransition = setTimeout(() => {
-      setCurrentIndex(nextIndex);
-      setIsTransitioning(false);
+    const timer = setTimeout(() => {
+      setCurrentIndex((prev) => (prev + 1) % flattenedQabasat.length);
     }, duration);
 
     return () => {
-      clearTimeout(startTransition);
-      clearTimeout(completeTransition);
+      clearTimeout(timer);
     };
-  }, [currentIndex, isPaused, nextIndex]); // Removed currentQuote?.time from dependencies
+  }, [currentIndex, isPaused, currentQuote, flattenedQabasat.length]);
 
   const hasImage = currentQuote?.image;
   const currentCategoryIndex = getCurrentCategoryIndex();
 
-  // Simple height calculation to prevent content overflow
-  const minBoxHeight = useMemo(() => {
-    if (!currentQuote) return 200;
-
-    const text = stripHtmlTags(currentQuote.description);
-    const wordCount = text.split(" ").length;
-
-    // Base height + height for content (roughly 6px per word)
-    return Math.min(300 + wordCount * 6, 320); // Cap at 500px max
-  }, [currentQuote]);
-
   if (!currentQuote) return null;
 
   return (
-    <div className="relative flex h-full  items-center px-10 lg:px-20 xl:px-[70px] 2xl:box-container">
+    <div className="relative flex h-full items-center px-10 lg:px-20 xl:px-[70px] 2xl:box-container">
       <div className="flex w-full flex-col items-center gap-5 lg:flex-row-reverse lg:justify-between">
         <Image
           alt="Aya"
@@ -109,11 +98,11 @@ export default function QabasatBox({ Qabasat }: { Qabasat: Qabasat[] }) {
         />
 
         <div
-          className="hover:border-1 hover:border-[#B5975C] w-full rounded-[12px] border border-[#2E394780] bg-[#FFFFFF26] px-[10px] pb-[16px] pt-5 sm:pt-10 transition-all duration-[2000ms] ease-in-out sm:px-[20px] md:w-[80%] lg:mt-16 lg:w-[51%] lg:px-[15px] xl:mt-28 xl:px-[45px] xl:py-[15px] cursor-pointer flex flex-col"
+          className="hover:border-1 hover:border-[#B5975C] w-full rounded-[12px] border border-[#2E394780] bg-[#FFFFFF26] px-[10px] pb-[16px] pt-5 sm:pt-10 transition-all duration-700 ease-in-out sm:px-[20px] md:w-[80%] lg:mt-16 lg:w-[51%] lg:px-[15px] xl:mt-28 xl:px-[45px] xl:py-[15px] cursor-pointer flex flex-col relative overflow-hidden"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
           style={{
-            minHeight: minBoxHeight,
+            height: boxHeight,
           }}
         >
           {/* HEADER AND IMAGE CONTAINER */}
@@ -164,7 +153,6 @@ export default function QabasatBox({ Qabasat }: { Qabasat: Qabasat[] }) {
                         );
                         if (firstIndex !== -1) {
                           setCurrentIndex(firstIndex);
-                          setIsTransitioning(false);
                         }
                       }
                     }}
@@ -188,45 +176,37 @@ export default function QabasatBox({ Qabasat }: { Qabasat: Qabasat[] }) {
           />
 
           <div
-            ref={contentRef}
-            className={`flex flex-col justify-center transition-all duration-[2000ms] min-h-fit ease-in-out ${
+            className={`flex flex-col justify-center transition-all duration-700 min-h-fit ease-in-out ${
               hasImage ? "mt-4" : "mt-6"
             }`}
           >
-            {/* DESCRIPTION - Crossfade Animation Container */}
+            {/* DESCRIPTION - All descriptions absolutely positioned with fade */}
             <div className="relative">
-              {/* Current Description */}
-              <p
-                style={{ direction: "rtl" }}
-                className={` font-tajawal text-sm font-[400] leading-8 text-gray-200 sm:text-base sm:leading-[25px]  xl:text-[18px] transition-opacity duration-[2000ms] ease-in-out ${
-                  isTransitioning ? "opacity-0" : "opacity-100"
-                }`}
-              >
-                {stripHtmlTags(currentQuote.description)}
-              </p>
-
-              {/* Next Description - Overlaid during transition */}
-              {isTransitioning && nextQuote && (
+              {flattenedQabasat.map((quote, i) => (
                 <p
+                  key={quote.uuid}
+                  ref={i === currentIndex ? contentRef : null}
                   style={{ direction: "rtl" }}
-                  className={`absolute top-0 left-0 right-0 font-tajawal text-sm font-[400] leading-8 text-gray-200 sm:text-base sm:leading-[25px] xl:text-[18px] transition-opacity duration-[2000ms] ease-in-out ${
-                    isTransitioning ? "opacity-100" : "opacity-0"
+                  className={`font-tajawal text-sm font-[400] leading-8 text-gray-200 sm:text-base sm:leading-[25px] xl:text-[18px] transition-opacity duration-[1800ms] ${
+                    i === currentIndex
+                      ? "opacity-100 relative"
+                      : "opacity-0 absolute inset-0"
                   }`}
                 >
-                  {stripHtmlTags(nextQuote.description)}
+                  {stripHtmlTags(quote.description)}
                 </p>
-              )}
+              ))}
             </div>
           </div>
 
           {/* SOURCE */}
           <div
-            className={`transition-all duration-[2000ms] ease-in-out mt-auto ${
+            className={`transition-all duration-700 ease-in-out mt-auto pt-4 ${
               currentQuote.source ? "opacity-100" : "opacity-0"
             }`}
           >
             {currentQuote.source && (
-              <p className="text-left font-tajawal self-end justify-self-start text-base text-white lg:mt-[6px] xl:mt-4">
+              <p className="text-left font-tajawal text-base text-white">
                 {currentQuote.source}
               </p>
             )}
