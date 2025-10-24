@@ -19,7 +19,7 @@ export default function SubCategorySection({ SubCategory, categoryId }: Props) {
       className="w-full px-4 pb-5 sm:px-6 md:px-10"
     >
       {/* Mobile & Tablet Layout */}
-      <div className="block lg:hidden">
+      <div className="block lg:hidden mt-16">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           {SubCategory.map((sub, index) => (
             <motion.div

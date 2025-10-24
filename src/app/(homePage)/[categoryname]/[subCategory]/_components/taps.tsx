@@ -26,10 +26,10 @@ const Taps: React.FC<TapsProps> = ({ activeTab, setActiveTab, taps }) => {
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`relative w-fit shrink-0 px-3 py-2 text-center text-sm transition-colors duration-200 sm:w-[160px] sm:text-base md:w-[200px] md:text-lg lg:text-xl ${
+              className={`relative w-fit shrink-0 px-3 py-1 text-center text-lg transition-colors duration-200 sm:w-[160px] sm:text-base md:w-[200px] md:text-lg lg:text-xl ${
                 activeTab === tab
-                  ? "text-white before:absolute before:left-0 before:right-0 before:top-0 before:h-[3px] before:bg-[#E9E9E9] before:opacity-90 before:shadow-[-1px_-2px_11px_0px_#E9E9E9] before:blur-sm after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-[#E9E9E9] after:opacity-90 after:shadow-[-2px_-1px_11px_1px_#E9E9E9] after:blur-sm"
-                  : "text-[#DBBC80] hover:text-white"
+                  ? "text-white light:text-black before:absolute before:left-0 before:right-0 before:top-0 before:h-[3px] before:bg-[#E9E9E9] before:opacity-90 before:shadow-[-1px_-2px_11px_0px_#E9E9E9] before:blur-sm after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-[#E9E9E9] after:opacity-90 after:shadow-[-2px_-1px_11px_1px_#E9E9E9] after:blur-sm"
+                  : "text-[#DBBC80] hover:text-white light:hover:text-black"
               }`}
             >
               {tab}

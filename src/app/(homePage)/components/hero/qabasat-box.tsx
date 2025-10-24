@@ -9,7 +9,7 @@ export default function QabasatBox({ Qabasat }: { Qabasat: Qabasat[] }) {
   const [isPaused, setIsPaused] = useState(false);
   const [boxHeight, setBoxHeight] = useState(200);
   const contentRef = useRef<HTMLDivElement>(null);
-
+  console.log(Qabasat);
   // Group Qabasat by category
   const groupedQabasat = useMemo(() => {
     const groups: { [key: string]: Qabasat[] } = {};
@@ -60,7 +60,7 @@ export default function QabasatBox({ Qabasat }: { Qabasat: Qabasat[] }) {
   useEffect(() => {
     if (contentRef.current) {
       const newHeight = Math.min(
-        Math.max(contentRef.current.scrollHeight + 250, 200),
+        Math.max(contentRef.current.scrollHeight + 200, 200),
         600
       );
       setBoxHeight(newHeight);
@@ -87,7 +87,7 @@ export default function QabasatBox({ Qabasat }: { Qabasat: Qabasat[] }) {
   if (!currentQuote) return null;
 
   return (
-    <div className="relative flex h-full items-center px-10 lg:px-20 xl:px-[70px] 2xl:box-container">
+    <div className="relative flex h-full items-center px-10 lg:px-20 xl:px-[70px] 2xl:box-container mt-10 sm:mt-0">
       <div className="flex w-full flex-col items-center gap-5 lg:flex-row-reverse lg:justify-between">
         <Image
           alt="Aya"

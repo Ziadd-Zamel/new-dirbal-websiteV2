@@ -40,7 +40,7 @@ export default function HighLightCard({ article }: { article: Article }) {
       </h3>
 
       {/* Title + subtitle */}
-      <h4 className="my-7 min-h-[80px] text-right font-tajawal text-xl font-medium text-black">
+      <h4 className="my-7 min-h-[80px] text-right font-tajawal text-lg sm:text-xl font-medium text-black">
         <span className="font-semibold text-[#B5975C]">
           {article.title_number}
           {article.title_short}:
@@ -49,7 +49,7 @@ export default function HighLightCard({ article }: { article: Article }) {
       </h4>
 
       {/* Truncated description with fade */}
-      <p className="-mt-8 min-h-[100px] text-justify font-tajawal text-[16px] text-gray-500">
+      <p className="sm:-mt-8 min-h-[100px] text-justify font-tajawal text-[16px] text-gray-500">
         {beforeFade}
         {fadeWords.length > 0 && (
           <span className="fade-text">{" " + fadeWords.join(" ")}</span>

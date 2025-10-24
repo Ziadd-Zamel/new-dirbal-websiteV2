@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
@@ -59,7 +58,7 @@ export default function HeroSection({
   return (
     <div
       style={{ direction: "ltr" }}
-      className="relative z-50 h-[170vh] sm:h-[150vh] w-full overflow-hidden lg:h-screen"
+      className="relative z-50 h-[110vh] sm:h-[150vh] w-full overflow-hidden lg:h-screen"
     >
       <div className="h-full w-full" ref={emblaRef}>
         <div className="flex h-full w-full">

@@ -11,6 +11,7 @@ export default async function Footer() {
     <footer
       className="relative overflow-hidden border-t-2 border-solid border-[#AB8219] bg-[#050A12] text-white"
       role="contentinfo"
+      id="site-footer"
     >
       {/* Background image optimized with Next.js Image */}
       <Image

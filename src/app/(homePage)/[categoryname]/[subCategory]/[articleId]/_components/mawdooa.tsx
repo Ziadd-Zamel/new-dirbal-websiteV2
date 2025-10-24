@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { Pause, Play } from "lucide-react";
 import Image from "next/image";
@@ -315,10 +314,10 @@ const Mawdooa = ({ articleById, searchTerm }: MawdooaProps) => {
         className="flex w-full items-center gap-5"
       >
         <div className="w-full">
-          <span className="font-tajawal text-[12px] font-bold text-[#B5975C] sm:text-[16px] md:text-[16px] xl:text-2xl">
+          <span className="font-tajawal text-lg font-bold text-[#B5975C] md:text-[16px] xl:text-2xl">
             {articleById.title_number} {articleById.title_short}:{" "}
           </span>
-          <span className="font-tajawal text-[12px] font-bold text-white light:text-black sm:text-[16px] md:text-[16px] xl:text-2xl">
+          <span className="font-tajawal text-lg font-bold text-white light:text-black md:text-[16px] xl:text-2xl">
             {articleById.title}
           </span>
         </div>
@@ -328,14 +327,14 @@ const Mawdooa = ({ articleById, searchTerm }: MawdooaProps) => {
         style={{ direction: "rtl" }}
         className="-mr-2 flex items-center gap-10 text-white light:text-black"
       >
-        <div className="mt-1 flex items-center">
+        <div className=" mt-2 sm:mt-1 flex items-center">
           <Image
             src={"/assets/date.png"}
             alt="Home Icon"
             width={35}
             height={0}
           />{" "}
-          <span className="font-tajawal text-[12px] text-[#B5975C] sm:text-[14px] xl:text-[16px]">
+          <span className="font-tajawal  text-[#B5975C] text-[14px] xl:text-[16px]">
             {new Date(articleById.published_at)
               .toLocaleDateString("en-GB")
               .split("/")
@@ -343,14 +342,14 @@ const Mawdooa = ({ articleById, searchTerm }: MawdooaProps) => {
               .join("-")}
           </span>
         </div>
-        <div className="ml-6 mt-1 flex items-center">
+        <div className="ml-6 mt-2 sm:mt-1 flex items-center">
           <Image
             src={"/assets/Author.svg"}
             alt="Home Icon"
             width={30}
             height={0}
           />{" "}
-          <span className="font-tajawal text-[12px] text-[#B5975C] sm:text-[14px] xl:text-[16px]">
+          <span className="font-tajawal text-[#B5975C] text-[14px] xl:text-[16px]">
             {articleById.written_by}
           </span>
         </div>
@@ -358,7 +357,7 @@ const Mawdooa = ({ articleById, searchTerm }: MawdooaProps) => {
 
       <p
         style={{ direction: "rtl" }}
-        className="-mr-[11px] mt-12 text-center text-gray-300 light:text-black font-tajawal text-[12px] font-medium text-gray sm:text-[16px] md:text-[16px]"
+        className="-mr-[11px] mt-12 text-center text-gray-300 light:text-black font-tajawal text-sm font-medium text-gray sm:text-[16px] md:text-[16px]"
       >
         {articleById.sub_title}
       </p>

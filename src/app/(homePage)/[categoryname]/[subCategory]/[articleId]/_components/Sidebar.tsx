@@ -6,6 +6,7 @@ import { SiMessenger } from "react-icons/si";
 import { BsTwitterX } from "react-icons/bs";
 import { motion, AnimatePresence } from "framer-motion";
 import { FileDown, MessageCircle, Share2 } from "lucide-react";
+import Link from "next/link";
 
 interface SidebarProps {
   articleById?: Article;
@@ -22,7 +23,7 @@ const Sidebar = ({ articleById }: SidebarProps) => {
       const currentScrollY = window.scrollY;
 
       // Get the target position (comments section position minus some offset for better visibility)
-      const targetPosition = commentsSection.offsetTop - 100;
+      const targetPosition = commentsSection.offsetTop + 100;
 
       // Custom smooth scroll function
       const smoothScroll = (start: number, end: number, duration: number) => {
@@ -333,17 +334,17 @@ const Sidebar = ({ articleById }: SidebarProps) => {
         </div>
 
         {/* Comment Icon - Scroll to Comments */}
-        <button
-          onClick={scrollToComments}
+        <Link
           className="flex h-[70px] w-full cursor-pointer items-center justify-center transition-colors hover:bg-gray-800 light:hover:bg-gray-300"
           title="أضف تعليقاً"
+          href={"#site-footer"}
         >
           <MessageCircle
             strokeWidth={1}
             size={35}
             className="light:text-black"
           />
-        </button>
+        </Link>
       </div>
     </div>
   );

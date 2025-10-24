@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 "use client";
 import LeftArrowIcon from "@/components/Icons/LeftArrowIcon";
 import { AnimatePresence, motion } from "framer-motion";
@@ -220,11 +219,11 @@ const ArticleCard = ({
         onClick={toggleExpand}
       >
         <div>
-          <span className="font-tajawal text-[12px] text-[#B5975C] sm:text-[16px] md:text-[16px] xl:text-[22px]">
+          <span className="font-tajawal text-base text-[#B5975C]  md:text-[16px] xl:text-[22px]">
             {article.title_number} {article.title_short}:{" "}
           </span>
           <span
-            className="font-tajawal text-[12px] text-white light:text-black sm:text-[16px] md:text-[16px] xl:text-[22px]"
+            className="font-tajawal text-base text-white light:text-black  md:text-[16px] xl:text-[22px]"
             dangerouslySetInnerHTML={{
               __html: searchTerm
                 ? highlightText(article.title, searchTerm)

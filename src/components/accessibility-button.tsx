@@ -542,7 +542,7 @@ export default function AccessibilityButton({
             <button
               onClick={toggleReadingMask}
               className={cn(
-                "w-full py-2 px-2 rounded-xl text-sm font-semibold transition-all duration-200 border-2 shadow-sm",
+                "w-full py-2 px-2 rounded-xl font-tajawal text-sm font-semibold transition-all duration-200 border-2 shadow-sm",
                 isReadingMaskActive
                   ? "bg-green-100 text-green-800 border-green-300 hover:bg-green-200 hover:border-green-400"
                   : "bg-slate-100 text-slate-700 border-slate-300 hover:bg-slate-200 hover:border-slate-400"
@@ -554,7 +554,7 @@ export default function AccessibilityButton({
             {/* Reset button */}
             <button
               onClick={resetAccessibility}
-              className="w-full py-2 px-2 bg-gradient-to-r from-slate-100 to-slate-200 text-slate-700 rounded-xl text-sm font-semibold border border-slate-300 hover:from-slate-200 hover:to-slate-300 hover:border-slate-400 transition-all duration-200 shadow-sm hover:shadow-md"
+              className="w-full py-2 px-2 font-tajawal bg-gradient-to-r from-slate-100 to-slate-200 text-slate-700 rounded-xl text-sm font-semibold border border-slate-300 hover:from-slate-200 hover:to-slate-300 hover:border-slate-400 transition-all duration-200 shadow-sm hover:shadow-md"
             >
               افتراضي
             </button>
