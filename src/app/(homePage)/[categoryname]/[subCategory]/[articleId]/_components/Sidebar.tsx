@@ -337,7 +337,7 @@ const Sidebar = ({ articleById }: SidebarProps) => {
         <Link
           className="flex h-[70px] w-full cursor-pointer items-center justify-center transition-colors hover:bg-gray-800 light:hover:bg-gray-300"
           title="أضف تعليقاً"
-          href={"#site-footer"}
+          href={"#comments-section"}
         >
           <MessageCircle
             strokeWidth={1}
