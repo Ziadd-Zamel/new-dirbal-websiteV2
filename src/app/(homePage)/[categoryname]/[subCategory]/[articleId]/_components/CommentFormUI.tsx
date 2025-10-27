@@ -154,6 +154,14 @@ const CommentForm = ({ uuid }: { uuid: string }) => {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              onInvalid={(e) => {
+                (e.target as HTMLInputElement).setCustomValidity(
+                  "أدخل عنواناً بريدياً صحيحاً"
+                );
+              }}
+              onInput={(e) => {
+                (e.target as HTMLInputElement).setCustomValidity("");
+              }}
               disabled={isLoading}
               className="w-1/2 bg-[#F2F2F2] light:bg-white text-base placeholder:text-base font-tajawal p-2 text-black placeholder:font-tajawal focus:outline-none disabled:opacity-50"
               placeholder="البريد الإلكتروني"

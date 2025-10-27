@@ -11,10 +11,16 @@ export default function RecentIcons({ article }: { article: Article }) {
   const [showShareDropdown, setShowShareDropdown] = useState(false);
 
   /** ✅ Copy description only */
+  /** ✅ Copy description only - cleaned from HTML */
   const handleCopyDescription = async () => {
     if (!article?.description) return;
     try {
-      await navigator.clipboard.writeText(article.description);
+      // Remove HTML tags and decode HTML entities
+      const tempDiv = document.createElement("div");
+      tempDiv.innerHTML = article.description;
+      const cleanText = tempDiv.textContent || tempDiv.innerText || "";
+
+      await navigator.clipboard.writeText(cleanText.trim());
       setCopiedDesc(true);
       setTimeout(() => setCopiedDesc(false), 1200);
     } catch {

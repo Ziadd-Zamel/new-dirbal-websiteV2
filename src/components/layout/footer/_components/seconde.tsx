@@ -168,6 +168,14 @@ export default function Seconde() {
           <div className="mt-4 flex w-full items-center rounded border border-[#474747] bg-[#C4C4C426] px-2 py-1">
             <input
               type="email"
+              onInvalid={(e) => {
+                (e.target as HTMLInputElement).setCustomValidity(
+                  "أدخل عنواناً بريدياً صحيحاً"
+                );
+              }}
+              onInput={(e) => {
+                (e.target as HTMLInputElement).setCustomValidity("");
+              }}
               placeholder=" *بريدك الإلكتروني"
               value={email}
               onChange={(e) => setEmail(e.target.value)}

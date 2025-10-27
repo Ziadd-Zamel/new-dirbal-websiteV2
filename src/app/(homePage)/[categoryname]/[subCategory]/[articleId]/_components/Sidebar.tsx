@@ -19,39 +19,18 @@ const Sidebar = ({ articleById }: SidebarProps) => {
   const scrollToComments = () => {
     const commentsSection = document.getElementById("comments-section");
     if (commentsSection) {
-      // Get the current scroll position
-      const currentScrollY = window.scrollY;
+      // Get navbar height (adjust this value based on your actual navbar height)
+      const navbarHeight = 100; // أو قم بحساب الارتفاع الفعلي
 
-      // Get the target position (comments section position minus some offset for better visibility)
-      const targetPosition = commentsSection.offsetTop + 100;
+      // Calculate position with offset
+      const elementPosition = commentsSection.getBoundingClientRect().top;
+      const offsetPosition =
+        elementPosition + window.pageYOffset - navbarHeight;
 
-      // Custom smooth scroll function
-      const smoothScroll = (start: number, end: number, duration: number) => {
-        const startTime = performance.now();
-
-        const animateScroll = (currentTime: number) => {
-          const elapsed = currentTime - startTime;
-          const progress = Math.min(elapsed / duration, 1);
-
-          // Easing function for smooth animation
-          const easeInOutCubic = (t: number) =>
-            t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
-
-          const currentPosition =
-            start + (end - start) * easeInOutCubic(progress);
-
-          window.scrollTo(0, currentPosition);
-
-          if (progress < 1) {
-            requestAnimationFrame(animateScroll);
-          }
-        };
-
-        requestAnimationFrame(animateScroll);
-      };
-
-      // Start the smooth scroll animation
-      smoothScroll(currentScrollY, targetPosition, 0);
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
     }
   };
 
@@ -334,17 +313,18 @@ const Sidebar = ({ articleById }: SidebarProps) => {
         </div>
 
         {/* Comment Icon - Scroll to Comments */}
-        <Link
+        <button
           className="flex h-[70px] w-full cursor-pointer items-center justify-center transition-colors hover:bg-gray-800 light:hover:bg-gray-300"
           title="أضف تعليقاً"
-          href={"#comments-section"}
+          onClick={scrollToComments}
+          // href={"#comments-section"}
         >
           <MessageCircle
             strokeWidth={1}
             size={35}
             className="light:text-black"
           />
-        </Link>
+        </button>
       </div>
     </div>
   );

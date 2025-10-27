@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import LeftArrowIcon from "@/components/Icons/LeftArrowIcon";
 import { MdEmail } from "react-icons/md";
@@ -63,6 +62,14 @@ export default function Third() {
           <div className="flex w-full items-center rounded border border-[#474747] bg-[#C4C4C426] px-2 py-1">
             <input
               type="email"
+              onInvalid={(e) => {
+                (e.target as HTMLInputElement).setCustomValidity(
+                  "أدخل عنواناً بريدياً صحيحاً"
+                );
+              }}
+              onInput={(e) => {
+                (e.target as HTMLInputElement).setCustomValidity("");
+              }}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               disabled={isLoading}

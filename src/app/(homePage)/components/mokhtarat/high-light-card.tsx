@@ -12,7 +12,7 @@ export default function HighLightCard({ article }: { article: Article }) {
   const beforeFade = words.slice(0, 120).join(" ");
   const fadeWords = words.slice(120, 130);
   // const hasMoreWords = words.length > 130;
-
+  console.log(article);
   return (
     <article
       className="flex w-full flex-col  pb-10 pt-5 md:w-[350px] lg:w-[500px] xl:w-[630px]"
