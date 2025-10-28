@@ -23,6 +23,7 @@ declare type Article = {
   voice_url: string | null;
   written_by: string;
   sub_category_id: number;
+
   best: boolean;
   is_best: boolean;
   sub_category: {
@@ -33,6 +34,12 @@ declare type Article = {
     category: Category;
     icon_url: string;
     light: boolean;
+  };
+  subSubCategory: {
+    id: number;
+    name: string;
+    uuid: string;
+    icon: string;
   };
   subjects: Subject[];
   status: boolean;

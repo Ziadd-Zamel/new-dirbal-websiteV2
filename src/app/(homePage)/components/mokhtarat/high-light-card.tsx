@@ -13,17 +13,22 @@ export default function HighLightCard({ article }: { article: Article }) {
   const fadeWords = words.slice(120, 130);
   // const hasMoreWords = words.length > 130;
   console.log(article);
+
+  // Determine which icon to use
+  const iconUrl = article.subSubCategory?.icon || article.sub_category.icon_url;
+  const iconAlt = article.subSubCategory?.name || article.sub_category.name;
+
   return (
     <article
       className="flex w-full flex-col  pb-10 pt-5 md:w-[350px] lg:w-[500px] xl:w-[630px]"
       aria-labelledby={`article-${article.uuid}`}
     >
       <div className="w-full flex justify-center mb-3">
-        {/* Icon for subcategory (if available) */}
-        {article.sub_category.icon_url && (
+        {/* Icon for subcategory or subSubCategory (if available) */}
+        {iconUrl && (
           <Image
-            src={article.sub_category.icon_url}
-            alt={`${article.sub_category.name} icon`}
+            src={iconUrl}
+            alt={`${iconAlt} icon`}
             width={40}
             height={40}
             className="mt-5"
@@ -36,7 +41,9 @@ export default function HighLightCard({ article }: { article: Article }) {
         id={`article-${article.uuid}`}
         className="mt-5 text-center font-tajawal text-xl font-bold text-[#B5975C]"
       >
-        {article.sub_category.name}
+        {article.subSubCategory?.name
+          ? article.subSubCategory?.name
+          : article.sub_category.name}
       </h3>
 
       {/* Title + subtitle */}
