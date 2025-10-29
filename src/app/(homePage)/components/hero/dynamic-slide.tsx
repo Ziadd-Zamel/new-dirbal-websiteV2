@@ -50,7 +50,7 @@ export default function DynamicSlide({ category }: { category: Category }) {
             <div
               role="region"
               aria-label={`${category.name} description`}
-              className="scrollbar-hide mt-6 max-h-[300px] overflow-y-auto text-justify font-tajawal text-[18px] font-[400] text-gray-300 md:text-[21px] lg:h-full lg:max-h-none xl:w-[77%] xl:leading-[30px]"
+              className="scrollbar-hide mt-6 max-h-[320px] overflow-y-auto text-justify font-tajawal text-[16px] font-[400] text-gray-300 md:text-[21px] lg:h-full lg:max-h-none xl:w-[77%] xl:leading-[30px]"
             >
               {cleanDescription}
             </div>
