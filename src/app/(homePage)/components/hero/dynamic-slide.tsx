@@ -42,7 +42,7 @@ export default function DynamicSlide({ category }: { category: Category }) {
         <div className="text-justify">
           <div className="px-10 pt-5 lg:px-20 xl:px-[71px]">
             {/* Main heading for SEO */}
-            <h1 className="mt-20 text-justify font-tajawal text-[40px] font-[800] text-white sm:mt-20 sm:text-[70px] lg:mt-20">
+            <h1 className="mt-12 text-justify font-tajawal text-[40px] font-[800] text-white sm:mt-20 sm:text-[70px] lg:mt-20">
               {category.name || ""}
             </h1>
 
