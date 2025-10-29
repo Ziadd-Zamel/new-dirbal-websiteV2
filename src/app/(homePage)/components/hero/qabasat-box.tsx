@@ -87,7 +87,7 @@ export default function QabasatBox({ Qabasat }: { Qabasat: Qabasat[] }) {
   if (!currentQuote) return null;
 
   return (
-    <div className="relative flex h-full items-center px-10 lg:px-20 xl:px-[70px] 2xl:box-container mt-10 sm:mt-0">
+    <div className="relative flex h-full items-center main-padding 2xl:box-container mt-20 sm:mt-0">
       <div className="flex w-full flex-col items-center gap-5 lg:flex-row-reverse lg:justify-between">
         <Image
           alt="Aya"

@@ -58,7 +58,7 @@ export default function HeroSection({
   return (
     <div
       style={{ direction: "ltr" }}
-      className="relative z-50 h-[110vh] sm:h-[150vh] w-full overflow-hidden lg:h-screen"
+      className="relative z-50 h-[130vh] sm:h-[150vh] w-full overflow-hidden lg:h-screen"
     >
       <div className="h-full w-full" ref={emblaRef}>
         <div className="flex h-full w-full">
