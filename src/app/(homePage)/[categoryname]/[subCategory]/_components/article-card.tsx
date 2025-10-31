@@ -19,18 +19,73 @@ function stripHtmlTags(html: string): string {
   return div.textContent || div.innerText || "";
 }
 
-// Function to highlight search terms
-function highlightText(text: string, searchTerm: string) {
-  if (!searchTerm || !text) return text;
+// Function to remove only font-size and font-family from inline styles
+function removeParagraphStylesOnly(html: string): string {
+  return html.replace(/style="([^"]*)"/gi, (_, styleContent) => {
+    const cleanedStyle = styleContent
+      .split(";")
+      .map((rule: any) => rule.trim())
+      .filter(
+        (rule: any) =>
+          rule &&
+          !rule.toLowerCase().startsWith("font-size") &&
+          !rule.toLowerCase().startsWith("font-family")
+      )
+      .join("; ");
 
-  const regex = new RegExp(
-    `(${searchTerm.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`,
-    "gi"
-  );
-  return text.replace(
-    regex,
-    '<mark class="search-highlight bg-yellow-300 text-black px-1 rounded">$1</mark>'
-  );
+    return cleanedStyle ? `style="${cleanedStyle}"` : "";
+  });
+}
+
+// Function to highlight text in HTML content
+function highlightHtmlContent(html: string, searchTerm: string): string {
+  if (!searchTerm || !html) return html;
+
+  const tempDiv = document.createElement("div");
+  tempDiv.innerHTML = html;
+
+  const highlightTextNodes = (node: Node) => {
+    if (node.nodeType === Node.TEXT_NODE) {
+      const text = node.textContent || "";
+      if (text.toLowerCase().includes(searchTerm.toLowerCase())) {
+        const regex = new RegExp(
+          `(${searchTerm.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`,
+          "gi"
+        );
+        const highlightedText = text.replace(
+          regex,
+          '<mark class="search-highlight bg-yellow-300 text-black px-1 rounded font-bold">$1</mark>'
+        );
+        const span = document.createElement("span");
+        span.innerHTML = highlightedText;
+        node.parentNode?.replaceChild(span, node);
+      }
+    } else if (node.nodeType === Node.ELEMENT_NODE) {
+      const element = node as Element;
+      if (element.tagName !== "SCRIPT" && element.tagName !== "STYLE") {
+        const children = Array.from(node.childNodes);
+        children.forEach(highlightTextNodes);
+      }
+    }
+  };
+
+  highlightTextNodes(tempDiv);
+  return tempDiv.innerHTML;
+}
+
+// Function to detect if content is primarily English
+function isContentEnglish(text: string): boolean {
+  if (!text) return false;
+  const plainText = stripHtmlTags(text);
+  const englishChars = (plainText.match(/[a-zA-Z]/g) || []).length;
+  const arabicChars = (
+    plainText.match(
+      /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]/g
+    ) || []
+  ).length;
+  const totalLetters = englishChars + arabicChars;
+  if (totalLetters === 0) return false;
+  return englishChars / totalLetters > 0.6;
 }
 
 function getYouTubeVideoId(url: string): string | null {
@@ -39,22 +94,18 @@ function getYouTubeVideoId(url: string): string | null {
   return match && match[2].length === 11 ? match[2] : null;
 }
 
-// Function to intelligently scroll to bring content into view
 function scrollToElement(element: HTMLElement, targetElement: HTMLElement) {
   const targetRect = targetElement.getBoundingClientRect();
   const viewportHeight = window.innerHeight;
 
-  // If the target element is below the viewport, scroll to show it
   if (targetRect.bottom > viewportHeight) {
-    const scrollAmount = targetRect.bottom - viewportHeight + 100; // Add 100px buffer
+    const scrollAmount = targetRect.bottom - viewportHeight + 100;
     window.scrollBy({
       top: scrollAmount,
       behavior: "smooth",
     });
-  }
-  // If the target element is above the viewport, scroll to show it
-  else if (targetRect.top < 0) {
-    const scrollAmount = targetRect.top - 100; // Add 100px buffer
+  } else if (targetRect.top < 0) {
+    const scrollAmount = targetRect.top - 100;
     window.scrollBy({
       top: scrollAmount,
       behavior: "smooth",
@@ -62,7 +113,6 @@ function scrollToElement(element: HTMLElement, targetElement: HTMLElement) {
   }
 }
 
-// Global state to track which article is currently expanded
 let currentlyExpandedArticle: string | null = null;
 
 const ArticleCard = ({
@@ -74,15 +124,16 @@ const ArticleCard = ({
   const [isExpanded, setIsExpanded] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const [isCollapsing, setIsCollapsing] = useState(false);
-  const plainText = stripHtmlTags(article.description);
   const hasImage = article.image_url;
+  const hasVideo = article.video_url;
+  const isEnglish = isContentEnglish(article.description);
+
   const handleDelete = () => {
     if (onDelete) {
       onDelete(article.uuid);
     }
   };
 
-  const hasVideo = article.video_url;
   useEffect(() => {
     const handleCloseOthers = (event: CustomEvent) => {
       if (event.detail.exceptId !== article.uuid && isExpanded) {
@@ -129,11 +180,9 @@ const ArticleCard = ({
       currentlyExpandedArticle = article.uuid;
 
       setIsExpanded(true);
-      // Scroll to bring the expanded content into view
       setTimeout(() => {
         const element = document.getElementById(`article-${article.uuid}`);
         if (element) {
-          // Use intelligent scrolling to bring content into view
           scrollToElement(element, element);
         }
       }, 300);
@@ -198,13 +247,19 @@ const ArticleCard = ({
       }
     }
 
-    // Fallback to text if no video or invalid video URL
     return (
       <div
-        style={{ direction: "rtl" }}
-        className="mt-5 text-justify font-tajawal text-gray-300 light:text-gray-600 lg:text-base"
+        style={{ direction: isEnglish ? "ltr" : "rtl" }}
+        className={`mt-5 font-tajawal text-base text-gray-300 light:text-gray-600 ${
+          isEnglish ? "text-left" : "text-justify"
+        }`}
         dangerouslySetInnerHTML={{
-          __html: searchTerm ? highlightText(plainText, searchTerm) : plainText,
+          __html: searchTerm
+            ? highlightHtmlContent(
+                removeParagraphStylesOnly(article.description),
+                searchTerm
+              )
+            : removeParagraphStylesOnly(article.description),
         }}
       />
     );
@@ -226,7 +281,7 @@ const ArticleCard = ({
             className="font-tajawal text-base text-white light:text-black  md:text-[16px] xl:text-[22px]"
             dangerouslySetInnerHTML={{
               __html: searchTerm
-                ? highlightText(article.title, searchTerm)
+                ? highlightHtmlContent(article.title, searchTerm)
                 : article.title,
             }}
           />
@@ -235,8 +290,8 @@ const ArticleCard = ({
           <Image
             src={article.image_url!}
             alt="article image"
-            width={85} // 17 * 5
-            height={120} // 24 * 5
+            width={85}
+            height={120}
           />
         )}
         {onDelete && (
@@ -245,7 +300,7 @@ const ArticleCard = ({
               e.stopPropagation();
               handleDelete();
             }}
-            className="group flex items-center justify-center mt-3"
+            className="group mt-3 flex items-center justify-center"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

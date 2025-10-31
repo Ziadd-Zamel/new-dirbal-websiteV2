@@ -83,7 +83,6 @@ export default function RecentRightSection({
   if (!articles.length || !articleGroups.length) {
     return null;
   }
-
   return (
     <div className="mt-3 flex w-full flex-col items-start justify-end sm:w-[80%] lg:w-[48%] sm:-5 md:pr-0 lg:pr-5">
       <div className="w-full">
@@ -122,7 +121,11 @@ export default function RecentRightSection({
 
                     {/* Subcategory - hidden on small screens */}
                     <span className="mt-2 justify-end items-center gap-1 font-tajawal text-xs font-medium text-[#B49471] absolute bottom-3 left-4 flex">
-                      <p>{article.sub_category.name}</p>
+                      <p>
+                        {article.subSubCategory?.name
+                          ? article.subSubCategory?.name
+                          : article.sub_category.name}
+                      </p>
                     </span>
                   </div>
                   <div className="absolute -right-6 top-[50%] z-30  translate-y-[-50%] flex-col items-center bg-[#2E3A47] font-tajawal text-white flex">
@@ -150,7 +153,12 @@ export default function RecentRightSection({
 
                     {/* Subcategory - hidden on small screens */}
                     <span className="mt-2 justify-end items-center gap-1 font-tajawal text-xs font-medium text-[#B49471] absolute bottom-3 left-4 flex">
-                      <p>{article.sub_category.name}</p>
+                      <p>
+                        {" "}
+                        {article.subSubCategory?.name
+                          ? article.subSubCategory?.name
+                          : article.sub_category.name}
+                      </p>
                     </span>
                   </div>
                   <div className="absolute -right-6 top-[50%] z-30  translate-y-[-50%] flex-col items-center bg-[#2E3A47] font-tajawal text-white flex">

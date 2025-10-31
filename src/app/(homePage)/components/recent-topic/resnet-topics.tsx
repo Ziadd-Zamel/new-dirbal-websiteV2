@@ -34,7 +34,6 @@ const RecentTopics = ({
     setSelectedArticle(article);
     onArticleClick?.(article);
   };
-
   if (!selectedArticle) {
     return (
       <section

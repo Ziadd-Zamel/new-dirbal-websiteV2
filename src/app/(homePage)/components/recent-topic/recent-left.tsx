@@ -41,14 +41,18 @@ export default function RecentLeftSection({
       </span>
     );
   };
-
+  const iconUrl =
+    selectedArticle.subSubCategory?.icon ||
+    selectedArticle.sub_category.icon_url;
+  const iconAlt =
+    selectedArticle.subSubCategory?.name || selectedArticle.sub_category.name;
   return (
     <div className="w-full lg:w-[47%]" id="left-recent">
       <div className="mb-3 mt-10 flex items-center gap-4 text-[16px] font-semibold text-white sm:text-[25px] lg:mb-3 lg:mt-2 lg:text-lg">
-        {selectedArticle.sub_category.icon_url && (
+        {iconUrl && (
           <Image
-            src={selectedArticle.sub_category.icon_url}
-            alt={selectedArticle.sub_category.name || "Subcategory Icon"}
+            src={iconUrl}
+            alt={iconAlt || "Subcategory Icon"}
             height={50}
             width={50}
             className="h-[50px] w-[50px] object-contain"
