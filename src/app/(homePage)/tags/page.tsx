@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { getArticlesByTag } from "@/lib/api/article.api";
+import { getArticlesByTagNew } from "@/lib/api/article.api";
 import { generateTagsMetadata } from "@/lib/metadata/data";
 import { generateTagsStructuredData } from "@/lib/Seo/data";
 import TagResults from "./_components/tag-results";
@@ -48,7 +47,7 @@ export default async function TagsPage({ searchParams }: TagsPageProps) {
   }
 
   try {
-    const tagResults = await getArticlesByTag(tag, currentPage, 15);
+    const tagResults = await getArticlesByTagNew(tag, currentPage, 15);
 
     if (!tagResults?.data) {
       return (

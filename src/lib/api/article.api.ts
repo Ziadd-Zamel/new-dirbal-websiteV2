@@ -155,6 +155,51 @@ export const getArticlesByTag = async (
   }
 };
 
+export const getArticlesByTagNew = async (
+  tag: string,
+  page: number = 1,
+  perPage: number = 15
+) => {
+  // Encode the tag name for the URL path
+  const encodedTag = encodeURIComponent(tag);
+  const url = `${process.env.API}/articles/by-tag/${encodedTag}?page=${page}&per_page=${perPage}`;
+  console.log(encodedTag);
+  try {
+    const response = await fetch(url, {
+      cache: "no-store",
+    });
+    console.log(response);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const payload = await response.json();
+
+    if (!("data" in payload)) {
+      throw new Error(payload.message || "Unknown error occurred");
+    }
+
+    // Transform the API response to match the expected structure
+    // API returns: { data: Article[], pagination: {...}, ... }
+    // Component expects: { data: { articles: Article[], pagination: {...} }, ... }
+    const transformedPayload = {
+      ...payload,
+      data: {
+        articles: Array.isArray(payload.data) ? payload.data : [],
+        pagination: payload.pagination || {},
+      },
+    };
+
+    console.log("Original payload:", payload);
+    console.log("Transformed payload:", transformedPayload);
+
+    return transformedPayload;
+  } catch (error) {
+    console.error("Error fetching articles by tag:", error);
+    throw error;
+  }
+};
+
 export const searchArticles = async (
   query: string,
   page: number = 1,

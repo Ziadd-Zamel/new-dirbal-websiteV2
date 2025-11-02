@@ -16,12 +16,24 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
 
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
-      onClose();
+  const handleSearch = async (e?: React.FormEvent) => {
+    if (e) {
+      e.preventDefault();
     }
+    if (searchQuery.trim()) {
+      const encodedQuery = encodeURIComponent(searchQuery.trim());
+      onClose();
+      // Navigate and refresh to ensure fresh data
+      router.push(`/search?q=${encodedQuery}`);
+      // Small delay to ensure navigation completes before refresh
+      setTimeout(() => {
+        router.refresh();
+      }, 100);
+    }
+  };
+
+  const handleIconClick = () => {
+    handleSearch();
   };
 
   return (
@@ -49,9 +61,14 @@ export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
             className="relative flex w-full !max-w-4xl items-center"
           >
             <div className="relative w-full">
-              <div className="absolute left-0 top-1/2 -translate-y-1/2 text-white light:text-black">
+              <button
+                type="button"
+                onClick={handleIconClick}
+                className="absolute left-0 top-1/2 -translate-y-1/2 cursor-pointer hover:opacity-80 transition-opacity text-white light:text-black"
+                aria-label="Search"
+              >
                 <Search className="text-white light:text-black" />
-              </div>
+              </button>
               <Input
                 className="border-0 bg-transparent font-tajawal light:placeholder:text-black text-right !text-[30px] text-white light:text-black placeholder:text-[30px] placeholder:font-tajawal placeholder:text-[#FFFFFF4D] focus-visible:ring-0"
                 dir="rtl"
