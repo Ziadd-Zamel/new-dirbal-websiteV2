@@ -21,7 +21,7 @@ function stripHtmlTags(html: string): string {
 
 // Function to remove only font-size and font-family from inline styles
 function removeParagraphStylesOnly(html: string): string {
-  return html.replace(/style="([^"]*)"/gi, (_, styleContent) => {
+  return html?.replace(/style="([^"]*)"/gi, (_, styleContent) => {
     const cleanedStyle = styleContent
       .split(";")
       .map((rule: any) => rule.trim())
@@ -49,10 +49,10 @@ function highlightHtmlContent(html: string, searchTerm: string): string {
       const text = node.textContent || "";
       if (text.toLowerCase().includes(searchTerm.toLowerCase())) {
         const regex = new RegExp(
-          `(${searchTerm.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`,
+          `(${searchTerm?.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`,
           "gi"
         );
-        const highlightedText = text.replace(
+        const highlightedText = text?.replace(
           regex,
           '<mark class="search-highlight bg-yellow-300 text-black px-1 rounded font-bold">$1</mark>'
         );

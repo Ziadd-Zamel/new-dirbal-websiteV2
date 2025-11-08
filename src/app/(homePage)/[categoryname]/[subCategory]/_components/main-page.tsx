@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import HeadingSection from "@/components/common/heading-section";
@@ -132,7 +131,7 @@ const MainPage = ({
 
       // Only parse HTML content if we haven't found a match yet
       if (article.description) {
-        const plainContent = article.description.replace(htmlTagRegex, "");
+        const plainContent = article?.description?.replace(htmlTagRegex, "");
         return plainContent.toLowerCase().includes(processedSearchQuery);
       }
 
@@ -236,7 +235,7 @@ const MainPage = ({
   const processedDescription = useMemo(
     () =>
       subCategory.description
-        ? subCategory.description.replace(/<[^>]*>/g, "")
+        ? subCategory?.description?.replace(/<[^>]*>/g, "")
         : "القانون الليبي هو المرجع في الأعمال...",
     [subCategory.description]
   );
@@ -256,7 +255,7 @@ const MainPage = ({
       per_page: filteredArticles.length,
     };
   }, [pagination, filteredArticles.length, processedSearchQuery]);
-
+  console.log(articles);
   // Memoize the main content to prevent unnecessary re-renders
   const mainContent = useMemo(
     () => (
