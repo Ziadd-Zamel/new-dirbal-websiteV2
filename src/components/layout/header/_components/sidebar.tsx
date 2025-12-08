@@ -11,24 +11,27 @@ import Link from "next/link";
 import { useState, useRef } from "react";
 import { FiMinus, FiPlus } from "react-icons/fi";
 import { IoIosArrowBack } from "react-icons/io";
+interface SideBarProps {
+  serverCategories: Category[];
+}
 
-export default function Sidebar() {
+export default function Sidebar({ serverCategories }: SideBarProps) {
   const [open, setOpen] = useState(false);
   const [expandedId, setExpandedId] = useState<number | null>(null);
   const sheetRef = useRef<CustomSheetRef>(null);
 
-  const {
-    data: categories,
-    isLoading,
-    isError,
-  } = useQuery({
+  const { data: categories } = useQuery({
     queryKey: ["categories"],
     queryFn: async () => {
       const response = await getAllCategories();
       return response.data;
     },
     staleTime: 1000 * 60 * 5,
+    // Only fetch if serverCategories is not available
+    enabled: !serverCategories || serverCategories.length === 0,
   });
+
+  const showCategories = serverCategories || categories;
 
   const handleExpand = (id: number) => {
     setExpandedId(expandedId === id ? null : id);
@@ -47,7 +50,6 @@ export default function Sidebar() {
       setExpandedId(null);
     }
   };
-
   return (
     <div className="relative " style={{ direction: "rtl" }}>
       {/* Hamburger button */}
@@ -76,10 +78,6 @@ export default function Sidebar() {
         </div>
 
         <div className="mt-4 space-y-3 px-6">
-          {isLoading && <p className="text-center">جاري التحميل...</p>}
-          {isError && (
-            <p className="text-center text-red-500">حدث خطأ أثناء التحميل</p>
-          )}
           <div>
             <div className="mr-1 flex cursor-pointer items-center justify-start gap-2 rounded-sm px-1 py-2 light:text-black  text-white transition-colors hover:bg-white/10 light:hover:bg-black/10 ">
               <Link href="/" passHref>
@@ -95,7 +93,7 @@ export default function Sidebar() {
               </Link>
             </div>
           </div>
-          {categories?.map((item) => (
+          {showCategories?.map((item) => (
             <div key={item.id}>
               <motion.div
                 onClick={() => handleExpand(item.id)}

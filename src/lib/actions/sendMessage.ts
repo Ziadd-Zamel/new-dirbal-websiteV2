@@ -19,7 +19,6 @@ export async function sendMessage(
         ...(uuid && { article_uuid: uuid }),
       }),
     });
-    console.log(response);
     if (!response.ok) {
       throw new Error("Failed to send message");
     }

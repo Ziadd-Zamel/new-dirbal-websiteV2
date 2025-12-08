@@ -137,7 +137,6 @@ export const getArticlesByTag = async (
     const response = await fetch(url, {
       cache: "no-store",
     });
-    console.log(response);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -163,12 +162,10 @@ export const getArticlesByTagNew = async (
   // Encode the tag name for the URL path
   const encodedTag = encodeURIComponent(tag);
   const url = `${process.env.API}/articles/by-tag/${encodedTag}?page=${page}&per_page=${perPage}`;
-  console.log(encodedTag);
   try {
     const response = await fetch(url, {
       cache: "no-store",
     });
-    console.log(response);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -189,9 +186,6 @@ export const getArticlesByTagNew = async (
         pagination: payload.pagination || {},
       },
     };
-
-    console.log("Original payload:", payload);
-    console.log("Transformed payload:", transformedPayload);
 
     return transformedPayload;
   } catch (error) {

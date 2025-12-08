@@ -57,3 +57,28 @@ export const getCategoryById = async (categoryUuid: string) => {
     throw error;
   }
 };
+
+export const getAllCategoriesServer = async () => {
+  const url = `${process.env.API}/categories`;
+
+  try {
+    const response = await fetch(url, {
+      cache: "no-store",
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const payload: APIResponse<Category[]> = await response.json();
+
+    if (!("data" in payload)) {
+      throw new Error(payload.message || "Unknown error occurred");
+    }
+
+    return payload;
+  } catch (error) {
+    console.error("Error fetching categories:", error);
+    throw error;
+  }
+};

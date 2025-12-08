@@ -9,7 +9,6 @@ export async function subscribe(email: string) {
       },
       body: JSON.stringify({ email }),
     });
-    console.log(response);
     if (!response.ok) {
       // If the response indicates the email already exists
       if (response.status === 409 || response.status === 400) {

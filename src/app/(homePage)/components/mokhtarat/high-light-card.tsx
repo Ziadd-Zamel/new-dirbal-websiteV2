@@ -12,7 +12,6 @@ export default function HighLightCard({ article }: { article: Article }) {
   const beforeFade = words.slice(0, 120).join(" ");
   const fadeWords = words.slice(120, 130);
   // const hasMoreWords = words.length > 130;
-  console.log(article);
 
   // Determine which icon to use
   const iconUrl = article.subSubCategory?.icon || article.sub_category.icon_url;

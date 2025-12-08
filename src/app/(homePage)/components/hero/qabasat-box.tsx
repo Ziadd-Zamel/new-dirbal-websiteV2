@@ -9,7 +9,6 @@ export default function QabasatBox({ Qabasat }: { Qabasat: Qabasat[] }) {
   const [isPaused, setIsPaused] = useState(false);
   const [boxHeight, setBoxHeight] = useState(200);
   const contentRef = useRef<HTMLDivElement>(null);
-  console.log(Qabasat);
   // Group Qabasat by category
   const groupedQabasat = useMemo(() => {
     const groups: { [key: string]: Qabasat[] } = {};

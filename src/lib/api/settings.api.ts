@@ -18,7 +18,6 @@ export const getFooterSettings = async (): Promise<FooterSettings> => {
   const footerImageResponse = await fetch(`${baseUrl}/settings/footer-image`, {
     cache: "no-store",
   });
-  console.log(footerImageResponse);
   if (!footerImageResponse.ok) {
     throw new Error(`HTTP error! status: ${footerImageResponse.status}`);
   }

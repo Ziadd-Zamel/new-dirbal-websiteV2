@@ -6,7 +6,6 @@ import SiteHighLights from "./site-high-lights";
 export default async function Mokhtarat() {
   // ✅ Cache request for better perf (ISR or static fetch if possible)
   const bestArticles = await getBestArticles();
-  console.log(bestArticles);
   return (
     <section
       id="mokhtarat"

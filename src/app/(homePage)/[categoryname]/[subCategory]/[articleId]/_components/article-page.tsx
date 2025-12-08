@@ -63,7 +63,6 @@ const ArticlePage = ({
   const handleSearch = (term: string) => {
     setSearchTerm(term);
   };
-  console.log(articleById);
   return (
     <>
       <div className="relative min-h-screen bg-background">

@@ -255,7 +255,6 @@ const MainPage = ({
       per_page: filteredArticles.length,
     };
   }, [pagination, filteredArticles.length, processedSearchQuery]);
-  console.log(articles);
   // Memoize the main content to prevent unnecessary re-renders
   const mainContent = useMemo(
     () => (
