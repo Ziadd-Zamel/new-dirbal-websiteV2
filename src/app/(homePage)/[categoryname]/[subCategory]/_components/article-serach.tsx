@@ -79,7 +79,7 @@ const ArticleSearch = ({
             value={searchQuery}
             onChange={handleInputChange}
             placeholder={placeholder}
-            className="ml-3 w-[170px] border-b border-white light:border-black light:text-black bg-transparent pb-1 pt-2 text-right font-tajawal text-gray-200 outline-none placeholder:text-xs focus:border-[#B5975C] xl:w-[280px] xl:placeholder:text-base"
+            className="ml-3 w-[170px] min-[1900px]:w-[350px]! border-b border-white light:border-black light:text-black bg-transparent pb-1 pt-2 text-right font-tajawal text-gray-200 outline-none placeholder:text-xs min-[1900px]:placeholder:text-xl! focus:border-[#B5975C] min-[1900px]:text-2xl! xl:w-[280px] xl:placeholder:text-base"
             dir="rtl"
           />
 

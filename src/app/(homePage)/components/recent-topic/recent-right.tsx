@@ -110,7 +110,7 @@ export default function RecentRightSection({
                   >
                     {/* Title and content */}
                     <p className="mb-2 mr-2 mt-1 h-auto font-tajawal text-sm font-medium leading-[30px] text-[#3A4553] sm:mb-0 sm:h-[80px] sm:text-base md:text-lg">
-                      <span className="text-[18px] font-medium text-[#B5975C] sm:text-[20px]">
+                      <span className="text-[18px] min-[1900px]:text-2xl! font-medium text-[#B5975C] sm:text-[20px]">
                         {article.title_number}
                         {article.title_short}:{" "}
                       </span>
@@ -120,7 +120,7 @@ export default function RecentRightSection({
                     </p>
 
                     {/* Subcategory - hidden on small screens */}
-                    <span className="mt-2 justify-end items-center gap-1 font-tajawal text-xs font-medium text-[#B49471] absolute bottom-3 left-4 flex">
+                    <span className="mt-2 justify-end items-center gap-1 font-tajawal text-xs min-[1900px]:text-xl! font-medium text-[#B49471] absolute bottom-3 left-4 flex">
                       <p>
                         {article.subSubCategory?.name
                           ? article.subSubCategory?.name

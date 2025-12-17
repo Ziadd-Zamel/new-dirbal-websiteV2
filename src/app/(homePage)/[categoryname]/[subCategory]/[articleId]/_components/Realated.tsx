@@ -128,7 +128,7 @@ const RelatedTopics = ({
 
       {/* Latest Branch Topics Section */}
       <div className="mt-20">
-        <h2 className="mb-2 font-tajawal text-lg light:text-black">
+        <h2 className="mb-2 font-tajawal text-lg min-[1900px]:text-2xl! light:text-black">
           آخر موضوعات الفرع:
         </h2>
         <div className="overflow-hidden  bg-white text-black">
@@ -142,7 +142,7 @@ const RelatedTopics = ({
                 className="flex cursor-pointer flex-row-reverse items-center justify-between gap-2 border-b border-gray-200 py-2 pl-4 pr-1 transition-colors duration-200 last:border-none hover:bg-gray-50"
               >
                 <p
-                  className="min-w-0 flex-1 pr-2 font-tajawal text-xs"
+                  className="min-w-0 flex-1 pr-2 font-tajawal text-xs min-[1900px]:text-lg!"
                   style={{
                     display: "-webkit-box",
                     WebkitLineClamp: 2,

@@ -4,11 +4,22 @@ import { stripHtmlTags } from "@/lib/utils/stripHtml";
 import Image from "next/image";
 import { useEffect, useState, useMemo, useRef } from "react";
 
+// Helper function to detect if text is primarily Arabic
+function isArabicText(text: string): boolean {
+  const arabicPattern = /[\u0600-\u06FF]/;
+  const arabicChars = text.match(/[\u0600-\u06FF]/g);
+  const totalChars = text.replace(/\s/g, "").length;
+
+  // If more than 30% of characters are Arabic, consider it Arabic text
+  return arabicChars ? arabicChars.length / totalChars > 0.3 : false;
+}
+
 export default function QabasatBox({ Qabasat }: { Qabasat: Qabasat[] }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [boxHeight, setBoxHeight] = useState(200);
   const contentRef = useRef<HTMLDivElement>(null);
+
   // Group Qabasat by category
   const groupedQabasat = useMemo(() => {
     const groups: { [key: string]: Qabasat[] } = {};
@@ -84,6 +95,10 @@ export default function QabasatBox({ Qabasat }: { Qabasat: Qabasat[] }) {
   const currentCategoryIndex = getCurrentCategoryIndex();
 
   if (!currentQuote) return null;
+
+  // Detect if current description is Arabic or English
+  const currentDescription = stripHtmlTags(currentQuote.description);
+  const isArabic = isArabicText(currentDescription);
 
   return (
     <div className="relative flex h-full items-center main-padding 2xl:box-container mt-12 sm:mt-0">
@@ -181,20 +196,29 @@ export default function QabasatBox({ Qabasat }: { Qabasat: Qabasat[] }) {
           >
             {/* DESCRIPTION - All descriptions absolutely positioned with fade */}
             <div className="relative">
-              {flattenedQabasat.map((quote, i) => (
-                <p
-                  key={quote.uuid}
-                  ref={i === currentIndex ? contentRef : null}
-                  style={{ direction: "rtl" }}
-                  className={`font-tajawal text-sm font-[400] leading-8 text-gray-200 sm:text-base sm:leading-[25px] xl:text-[18px] transition-opacity duration-[1800ms] ${
-                    i === currentIndex
-                      ? "opacity-100 relative"
-                      : "opacity-0 absolute inset-0"
-                  }`}
-                >
-                  {stripHtmlTags(quote.description)}
-                </p>
-              ))}
+              {flattenedQabasat.map((quote, i) => {
+                const description = stripHtmlTags(quote.description);
+                const isDescriptionArabic = isArabicText(description);
+
+                return (
+                  <p
+                    key={quote.uuid}
+                    ref={i === currentIndex ? contentRef : null}
+                    style={{
+                      direction: isDescriptionArabic ? "rtl" : "ltr",
+                    }}
+                    className={`font-tajawal ${
+                      isDescriptionArabic ? "text-justify" : "text-left"
+                    } text-sm font-[400] leading-8 text-gray-200 sm:text-base sm:leading-[25px] xl:text-[18px] transition-opacity duration-[1800ms] ${
+                      i === currentIndex
+                        ? "opacity-100 relative"
+                        : "opacity-0 absolute inset-0"
+                    }`}
+                  >
+                    {description}
+                  </p>
+                );
+              })}
             </div>
           </div>
 

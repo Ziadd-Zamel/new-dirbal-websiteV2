@@ -314,10 +314,10 @@ const Mawdooa = ({ articleById, searchTerm }: MawdooaProps) => {
         className="flex w-full items-center gap-5"
       >
         <div className="w-full">
-          <span className="font-tajawal text-lg font-bold text-[#B5975C] md:text-[16px] xl:text-2xl">
+          <span className="font-tajawal text-lg font-bold text-[#B5975C] md:text-[16px] xl:text-2xl min-[1900px]:text-4xl!">
             {articleById.title_number} {articleById.title_short}:{" "}
           </span>
-          <span className="font-tajawal text-lg font-bold text-white light:text-black md:text-[16px] xl:text-2xl">
+          <span className="font-tajawal text-lg font-bold text-white light:text-black md:text-[16px] xl:text-2xl min-[1900px]:text-4xl!">
             {articleById.title}
           </span>
         </div>
@@ -325,7 +325,7 @@ const Mawdooa = ({ articleById, searchTerm }: MawdooaProps) => {
 
       <div
         style={{ direction: "rtl" }}
-        className="-mr-2 flex items-center gap-10 text-white light:text-black"
+        className="-mr-2 min-[1900px]:mt-6! flex items-center gap-10 text-white light:text-black"
       >
         <div className=" mt-2 sm:mt-1 flex items-center">
           <Image
@@ -334,7 +334,7 @@ const Mawdooa = ({ articleById, searchTerm }: MawdooaProps) => {
             width={35}
             height={0}
           />{" "}
-          <span className="font-tajawal  text-[#B5975C] text-[14px] xl:text-[16px]">
+          <span className="font-tajawal  text-[#B5975C] text-[14px] xl:text-[16px] min-[1900px]:text-xl!">
             {new Date(articleById.published_at)
               .toLocaleDateString("en-GB")
               .split("/")
@@ -349,7 +349,7 @@ const Mawdooa = ({ articleById, searchTerm }: MawdooaProps) => {
             width={30}
             height={0}
           />{" "}
-          <span className="font-tajawal text-[#B5975C] text-[14px] xl:text-[16px]">
+          <span className="font-tajawal text-[#B5975C] text-[14px] xl:text-[16px] min-[1900px]:text-xl!">
             {articleById.written_by}
           </span>
         </div>
@@ -357,14 +357,14 @@ const Mawdooa = ({ articleById, searchTerm }: MawdooaProps) => {
 
       <p
         style={{ direction: "rtl" }}
-        className="-mr-[11px] mt-12 text-center text-gray-300 light:text-black font-tajawal text-sm font-medium text-gray sm:text-[16px] md:text-[16px]"
+        className="-mr-[11px] mt-12 text-center min-[1900px]:text-2xl! text-gray-300 light:text-black font-tajawal text-sm font-medium text-gray sm:text-[16px] md:text-[16px]"
       >
         {articleById.sub_title}
       </p>
 
       <div className="mb-3 mt-3">
         <hr className="w-full border-t border-[#B5975C] opacity-70" />
-        <h6 className="mt-5 text-center font-tajawal text-xl font-bold text-[#B5975C]">
+        <h6 className="mt-5 text-center font-tajawal text-xl min-[1900px]:text-3xl! font-bold text-[#B5975C]">
           {articleById.title_description}
         </h6>
         {articleById.voice_url && (
@@ -382,7 +382,7 @@ const Mawdooa = ({ articleById, searchTerm }: MawdooaProps) => {
               ? "ltr"
               : "rtl",
           }}
-          className={`mt-5 font-tajawal text-sm text-gray-300 light:text-gray-600 ${
+          className={`mt-5 font-tajawal text-sm min-[1900px]:text-xl! text-gray-300 light:text-gray-600 ${
             isSubjectEnglish(articleById.description)
               ? "text-left"
               : "text-justify"
@@ -407,13 +407,13 @@ const Mawdooa = ({ articleById, searchTerm }: MawdooaProps) => {
                 <div key={subject.id} className="mt-5">
                   <h6
                     style={{ direction: isEnglish ? "ltr" : "rtl" }}
-                    className="mb-3 text-center font-tajawal text-lg font-bold text-[#B5975C]"
+                    className="mb-3 text-center font-tajawal min-[1900px]:text-3xl! text-lg font-bold text-[#B5975C]"
                   >
                     {subject.title}
                   </h6>
                   <p
                     style={{ direction: isEnglish ? "ltr" : "rtl" }}
-                    className={`font-tajawal text-sm text-gray-300 light:text-gray-600 ${
+                    className={`font-tajawal text-sm text-gray-300 min-[1900px]:text-xl! light:text-gray-600 ${
                       isEnglish ? "text-left" : "text-justify"
                     }`}
                     dangerouslySetInnerHTML={{
@@ -464,7 +464,7 @@ const Mawdooa = ({ articleById, searchTerm }: MawdooaProps) => {
                 <Link
                   key={index}
                   href={`/tags?tag=${encodeURIComponent(tag)}`}
-                  className="bg-white text-black font-tajawal py-1 px-2 text-sm border border-gray-300 hover:bg-[#B5975C] hover:border-[#B5975C] hover:text-white transition-all duration-300 cursor-pointer"
+                  className="bg-white text-black font-tajawal py-1 px-2 text-sm min-[1900px]:text-xl! border border-gray-300 hover:bg-[#B5975C] hover:border-[#B5975C] hover:text-white transition-all duration-300 cursor-pointer"
                 >
                   {tag}
                 </Link>

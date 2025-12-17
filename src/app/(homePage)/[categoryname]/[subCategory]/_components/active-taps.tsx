@@ -30,10 +30,10 @@ const NewActiveTaps: React.FC<TapsProps> = ({
               : "border-[#d7d7d7] bg-white text-[#191514]"
           } hover:shadow-md`}
         >
-          <span className="-mt-[4px] font-tajawal text-base font-[500] xl:text-lg">
+          <span className="-mt-[4px] font-tajawal text-base font-[500] xl:text-lg min-[1900px]:text-3xl!">
             {tab}
           </span>
-          <span className="w-[30px]">
+          <span className="w-[30px] min-[1900px]:w-[50px]">
             <LeftArrowIcon
               dark={activeTab !== tab && hoverTab !== tab}
               height={15}

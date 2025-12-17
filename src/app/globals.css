@@ -151,7 +151,7 @@
   @apply flex justify-center items-center;
 }
 @utility box-container {
-  @apply container w-full 2xl:max-w-[100%] min-[1600px]:w-[75%] mx-auto;
+  @apply container w-full 2xl:max-w-[100%] min-[1600px]:w-[90%] mx-auto;
 }
 
 @utility circle {

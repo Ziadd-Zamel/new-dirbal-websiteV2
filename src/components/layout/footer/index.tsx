@@ -24,7 +24,7 @@ export default async function Footer() {
       {/* Overlay for readability */}
       <div className="absolute inset-0 bg-black/50 -z-10" />
 
-      <div className="relative px-10 pt-20 lg:px-20 xl:px-[70px] z-10">
+      <div className="relative pt-20 box-container z-10">
         <div className="2xl:box-container relative z-20 flex flex-col items-end lg:flex-row lg:items-start">
           <First />
           <Seconde />

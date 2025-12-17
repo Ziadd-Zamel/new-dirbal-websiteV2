@@ -22,7 +22,7 @@ const ArticleSectoin = ({
 }: MainItemsProps) => {
   const isSearching = searchQuery.trim().length > 0;
   const hasResults = articles.length > 0;
-
+  console.log(articles);
   const renderEmptyState = () => {
     if (isSearching) {
       // Search-specific empty state
@@ -133,7 +133,7 @@ const ArticleSectoin = ({
     <div className="relative z-30 pb-20 pt-10 ">
       {/* Loading Indicator */}
       {/* Page Title */}
-      <h4 className="mb-[65px] mt-7 text-right font-tajawal text-4xl font-bold text-[#B5975C]">
+      <h4 className="mb-[65px] mt-7 text-right font-tajawal text-4xl font-bold text-[#B5975C] min-[1900px]:text-6xl!">
         {title}
       </h4>
 

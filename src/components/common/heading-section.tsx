@@ -63,7 +63,7 @@ const HeadingSection: React.FC<HeadingSectionProps> = ({
             <div className="mt-10 sm:mt-20 lg:mt-24">
               <div className="flex flex-col justify-between sm:flex-row sm:items-center xl:w-[90%]">
                 <motion.h2
-                  className="text-justify font-tajawal text-2xl font-semibold text-white sm:text-4xl"
+                  className="text-justify font-tajawal text-2xl font-semibold text-white sm:text-4xl min-[1900px]:text-6xl!"
                   initial={{ opacity: 0, y: 50 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8 }}
@@ -94,8 +94,8 @@ const HeadingSection: React.FC<HeadingSectionProps> = ({
                       </li>
                       {breadcrumbs.map((item, index) => (
                         <React.Fragment key={index}>
-                          <li className="mx-1 text-[18px]">
-                            <span className="text-[18px] text-[#B4935C]">
+                          <li className="mx-1 text-[18px] min-[1900px]:text-2xl!">
+                            <span className="text-[18px] min-[1900px]:text-2xl! text-[#B4935C]">
                               <ChevronLeft size={20} />
                             </span>
                           </li>
@@ -121,7 +121,7 @@ const HeadingSection: React.FC<HeadingSectionProps> = ({
               </div>
 
               <motion.p
-                className={`scrollbar-hide mt-6 max-h-[400px] overflow-y-auto text-justify font-tajawal font-[400] text-gray-300 md:text-[21px] lg:h-full lg:max-h-none xl:w-[90%] xl:leading-[30px] ${textcolor}`}
+                className={`scrollbar-hide mt-6 max-h-[400px] overflow-y-auto text-justify font-tajawal font-[400] text-gray-300 md:text-[21px] min-[1900px]:text-3xl! lg:h-full lg:max-h-none xl:w-[90%] xl:leading-[30px] min-[1900px]:leading-[50px]! ${textcolor}`}
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.3 }}

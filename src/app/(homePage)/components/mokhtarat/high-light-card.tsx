@@ -19,7 +19,7 @@ export default function HighLightCard({ article }: { article: Article }) {
 
   return (
     <article
-      className="flex w-full flex-col  pb-10 pt-5 md:w-[350px] lg:w-[500px] xl:w-[630px]"
+      className="flex w-full flex-col  pb-10 pt-5 md:w-[350px] lg:w-[500px] xl:w-[630px] min-[1900px]:w-1/2!"
       aria-labelledby={`article-${article.uuid}`}
     >
       <div className="w-full flex justify-center mb-3">
@@ -38,7 +38,7 @@ export default function HighLightCard({ article }: { article: Article }) {
       {/* Subcategory Name */}
       <h3
         id={`article-${article.uuid}`}
-        className="mt-5 text-center font-tajawal text-xl font-bold text-[#B5975C]"
+        className="mt-5 text-center font-tajawal text-xl min-[1900px]:text-4xl! font-bold text-[#B5975C]"
       >
         {article.subSubCategory?.name
           ? article.subSubCategory?.name
@@ -46,16 +46,16 @@ export default function HighLightCard({ article }: { article: Article }) {
       </h3>
 
       {/* Title + subtitle */}
-      <h4 className="my-7 min-h-[80px] text-right font-tajawal text-lg sm:text-xl font-medium text-black">
+      <h4 className="my-7 min-[1900px]:mb-12! min-h-[80px] text-right font-tajawal text-lg sm:text-xl min-[1900px]:text-2xl! font-medium text-black">
         <span className="font-semibold text-[#B5975C]">
           {article.title_number}
           {article.title_short}:
         </span>{" "}
-        {article.sub_title}
+        {article.title}
       </h4>
 
       {/* Truncated description with fade */}
-      <p className="sm:-mt-8 min-h-[100px] text-justify font-tajawal text-[16px] text-gray-500">
+      <p className="sm:-mt-8 min-[1900px]:mt-12 min-h-[100px] text-justify font-tajawal text-[16px] min-[1900px]:text-xl! text-gray-500">
         {beforeFade}
         {fadeWords.length > 0 && (
           <span className="fade-text">{" " + fadeWords.join(" ")}</span>
@@ -66,7 +66,7 @@ export default function HighLightCard({ article }: { article: Article }) {
       <Link
         href={`/${article.sub_category.category.name}/${article.sub_category.uuid}/${article.uuid}`}
         aria-label={`اقرأ المزيد عن ${article.sub_title}`}
-        className="mt-5 text-left font-tajawal text-sm font-medium text-[#B5975C] hover:underline focus:outline-none focus:ring-2 focus:ring-[#B5975C]"
+        className="mt-5 text-left font-tajawal text-sm min-[1900px]:text-lg! font-medium text-[#B5975C] hover:underline focus:outline-none focus:ring-2 focus:ring-[#B5975C]"
       >
         المزيد
       </Link>
