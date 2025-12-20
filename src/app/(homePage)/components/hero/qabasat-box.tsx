@@ -19,6 +19,8 @@ export default function QabasatBox({ Qabasat }: { Qabasat: Qabasat[] }) {
   const [isPaused, setIsPaused] = useState(false);
   const [boxHeight, setBoxHeight] = useState(200);
   const contentRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const sourceRef = useRef<HTMLDivElement>(null);
 
   // Group Qabasat by category
   const groupedQabasat = useMemo(() => {
@@ -65,17 +67,35 @@ export default function QabasatBox({ Qabasat }: { Qabasat: Qabasat[] }) {
   };
 
   const currentQuote = flattenedQabasat[currentIndex];
+  const hasImage = currentQuote?.image;
 
-  // Update box height based on current content
+  // Update box height based on current content - FIXED
   useEffect(() => {
-    if (contentRef.current) {
-      const newHeight = Math.min(
-        Math.max(contentRef.current.scrollHeight + 200, 200),
-        600
-      );
+    if (contentRef.current && headerRef.current) {
+      // Measure each section individually
+      const headerHeight = headerRef.current.offsetHeight;
+      const contentHeight = contentRef.current.scrollHeight;
+      const sourceHeight = sourceRef.current?.offsetHeight || 0;
+
+      // Add extra height when image exists
+      const imageExtraSpace = hasImage ? 60 : 0;
+
+      // Add up all parts + padding and margins
+      // Header + divider (1px) + margins (mt-4 = 16px) + content + source (if exists) + padding + extra space for image
+      const totalHeight =
+        headerHeight +
+        1 +
+        16 +
+        contentHeight +
+        sourceHeight +
+        80 +
+        imageExtraSpace;
+
+      // Set min/max bounds
+      const newHeight = Math.min(Math.max(totalHeight, 250), 600);
       setBoxHeight(newHeight);
     }
-  }, [currentIndex]);
+  }, [currentIndex, hasImage]);
 
   useEffect(() => {
     if (!currentQuote || isPaused) return;
@@ -91,7 +111,6 @@ export default function QabasatBox({ Qabasat }: { Qabasat: Qabasat[] }) {
     };
   }, [currentIndex, isPaused, currentQuote, flattenedQabasat.length]);
 
-  const hasImage = currentQuote?.image;
   const currentCategoryIndex = getCurrentCategoryIndex();
 
   if (!currentQuote) return null;
@@ -112,127 +131,124 @@ export default function QabasatBox({ Qabasat }: { Qabasat: Qabasat[] }) {
         />
 
         <div
-          className="hover:border-1 hover:border-[#B5975C] w-full rounded-[12px] border border-[#2E394780] bg-[#FFFFFF26] px-[10px] pb-[16px] pt-5 sm:pt-10 transition-all duration-700 ease-in-out sm:px-[20px] md:w-[80%] lg:mt-16 lg:w-[51%] lg:px-[15px] xl:mt-28 xl:px-[45px] xl:py-[15px] cursor-pointer flex flex-col relative overflow-hidden"
+          className="hover:border-1 hover:border-[#B5975C] w-full rounded-[12px] border border-[#2E394780] bg-[#FFFFFF26] px-[10px] pb-[16px] pt-5 sm:pt-10 transition-all duration-700 ease-in-out sm:px-[20px] md:w-[80%] lg:mt-16 lg:w-[51%] lg:px-[15px] xl:mt-28 xl:px-[45px] xl:py-[15px] cursor-pointer relative overflow-hidden"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
           style={{
             height: boxHeight,
           }}
         >
-          {/* HEADER AND IMAGE CONTAINER */}
-          <div className="flex justify-between gap-5 w-full flex-row items-end">
-            {/* IMAGE CONTAINER - Smooth collapse/expand */}
+          {/* CONTAINER WITH REF - FIXED: Now wraps everything */}
+          <div className="flex flex-col h-full">
+            {/* HEADER AND IMAGE CONTAINER */}
             <div
-              className={`overflow-hidden transition-all duration-1000 ease-in-out ${
-                hasImage
-                  ? "w-[150px] sm:w-[200px] lg:w-[200px] opacity-100"
-                  : "w-0 opacity-0"
-              }`}
-              style={{
-                height: hasImage ? "auto" : "0px",
-                marginTop: hasImage ? "20px" : "0px",
-              }}
+              ref={headerRef}
+              className="flex justify-between gap-3 w-full flex-row items-start"
             >
-              {hasImage && (
+              {/* IMAGE CONTAINER - FIXED: Better sizing and positioning with smooth disappear */}
+              <div
+                className={`flex-shrink-0 overflow-hidden transition-all duration-1000 ease-in-out ${
+                  hasImage
+                    ? "w-[120px] sm:w-[180px] lg:w-[200px] opacity-100"
+                    : "w-0 opacity-0"
+                }`}
+              >
                 <Image
                   width={200}
                   height={100}
                   alt="Quote Image"
-                  src={currentQuote.image || ""}
-                  className="w-full h-auto object-cover transition-all duration-1000 ease-in-out xl:h-[120px]"
+                  src={currentQuote.image || "/assets/placeholder.png"}
+                  className={`w-full h-auto object-cover rounded-md transition-all duration-1000 ease-in-out ${
+                    hasImage ? "opacity-100" : "opacity-0"
+                  }`}
                 />
-              )}
-            </div>
+              </div>
 
-            <div
-              className={`transition-all duration-1000 ease-in-out ${
-                hasImage ? "flex-1 mr-4" : "w-full"
-              }`}
-            >
-              <p className="text-end font-tajawal font-bold text-[#B5975C] sm:text-[40px] xl:text-2xl transition-all duration-1000 ease-in-out">
-                {getCurrentCategoryName()}
-              </p>
+              {/* HEADER - FIXED: Better flex properties */}
+              <div className="flex-1 min-w-0">
+                <p className="text-end font-tajawal font-bold text-[#B5975C] text-[28px] sm:text-[40px] xl:text-2xl transition-all duration-1000 ease-in-out">
+                  {getCurrentCategoryName()}
+                </p>
 
-              {/* Category Dots Navigation - Under category name */}
-              <div className="flex justify-end items-center gap-2 mt-3">
-                {categoryNames.map((categoryName, index) => (
-                  <button
-                    key={categoryName}
-                    onClick={() => {
-                      // Find the first Qabasat of this category
-                      const categoryQabasat = groupedQabasat[categoryName];
-                      if (categoryQabasat.length > 0) {
-                        const firstIndex = flattenedQabasat.findIndex(
-                          (q) => q.uuid === categoryQabasat[0].uuid
-                        );
-                        if (firstIndex !== -1) {
-                          setCurrentIndex(firstIndex);
+                {/* Category Dots Navigation - Under category name */}
+                <div className="flex justify-end items-center gap-2 mt-3">
+                  {categoryNames.map((categoryName, index) => (
+                    <button
+                      key={categoryName}
+                      onClick={() => {
+                        // Find the first Qabasat of this category
+                        const categoryQabasat = groupedQabasat[categoryName];
+                        if (categoryQabasat.length > 0) {
+                          const firstIndex = flattenedQabasat.findIndex(
+                            (q) => q.uuid === categoryQabasat[0].uuid
+                          );
+                          if (firstIndex !== -1) {
+                            setCurrentIndex(firstIndex);
+                          }
                         }
-                      }
-                    }}
-                    className={` w-2  h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ease-in-out ${
-                      index === currentCategoryIndex
-                        ? "bg-[#B5975C] scale-110"
-                        : "bg-[#B5975C40] hover:bg-[#B5975C80]"
-                    }`}
-                    title={categoryName}
-                  />
-                ))}
+                      }}
+                      className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ease-in-out ${
+                        index === currentCategoryIndex
+                          ? "bg-[#B5975C] scale-110"
+                          : "bg-[#B5975C40] hover:bg-[#B5975C80]"
+                      }`}
+                      title={categoryName}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* DIVIDER LINE - Smooth appearance */}
-          <div
-            className={`w-full bg-[#B5975C] transition-all duration-700 ease-in-out ${
-              hasImage ? "mt-6 h-[1px]" : "mt-4 h-[1px]"
-            }`}
-          />
+            {/* DIVIDER LINE - FIXED: Always visible */}
+            <div className="w-full bg-[#B5975C] h-[1px] mt-4 transition-all duration-700 ease-in-out" />
 
-          <div
-            className={`flex flex-col justify-center transition-all duration-700 min-h-fit ease-in-out ${
-              hasImage ? "mt-4" : "mt-6"
-            }`}
-          >
-            {/* DESCRIPTION - All descriptions absolutely positioned with fade */}
-            <div className="relative">
-              {flattenedQabasat.map((quote, i) => {
-                const description = stripHtmlTags(quote.description);
-                const isDescriptionArabic = isArabicText(description);
+            {/* DESCRIPTION CONTAINER - FIXED: Proper flex growth */}
+            <div className="flex-1 flex flex-col justify-start mt-4 min-h-0">
+              {/* DESCRIPTION - All descriptions absolutely positioned with fade */}
+              <div className="relative">
+                {flattenedQabasat.map((quote, i) => {
+                  const description = stripHtmlTags(quote.description);
+                  const isDescriptionArabic = isArabicText(description);
 
-                return (
-                  <p
-                    key={quote.uuid}
-                    ref={i === currentIndex ? contentRef : null}
-                    style={{
-                      direction: isDescriptionArabic ? "rtl" : "ltr",
-                    }}
-                    className={`font-tajawal ${
-                      isDescriptionArabic ? "text-justify" : "text-left"
-                    } text-sm font-[400] leading-8 text-gray-200 sm:text-base sm:leading-[25px] xl:text-[18px] transition-opacity duration-[1800ms] ${
-                      i === currentIndex
-                        ? "opacity-100 relative"
-                        : "opacity-0 absolute inset-0"
-                    }`}
-                  >
-                    {description}
-                  </p>
-                );
-              })}
+                  return (
+                    <p
+                      key={quote.uuid}
+                      ref={i === currentIndex ? contentRef : null}
+                      style={{
+                        direction: isDescriptionArabic ? "rtl" : "ltr",
+                      }}
+                      className={`font-tajawal ${
+                        isDescriptionArabic ? "text-justify" : "text-left"
+                      } text-sm font-[400] ${
+                        isDescriptionArabic
+                          ? "leading-7 sm:leading-[25px] xl:leading-8"
+                          : "leading-6 sm:leading-[22px] xl:leading-7"
+                      } text-gray-200 sm:text-base xl:text-[18px] transition-opacity duration-[1800ms] ${
+                        i === currentIndex
+                          ? "opacity-100 relative"
+                          : "opacity-0 absolute inset-0 pointer-events-none"
+                      }`}
+                    >
+                      {description}
+                    </p>
+                  );
+                })}
+              </div>
             </div>
-          </div>
 
-          {/* SOURCE */}
-          <div
-            className={`transition-all duration-700 ease-in-out mt-auto pt-4 ${
-              currentQuote.source ? "opacity-100" : "opacity-0"
-            }`}
-          >
-            {currentQuote.source && (
-              <p className="text-left font-tajawal text-base text-white">
-                {currentQuote.source}
-              </p>
-            )}
+            {/* SOURCE - FIXED: Better positioning */}
+            <div
+              ref={sourceRef}
+              className={`mt-auto pt-4 transition-all duration-700 ease-in-out ${
+                currentQuote.source ? "opacity-100" : "opacity-0 h-0"
+              }`}
+            >
+              {currentQuote.source && (
+                <p className="text-left font-tajawal text-sm sm:text-base text-white">
+                  {currentQuote.source}
+                </p>
+              )}
+            </div>
           </div>
         </div>
       </div>
