@@ -5,6 +5,3 @@ declare type RouteProps = {
   searchParams: SearchParams;
 };
 
-declare type LayoutProps = {
-  children: React.ReactNode;
-} & Pick<RouteProps, "params">;
