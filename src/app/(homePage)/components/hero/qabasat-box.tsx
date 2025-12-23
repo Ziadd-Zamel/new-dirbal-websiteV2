@@ -221,7 +221,7 @@ export default function QabasatBox({ Qabasat }: { Qabasat: Qabasat[] }) {
                         isDescriptionArabic ? "text-justify" : "text-left"
                       } text-sm font-[400] ${
                         isDescriptionArabic
-                          ? "leading-7 sm:leading-[25px] xl:leading-8"
+                          ? "leading-7 sm:leading-[25px] "
                           : "leading-6 sm:leading-[22px] xl:leading-7"
                       } text-gray-200 sm:text-base xl:text-[18px] transition-opacity duration-[1800ms] ${
                         i === currentIndex
