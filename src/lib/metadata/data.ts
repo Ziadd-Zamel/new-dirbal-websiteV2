@@ -7,7 +7,7 @@ export function generateGlobalMetadata(
   customImage?: string
 ): Metadata {
   const siteName = "موقع د. عياد دربال";
-  const siteDescription = "موقع دربال للمقالات والقبسات والمواضيع المختارة";
+  const siteDescription = "مدونة قضائية، قانونية، ثقافية";
   const siteUrl = "https://yoursite.com";
 
   const title = customTitle ? `${customTitle} | ${siteName}` : siteName;
