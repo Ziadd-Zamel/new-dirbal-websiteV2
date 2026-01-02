@@ -296,7 +296,7 @@ const MainPage = ({
           </div>
           {/* Sidebar with SearchBar and NewActiveTaps */}
           {hasTabs && (
-            <div className="mt-16 hidden md:block w-[340px] min-[1900px]:w-[500px]">
+            <div className="mt-16 hidden md:block w-[340px] min-[1900px]:w-[400px]">
               <ArticleSearch />
               <NewActiveTaps
                 Taps={tabs.map((tab) => tab.name)}

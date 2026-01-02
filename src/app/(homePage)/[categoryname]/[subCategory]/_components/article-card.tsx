@@ -250,7 +250,7 @@ const ArticleCard = ({
     return (
       <div
         style={{ direction: isEnglish ? "ltr" : "rtl" }}
-        className={`mt-5 font-tajawal text-base text-gray-300 light:text-gray-600 min-[1900px]:text-2xl! ${
+        className={`mt-5 font-tajawal text-base text-gray-300 light:text-gray-600 min-[1900px]:text-lg! ${
           isEnglish ? "text-left" : "text-justify"
         }`}
         dangerouslySetInnerHTML={{
@@ -274,11 +274,11 @@ const ArticleCard = ({
         onClick={toggleExpand}
       >
         <div>
-          <span className="font-tajawal text-base text-[#B5975C]  md:text-[16px] xl:text-[22px] min-[1900px]:text-3xl!">
+          <span className="font-tajawal text-base text-[#B5975C]  md:text-[16px] xl:text-[22px] min-[1900px]:text-2xl!">
             {article.title_number} {article.title_short}:{" "}
           </span>
           <span
-            className="font-tajawal text-base text-white light:text-black  md:text-[16px] xl:text-[22px] min-[1900px]:text-3xl!"
+            className="font-tajawal text-base text-white light:text-black  md:text-[16px] xl:text-[22px] min-[1900px]:text-2xl!"
             dangerouslySetInnerHTML={{
               __html: searchTerm
                 ? highlightHtmlContent(article.title, searchTerm)
@@ -342,7 +342,7 @@ const ArticleCard = ({
               width={35}
               height={0}
             />{" "}
-            <span className="font-tajawal text-[12px] text-[#B5975C] sm:text-[14px] xl:text-[16px] min-[1900px]:text-2xl!">
+            <span className="font-tajawal text-[12px] text-[#B5975C] sm:text-[14px] xl:text-[16px] min-[1900px]:text-xl!">
               {new Date(article.published_at)
                 .toLocaleDateString("en-GB")
                 .split("/")
@@ -357,7 +357,7 @@ const ArticleCard = ({
               width={30}
               height={0}
             />{" "}
-            <span className="font-tajawal text-[12px] text-[#B5975C] sm:text-[14px] xl:text-[16px] min-[1900px]:text-2xl!">
+            <span className="font-tajawal text-[12px] text-[#B5975C] sm:text-[14px] xl:text-[16px] min-[1900px]:text-xl!">
               {article.written_by}
             </span>
           </div>
@@ -381,13 +381,13 @@ const ArticleCard = ({
               }
             }}
           >
-            <h6 className="mt-8 font-tajawal text-xl text-[#B5975C] min-[1900px]:text-3xl!">
+            <h6 className="mt-8 font-tajawal text-xl text-[#B5975C] min-[1900px]:text-2xl!">
               {article.title_description}
             </h6>
 
             {renderVideoOrText()}
 
-            <div className="mt-5 flex w-full items-end justify-start min-[1900px]:text-2xl!">
+            <div className="mt-5 flex w-full items-end justify-start min-[1900px]:text-xl!">
               {article.description && (
                 <Link
                   href={`/${article.sub_category.category.uuid}/${

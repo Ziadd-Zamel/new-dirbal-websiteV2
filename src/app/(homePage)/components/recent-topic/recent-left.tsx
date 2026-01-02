@@ -72,7 +72,7 @@ export default function RecentLeftSection({
         thickness="h-[2px]"
       />
 
-      <p className="pl-2 pt-6 text-justify font-tajawal text-[16px] min-[1900px]:text-2xl! font-medium leading-[25px] text-gray-300 sm:text-[16px] md:text-[20px] lg:text-[13px] xl:text-[15.5px]">
+      <p className="pl-2 pt-6 text-justify font-tajawal text-[16px] min-[1900px]:text-lg! font-medium leading-[25px] text-gray-300 sm:text-[16px] md:text-[20px] lg:text-[13px] xl:text-[15.5px]">
         {renderDescriptionWithFade(selectedArticle.description)}
       </p>
 
